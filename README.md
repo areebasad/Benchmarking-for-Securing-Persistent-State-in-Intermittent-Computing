@@ -11,16 +11,17 @@ mechanisms.
 ## For getting started:
 
 Install PyDGILib, 
-PyDGILib provides python bindings for Atmel® Data Gateway Interface (DGI) devices.
-The live version of the documentation can be found at https://ewouters.github.io/ pydgilib.
+PyDGILib provides python bindings for Atmel® Data Gateway Interface (DGI) devices and allows collecting and visualizing power usage data.
+The live version of the documentation can be found at ewouters.github.io/pydgilib/ pydgilib.
 The documentation is very extensive and while the getting started example
 shows an easy way to get going, it should enable people to use the full extend of the library
 https://pypi.org/project/pydgilib/#description
 
+The repository includes bechmarking security code for SAML11 (Cortex-M23) and SAML21 (Cortex-M0+) 
 
 Authors: 
-Erik Henricus Wouters
-Hafiz Areeb Asad
-Luca Mottola
-Naveed Anwar Bhatti
+Erik Henricus Wouters,
+Hafiz Areeb Asad,
+Luca Mottola,
+Naveed Anwar Bhatti,
 Thiemo Voigt
