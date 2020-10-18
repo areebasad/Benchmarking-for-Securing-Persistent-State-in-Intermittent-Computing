@@ -17,7 +17,7 @@ The documentation is very extensive and while the getting started example
 shows an easy way to get going, it should enable people to use the full extend of the library
 https://pypi.org/project/pydgilib/#description
 
-The repository includes bechmarking security code for SAML11 (Cortex-M23) and SAML21 (Cortex-M0+) 
+The repository includes benchmarking security code for SAML11 (Cortex-M23) and SAML21 (Cortex-M0+) 
 
 Authors: 
 Erik Henricus Wouters,
