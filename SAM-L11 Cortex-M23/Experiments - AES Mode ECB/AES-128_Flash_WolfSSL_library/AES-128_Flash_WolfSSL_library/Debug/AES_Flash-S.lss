@@ -1,0 +1,4864 @@
+
+AES_Flash-S.elf:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000044ec  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .gnu.sgstubs  00000020  0000fb00  0000fb00  0002fb00  2**5
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .relocate     00000068  20000000  000044ec  00020000  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  3 .bss          00000260  20000068  00004554  00020068  2**2
+                  ALLOC
+  4 .heap         00000200  200002c8  000047b4  00020068  2**0
+                  ALLOC
+  5 .stack        00000400  200004c8  000049b4  00020068  2**0
+                  ALLOC
+  6 .userRowBlock 00000020  00804000  00804000  00034000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  7 .ARM.attributes 0000002c  00000000  00000000  00034020  2**0
+                  CONTENTS, READONLY
+  8 .comment      00000059  00000000  00000000  0003404c  2**0
+                  CONTENTS, READONLY
+  9 .debug_info   0000f07f  00000000  00000000  000340a5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_abbrev 00002746  00000000  00000000  00043124  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    0000550c  00000000  00000000  0004586a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_aranges 00000418  00000000  00000000  0004ad76  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .debug_ranges 00000538  00000000  00000000  0004b18e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 14 .debug_macro  0001b0b1  00000000  00000000  0004b6c6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 15 .debug_line   0000b628  00000000  00000000  00066777  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 16 .debug_str    0008f3aa  00000000  00000000  00071d9f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 17 .debug_frame  00000af0  00000000  00000000  0010114c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <exception_table>:
+       0:	c8 08 00 20 31 13 00 00 2f 13 00 00 2f 13 00 00     ... 1.../.../...
+	...
+      2c:	2f 13 00 00 00 00 00 00 00 00 00 00 2f 13 00 00     /.........../...
+      3c:	2f 13 00 00 2f 13 00 00 2f 13 00 00 2f 13 00 00     /.../.../.../...
+      4c:	2f 13 00 00 2f 13 00 00 2f 13 00 00 2f 13 00 00     /.../.../.../...
+      5c:	2f 13 00 00 2f 13 00 00 2f 13 00 00 2f 13 00 00     /.../.../.../...
+      6c:	2f 13 00 00 2f 13 00 00 2f 13 00 00 2f 13 00 00     /.../.../.../...
+      7c:	2f 13 00 00 2f 13 00 00 2f 13 00 00 2f 13 00 00     /.../.../.../...
+      8c:	2f 13 00 00 2f 13 00 00 2f 13 00 00 2f 13 00 00     /.../.../.../...
+      9c:	2f 13 00 00 2f 13 00 00 2f 13 00 00 2f 13 00 00     /.../.../.../...
+      ac:	2f 13 00 00 2f 13 00 00 2f 13 00 00 2f 13 00 00     /.../.../.../...
+      bc:	2f 13 00 00 2f 13 00 00 2f 13 00 00 2f 13 00 00     /.../.../.../...
+      cc:	2f 13 00 00 2f 13 00 00 2f 13 00 00 2f 13 00 00     /.../.../.../...
+      dc:	2f 13 00 00 2f 13 00 00 2f 13 00 00 2f 13 00 00     /.../.../.../...
+      ec:	2f 13 00 00 2f 13 00 00                             /.../...
+
+000000f4 <__acle_se_nsc_periph_clock_init>:
+#if defined(__ICCARM__) /* IAR EWARM */
+__cmse_nonsecure_entry int32_t nsc_periph_clock_init(uint32_t gclk_id, uint32_t gclk_src)
+#else /* GCC, Keil MDK with ARM Compiler 6 */
+int32_t __attribute__((cmse_nonsecure_entry)) nsc_periph_clock_init(uint32_t gclk_id, uint32_t gclk_src)
+#endif
+{
+      f4:	23ff      	movs	r3, #255	; 0xff
+      f6:	4003      	ands	r3, r0
+      f8:	009b      	lsls	r3, r3, #2
+      fa:	f641 4c00 	movw	ip, #7168	; 0x1c00
+      fe:	f2c4 0c00 	movt	ip, #16384	; 0x4000
+     102:	4463      	add	r3, ip
+}
+
+static inline bool hri_gclk_get_PCHCTRL_CHEN_bit(const void *const hw, uint8_t index)
+{
+	uint32_t tmp;
+	tmp = ((Gclk *)hw)->PCHCTRL[index].reg;
+     104:	2280      	movs	r2, #128	; 0x80
+     106:	589a      	ldr	r2, [r3, r2]
+	if (hri_gclk_get_PCHCTRL_CHEN_bit(GCLK, gclk_id)) {
+		return 1; /* Already enabled */
+     108:	2001      	movs	r0, #1
+	if (hri_gclk_get_PCHCTRL_CHEN_bit(GCLK, gclk_id)) {
+     10a:	0652      	lsls	r2, r2, #25
+     10c:	d404      	bmi.n	118 <__acle_se_nsc_periph_clock_init+0x24>
+	} else {
+		hri_gclk_write_PCHCTRL_reg(GCLK, gclk_id, gclk_src | (1 << GCLK_PCHCTRL_CHEN_Pos));
+     10e:	2240      	movs	r2, #64	; 0x40
+     110:	4311      	orrs	r1, r2
+}
+
+static inline void hri_gclk_write_PCHCTRL_reg(const void *const hw, uint8_t index, hri_gclk_pchctrl_reg_t data)
+{
+	GCLK_CRITICAL_SECTION_ENTER();
+	((Gclk *)hw)->PCHCTRL[index].reg = data;
+     112:	3240      	adds	r2, #64	; 0x40
+     114:	5099      	str	r1, [r3, r2]
+	}
+	return 0;
+     116:	2000      	movs	r0, #0
+}
+     118:	0001      	movs	r1, r0
+     11a:	0002      	movs	r2, r0
+     11c:	0003      	movs	r3, r0
+     11e:	4684      	mov	ip, r0
+     120:	f38e 8800 	msr	CPSR_f, lr
+     124:	4774      	bxns	lr
+
+00000126 <__acle_se_nsc_ext_irq_init>:
+#if defined(__ICCARM__) /* IAR EWARM */
+__cmse_nonsecure_entry int32_t nsc_ext_irq_init(struct ext_irq_setting irq_setting)
+#else /* GCC, Keil MDK with ARM Compiler 6 */
+int32_t __attribute__((cmse_nonsecure_entry)) nsc_ext_irq_init(struct ext_irq_setting irq_setting)
+#endif
+{
+     126:	b5f0      	push	{r4, r5, r6, r7, lr}
+     128:	46ce      	mov	lr, r9
+     12a:	4647      	mov	r7, r8
+     12c:	b580      	push	{r7, lr}
+     12e:	b087      	sub	sp, #28
+     130:	9002      	str	r0, [sp, #8]
+     132:	9103      	str	r1, [sp, #12]
+     134:	9204      	str	r2, [sp, #16]
+     136:	9305      	str	r3, [sp, #20]
+	EIC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline hri_eic_evctrl_reg_t hri_eic_read_EVCTRL_reg(const void *const hw)
+{
+	return ((Eic *)hw)->EVCTRL.reg;
+     138:	f642 2300 	movw	r3, #10752	; 0x2a00
+     13c:	f2c4 0300 	movt	r3, #16384	; 0x4000
+     140:	6898      	ldr	r0, [r3, #8]
+	EIC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline hri_eic_asynch_reg_t hri_eic_read_ASYNCH_reg(const void *const hw)
+{
+	return ((Eic *)hw)->ASYNCH.reg;
+     142:	6999      	ldr	r1, [r3, #24]
+	EIC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline hri_eic_debouncen_reg_t hri_eic_read_DEBOUNCEN_reg(const void *const hw)
+{
+	return ((Eic *)hw)->DEBOUNCEN.reg;
+     144:	6b1a      	ldr	r2, [r3, #48]	; 0x30
+	return ((Eic *)hw)->CONFIG[index].reg;
+     146:	69dc      	ldr	r4, [r3, #28]
+     148:	46a4      	mov	ip, r4
+	EIC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline hri_eic_nonsec_reg_t hri_eic_read_NONSEC_reg(const void *const hw)
+{
+	return ((Eic *)hw)->NONSEC.reg;
+     14a:	6c1f      	ldr	r7, [r3, #64]	; 0x40
+	uint32_t config_val         = hri_eic_read_CONFIG_reg(EIC_SEC, 0);
+	uint32_t nonsec_mask        = hri_eic_read_NONSEC_reg(EIC_SEC);
+	uint32_t config_nonsec_mask = 0;
+
+	/* Calculate external interrupt settings with non-secure part  */
+	evctrl_val    = (evctrl_val & (~nonsec_mask)) | (irq_setting.evctrl & nonsec_mask);
+     14c:	9e02      	ldr	r6, [sp, #8]
+     14e:	4046      	eors	r6, r0
+     150:	403e      	ands	r6, r7
+     152:	4046      	eors	r6, r0
+	asynch_val    = (asynch_val & (~nonsec_mask)) | (irq_setting.asynch & nonsec_mask);
+     154:	9b04      	ldr	r3, [sp, #16]
+     156:	9301      	str	r3, [sp, #4]
+     158:	001d      	movs	r5, r3
+     15a:	404d      	eors	r5, r1
+     15c:	403d      	ands	r5, r7
+     15e:	404d      	eors	r5, r1
+	debouncen_val = (debouncen_val & (~nonsec_mask)) | (irq_setting.debouncen & nonsec_mask);
+     160:	9c05      	ldr	r4, [sp, #20]
+     162:	4054      	eors	r4, r2
+     164:	403c      	ands	r4, r7
+     166:	4054      	eors	r4, r2
+     168:	46a1      	mov	r9, r4
+	uint32_t config_nonsec_mask = 0;
+     16a:	2100      	movs	r1, #0
+	for (i = 0; i < 8; i++) {
+     16c:	2300      	movs	r3, #0
+		if (nonsec_mask & (1u << i)) {
+     16e:	2001      	movs	r0, #1
+			config_nonsec_mask |= (0xFu << (i * 4));
+     170:	f240 080f 	movw	r8, #15
+     174:	e002      	b.n	17c <__acle_se_nsc_ext_irq_init+0x56>
+	for (i = 0; i < 8; i++) {
+     176:	3301      	adds	r3, #1
+     178:	2b08      	cmp	r3, #8
+     17a:	d008      	beq.n	18e <__acle_se_nsc_ext_irq_init+0x68>
+		if (nonsec_mask & (1u << i)) {
+     17c:	0002      	movs	r2, r0
+     17e:	409a      	lsls	r2, r3
+     180:	4217      	tst	r7, r2
+     182:	d0f8      	beq.n	176 <__acle_se_nsc_ext_irq_init+0x50>
+			config_nonsec_mask |= (0xFu << (i * 4));
+     184:	009a      	lsls	r2, r3, #2
+     186:	4644      	mov	r4, r8
+     188:	4094      	lsls	r4, r2
+     18a:	4321      	orrs	r1, r4
+     18c:	e7f3      	b.n	176 <__acle_se_nsc_ext_irq_init+0x50>
+		}
+	}
+	config_val = (config_val & (~config_nonsec_mask)) | (irq_setting.config[0] & config_nonsec_mask);
+     18e:	4660      	mov	r0, ip
+     190:	9b03      	ldr	r3, [sp, #12]
+     192:	4058      	eors	r0, r3
+     194:	4008      	ands	r0, r1
+     196:	4663      	mov	r3, ip
+     198:	4058      	eors	r0, r3
+	((Eic *)hw)->CTRLA.reg &= ~EIC_CTRLA_ENABLE_Msk;
+     19a:	f642 2300 	movw	r3, #10752	; 0x2a00
+     19e:	f2c4 0300 	movt	r3, #16384	; 0x4000
+     1a2:	781a      	ldrb	r2, [r3, #0]
+     1a4:	2102      	movs	r1, #2
+     1a6:	438a      	bics	r2, r1
+     1a8:	701a      	strb	r2, [r3, #0]
+	while (((Eic *)hw)->SYNCBUSY.reg & reg) {
+     1aa:	f642 2200 	movw	r2, #10752	; 0x2a00
+     1ae:	f2c4 0200 	movt	r2, #16384	; 0x4000
+     1b2:	3101      	adds	r1, #1
+     1b4:	6853      	ldr	r3, [r2, #4]
+     1b6:	4219      	tst	r1, r3
+     1b8:	d1fc      	bne.n	1b4 <__acle_se_nsc_ext_irq_init+0x8e>
+     1ba:	f642 2200 	movw	r2, #10752	; 0x2a00
+     1be:	f2c4 0200 	movt	r2, #16384	; 0x4000
+     1c2:	2102      	movs	r1, #2
+     1c4:	6853      	ldr	r3, [r2, #4]
+     1c6:	4219      	tst	r1, r3
+     1c8:	d1fc      	bne.n	1c4 <__acle_se_nsc_ext_irq_init+0x9e>
+	((Eic *)hw)->EVCTRL.reg = data;
+     1ca:	f642 2300 	movw	r3, #10752	; 0x2a00
+     1ce:	f2c4 0300 	movt	r3, #16384	; 0x4000
+     1d2:	609e      	str	r6, [r3, #8]
+	((Eic *)hw)->ASYNCH.reg = data;
+     1d4:	619d      	str	r5, [r3, #24]
+	((Eic *)hw)->DEBOUNCEN.reg = data;
+     1d6:	464a      	mov	r2, r9
+     1d8:	631a      	str	r2, [r3, #48]	; 0x30
+	((Eic *)hw)->CONFIG[index].reg = data;
+     1da:	61d8      	str	r0, [r3, #28]
+	((Eic *)hw)->CTRLA.reg |= EIC_CTRLA_ENABLE_Msk;
+     1dc:	781a      	ldrb	r2, [r3, #0]
+     1de:	2102      	movs	r1, #2
+     1e0:	430a      	orrs	r2, r1
+     1e2:	701a      	strb	r2, [r3, #0]
+	while (((Eic *)hw)->SYNCBUSY.reg & reg) {
+     1e4:	f642 2200 	movw	r2, #10752	; 0x2a00
+     1e8:	f2c4 0200 	movt	r2, #16384	; 0x4000
+     1ec:	3101      	adds	r1, #1
+     1ee:	6853      	ldr	r3, [r2, #4]
+     1f0:	4219      	tst	r1, r3
+     1f2:	d1fc      	bne.n	1ee <__acle_se_nsc_ext_irq_init+0xc8>
+
+	/* Enable EIC */
+	hri_eic_set_CTRLA_ENABLE_bit(EIC_SEC);
+
+	return 0;
+}
+     1f4:	2000      	movs	r0, #0
+     1f6:	b007      	add	sp, #28
+     1f8:	0001      	movs	r1, r0
+     1fa:	0002      	movs	r2, r0
+     1fc:	0003      	movs	r3, r0
+     1fe:	4684      	mov	ip, r0
+     200:	bc0c      	pop	{r2, r3}
+     202:	4690      	mov	r8, r2
+     204:	4699      	mov	r9, r3
+     206:	bcf0      	pop	{r4, r5, r6, r7}
+     208:	bc02      	pop	{r1}
+     20a:	4686      	mov	lr, r0
+     20c:	f381 8800 	msr	CPSR_f, r1
+     210:	470c      	bxns	r1
+	...
+
+00000214 <__do_global_dtors_aux>:
+     214:	b510      	push	{r4, lr}
+     216:	f240 0468 	movw	r4, #104	; 0x68
+     21a:	f2c2 0400 	movt	r4, #8192	; 0x2000
+     21e:	7823      	ldrb	r3, [r4, #0]
+     220:	b963      	cbnz	r3, 23c <__do_global_dtors_aux+0x28>
+     222:	f240 0300 	movw	r3, #0
+     226:	f2c0 0300 	movt	r3, #0
+     22a:	b12b      	cbz	r3, 238 <__do_global_dtors_aux+0x24>
+     22c:	f244 0020 	movw	r0, #16416	; 0x4020
+     230:	f2c0 0080 	movt	r0, #128	; 0x80
+     234:	e000      	b.n	238 <__do_global_dtors_aux+0x24>
+     236:	bf00      	nop
+     238:	2301      	movs	r3, #1
+     23a:	7023      	strb	r3, [r4, #0]
+     23c:	bd10      	pop	{r4, pc}
+     23e:	46c0      	nop			; (mov r8, r8)
+
+00000240 <frame_dummy>:
+     240:	f240 0300 	movw	r3, #0
+     244:	f2c0 0300 	movt	r3, #0
+     248:	b510      	push	{r4, lr}
+     24a:	b14b      	cbz	r3, 260 <frame_dummy+0x20>
+     24c:	f240 016c 	movw	r1, #108	; 0x6c
+     250:	f244 0020 	movw	r0, #16416	; 0x4020
+     254:	f2c2 0100 	movt	r1, #8192	; 0x2000
+     258:	f2c0 0080 	movt	r0, #128	; 0x80
+     25c:	e000      	b.n	260 <frame_dummy+0x20>
+     25e:	bf00      	nop
+     260:	f244 0020 	movw	r0, #16416	; 0x4020
+     264:	f2c0 0080 	movt	r0, #128	; 0x80
+     268:	6803      	ldr	r3, [r0, #0]
+     26a:	b903      	cbnz	r3, 26e <frame_dummy+0x2e>
+     26c:	bd10      	pop	{r4, pc}
+     26e:	f240 0300 	movw	r3, #0
+     272:	f2c0 0300 	movt	r3, #0
+     276:	2b00      	cmp	r3, #0
+     278:	d0f8      	beq.n	26c <frame_dummy+0x2c>
+     27a:	4798      	blx	r3
+     27c:	e7f6      	b.n	26c <frame_dummy+0x2c>
+     27e:	46c0      	nop			; (mov r8, r8)
+
+00000280 <gpio_init>:
+
+#include "driver_init.h"
+#include "gpio_init.h"
+
+void gpio_init(void)
+{
+     280:	b570      	push	{r4, r5, r6, lr}
+	((Port *)hw)->Group[submodule_index].OUTCLR.reg = ~data;
+}
+
+static inline void hri_port_clear_OUT_reg(const void *const hw, uint8_t submodule_index, hri_port_out_reg_t mask)
+{
+	((Port *)hw)->Group[submodule_index].OUTCLR.reg = mask;
+     282:	f240 2200 	movw	r2, #512	; 0x200
+     286:	f2c6 0200 	movt	r2, #24576	; 0x6000
+     28a:	f240 4300 	movw	r3, #1024	; 0x400
+     28e:	6153      	str	r3, [r2, #20]
+     290:	f640 0500 	movw	r5, #2048	; 0x800
+     294:	6155      	str	r5, [r2, #20]
+     296:	2180      	movs	r1, #128	; 0x80
+     298:	0409      	lsls	r1, r1, #16
+     29a:	6151      	str	r1, [r2, #20]
+     29c:	2080      	movs	r0, #128	; 0x80
+     29e:	0500      	lsls	r0, r0, #20
+     2a0:	6150      	str	r0, [r2, #20]
+	((Port *)hw)->Group[submodule_index].DIRSET.reg = mask;
+     2a2:	6093      	str	r3, [r2, #8]
+
+static inline void hri_port_write_WRCONFIG_reg(const void *const hw, uint8_t submodule_index,
+                                               hri_port_wrconfig_reg_t data)
+{
+	PORT_CRITICAL_SECTION_ENTER();
+	((Port *)hw)->Group[submodule_index].WRCONFIG.reg = data;
+     2a4:	f243 2300 	movw	r3, #12800	; 0x3200
+     2a8:	f2c4 0300 	movt	r3, #16384	; 0x4000
+     2ac:	f240 4400 	movw	r4, #1024	; 0x400
+     2b0:	f2c4 0400 	movt	r4, #16384	; 0x4000
+     2b4:	629c      	str	r4, [r3, #40]	; 0x28
+     2b6:	24c0      	movs	r4, #192	; 0xc0
+     2b8:	0624      	lsls	r4, r4, #24
+     2ba:	629c      	str	r4, [r3, #40]	; 0x28
+	((Port *)hw)->Group[submodule_index].DIRSET.reg = mask;
+     2bc:	6095      	str	r5, [r2, #8]
+	((Port *)hw)->Group[submodule_index].WRCONFIG.reg = data;
+     2be:	f2c4 0500 	movt	r5, #16384	; 0x4000
+     2c2:	629d      	str	r5, [r3, #40]	; 0x28
+     2c4:	629c      	str	r4, [r3, #40]	; 0x28
+	((Port *)hw)->Group[submodule_index].DIRSET.reg = mask;
+     2c6:	6091      	str	r1, [r2, #8]
+	((Port *)hw)->Group[submodule_index].WRCONFIG.reg = data;
+     2c8:	2180      	movs	r1, #128	; 0x80
+     2ca:	05c9      	lsls	r1, r1, #23
+     2cc:	6299      	str	r1, [r3, #40]	; 0x28
+     2ce:	2480      	movs	r4, #128	; 0x80
+     2d0:	f2cc 0400 	movt	r4, #49152	; 0xc000
+     2d4:	629c      	str	r4, [r3, #40]	; 0x28
+	((Port *)hw)->Group[submodule_index].DIRSET.reg = mask;
+     2d6:	6090      	str	r0, [r2, #8]
+	((Port *)hw)->Group[submodule_index].WRCONFIG.reg = data;
+     2d8:	6299      	str	r1, [r3, #40]	; 0x28
+     2da:	f640 0200 	movw	r2, #2048	; 0x800
+     2de:	f2cc 0200 	movt	r2, #49152	; 0xc000
+     2e2:	629a      	str	r2, [r3, #40]	; 0x28
+	tmp = ((Port *)hw)->Group[submodule_index].PINCFG[index].reg;
+     2e4:	204a      	movs	r0, #74	; 0x4a
+     2e6:	5c19      	ldrb	r1, [r3, r0]
+	tmp &= ~PORT_PINCFG_PMUXEN_Msk;
+     2e8:	2201      	movs	r2, #1
+     2ea:	4391      	bics	r1, r2
+	((Port *)hw)->Group[submodule_index].PINCFG[index].reg = tmp;
+     2ec:	5419      	strb	r1, [r3, r0]
+	tmp = ((Port *)hw)->Group[submodule_index].PINCFG[index].reg;
+     2ee:	3001      	adds	r0, #1
+     2f0:	5c19      	ldrb	r1, [r3, r0]
+	tmp &= ~PORT_PINCFG_PMUXEN_Msk;
+     2f2:	4391      	bics	r1, r2
+	((Port *)hw)->Group[submodule_index].PINCFG[index].reg = tmp;
+     2f4:	5419      	strb	r1, [r3, r0]
+	tmp = ((Port *)hw)->Group[submodule_index].PINCFG[index].reg;
+     2f6:	300c      	adds	r0, #12
+     2f8:	5c19      	ldrb	r1, [r3, r0]
+	tmp &= ~PORT_PINCFG_PMUXEN_Msk;
+     2fa:	4391      	bics	r1, r2
+	((Port *)hw)->Group[submodule_index].PINCFG[index].reg = tmp;
+     2fc:	5419      	strb	r1, [r3, r0]
+	tmp = ((Port *)hw)->Group[submodule_index].PINCFG[index].reg;
+     2fe:	3004      	adds	r0, #4
+     300:	5c19      	ldrb	r1, [r3, r0]
+	tmp &= ~PORT_PINCFG_PMUXEN_Msk;
+     302:	4391      	bics	r1, r2
+	((Port *)hw)->Group[submodule_index].PINCFG[index].reg = tmp;
+     304:	5419      	strb	r1, [r3, r0]
+	gpio_set_pin_direction(LED0, GPIO_DIRECTION_OUT);
+
+	gpio_set_pin_function(LED0, GPIO_PIN_FUNCTION_OFF);
+#endif
+
+	delay_ms(10);
+     306:	3851      	subs	r0, #81	; 0x51
+     308:	f241 4331 	movw	r3, #5169	; 0x1431
+     30c:	f2c0 0300 	movt	r3, #0
+     310:	4798      	blx	r3
+     312:	bd70      	pop	{r4, r5, r6, pc}
+
+00000314 <mbedtls_aes_init>:
+        u = i >> 1;
+        keybits = 128 + u * 64;
+        mode = i & 1;
+
+        if( verbose != 0 )
+            mbedtls_printf( "  AES-CFB128-%3d (%s): ", keybits,
+     314:	b510      	push	{r4, lr}
+     316:	f240 1218 	movw	r2, #280	; 0x118
+                            ( mode == MBEDTLS_AES_DECRYPT ) ? "dec" : "enc" );
+
+        memcpy( iv,  aes_test_cfb128_iv, 16 );
+     31a:	2100      	movs	r1, #0
+     31c:	f641 2335 	movw	r3, #6709	; 0x1a35
+     320:	f2c0 0300 	movt	r3, #0
+     324:	4798      	blx	r3
+        memcpy( key, aes_test_cfb128_key[u], keybits / 8 );
+     326:	bd10      	pop	{r4, pc}
+
+00000328 <mbedtls_aes_free>:
+     328:	b510      	push	{r4, lr}
+     32a:	b130      	cbz	r0, 33a <mbedtls_aes_free+0x12>
+     32c:	f240 1118 	movw	r1, #280	; 0x118
+     330:	f241 23e5 	movw	r3, #4837	; 0x12e5
+     334:	f2c0 0300 	movt	r3, #0
+     338:	4798      	blx	r3
+     33a:	bd10      	pop	{r4, pc}
+
+0000033c <mbedtls_aes_setkey_enc>:
+     33c:	b5f0      	push	{r4, r5, r6, r7, lr}
+
+        offset = 0;
+     33e:	46c6      	mov	lr, r8
+     340:	b500      	push	{lr}
+        ret = mbedtls_aes_setkey_enc( &ctx, key, keybits );
+     342:	2ac0      	cmp	r2, #192	; 0xc0
+     344:	d02a      	beq.n	39c <mbedtls_aes_setkey_enc+0x60>
+     346:	f240 1300 	movw	r3, #256	; 0x100
+     34a:	429a      	cmp	r2, r3
+     34c:	d029      	beq.n	3a2 <mbedtls_aes_setkey_enc+0x66>
+     34e:	2a80      	cmp	r2, #128	; 0x80
+     350:	d004      	beq.n	35c <mbedtls_aes_setkey_enc+0x20>
+        /*
+         * AES-192 is an optional feature that may be unavailable when
+         * there is an alternative underlying implementation i.e. when
+         * MBEDTLS_AES_ALT is defined.
+         */
+        if( ret == MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED && keybits == 192 )
+     352:	2020      	movs	r0, #32
+     354:	4240      	negs	r0, r0
+     356:	bc04      	pop	{r2}
+        {
+            mbedtls_printf( "skipped\n" );
+            continue;
+        }
+        else if( ret != 0 )
+     358:	4690      	mov	r8, r2
+     35a:	bdf0      	pop	{r4, r5, r6, r7, pc}
+     35c:	3bf6      	subs	r3, #246	; 0xf6
+        {
+            goto exit;
+        }
+
+        if( mode == MBEDTLS_AES_DECRYPT )
+     35e:	6003      	str	r3, [r0, #0]
+     360:	0004      	movs	r4, r0
+        {
+            memcpy( buf, aes_test_cfb128_ct[u], 64 );
+     362:	3408      	adds	r4, #8
+     364:	6044      	str	r4, [r0, #4]
+     366:	0952      	lsrs	r2, r2, #5
+     368:	0027      	movs	r7, r4
+     36a:	2600      	movs	r6, #0
+     36c:	784b      	ldrb	r3, [r1, #1]
+     36e:	021b      	lsls	r3, r3, #8
+     370:	788d      	ldrb	r5, [r1, #2]
+     372:	042d      	lsls	r5, r5, #16
+     374:	432b      	orrs	r3, r5
+     376:	780d      	ldrb	r5, [r1, #0]
+     378:	432b      	orrs	r3, r5
+     37a:	78cd      	ldrb	r5, [r1, #3]
+     37c:	062d      	lsls	r5, r5, #24
+     37e:	432b      	orrs	r3, r5
+     380:	c708      	stmia	r7!, {r3}
+            aes_tests = aes_test_cfb128_pt;
+     382:	3601      	adds	r6, #1
+     384:	3104      	adds	r1, #4
+     386:	4296      	cmp	r6, r2
+     388:	d3f0      	bcc.n	36c <mbedtls_aes_setkey_enc+0x30>
+     38a:	6803      	ldr	r3, [r0, #0]
+        {
+            memcpy( buf, aes_test_cfb128_pt, 64 );
+            aes_tests = aes_test_cfb128_ct[u];
+        }
+
+        ret = mbedtls_aes_crypt_cfb128( &ctx, mode, 64, &offset, iv, buf, buf );
+     38c:	2b0c      	cmp	r3, #12
+     38e:	d037      	beq.n	400 <STACK_SIZE>
+     390:	2b0e      	cmp	r3, #14
+     392:	d067      	beq.n	464 <STACK_SIZE+0x64>
+     394:	2b0a      	cmp	r3, #10
+     396:	d007      	beq.n	3a8 <mbedtls_aes_setkey_enc+0x6c>
+     398:	2000      	movs	r0, #0
+     39a:	e7dc      	b.n	356 <mbedtls_aes_setkey_enc+0x1a>
+     39c:	230c      	movs	r3, #12
+     39e:	6003      	str	r3, [r0, #0]
+     3a0:	e7de      	b.n	360 <mbedtls_aes_setkey_enc+0x24>
+     3a2:	230e      	movs	r3, #14
+     3a4:	6003      	str	r3, [r0, #0]
+     3a6:	e7db      	b.n	360 <mbedtls_aes_setkey_enc+0x24>
+        if( ret != 0 )
+     3a8:	f641 35b8 	movw	r5, #7096	; 0x1bb8
+     3ac:	f2c0 0500 	movt	r5, #0
+            goto exit;
+
+        if( memcmp( buf, aes_tests, 64 ) != 0 )
+     3b0:	30a8      	adds	r0, #168	; 0xa8
+     3b2:	002a      	movs	r2, r5
+     3b4:	21ff      	movs	r1, #255	; 0xff
+     3b6:	3228      	adds	r2, #40	; 0x28
+     3b8:	68e6      	ldr	r6, [r4, #12]
+     3ba:	cd08      	ldmia	r5!, {r3}
+     3bc:	6827      	ldr	r7, [r4, #0]
+     3be:	407b      	eors	r3, r7
+     3c0:	0a37      	lsrs	r7, r6, #8
+     3c2:	400f      	ands	r7, r1
+        {
+            ret = 1;
+            goto exit;
+        }
+
+        if( verbose != 0 )
+     3c4:	5dd7      	ldrb	r7, [r2, r7]
+     3c6:	407b      	eors	r3, r7
+    for( i = 0; i < 6; i++ )
+     3c8:	0e37      	lsrs	r7, r6, #24
+     3ca:	5dd7      	ldrb	r7, [r2, r7]
+     3cc:	043f      	lsls	r7, r7, #16
+        u = i >> 1;
+     3ce:	407b      	eors	r3, r7
+     3d0:	000f      	movs	r7, r1
+        keybits = 128 + u * 64;
+     3d2:	4037      	ands	r7, r6
+     3d4:	5dd7      	ldrb	r7, [r2, r7]
+        mode = i & 1;
+     3d6:	063f      	lsls	r7, r7, #24
+     3d8:	407b      	eors	r3, r7
+        if( verbose != 0 )
+     3da:	0c37      	lsrs	r7, r6, #16
+     3dc:	400f      	ands	r7, r1
+     3de:	5dd7      	ldrb	r7, [r2, r7]
+            mbedtls_printf( "  AES-CFB128-%3d (%s): ", keybits,
+     3e0:	023f      	lsls	r7, r7, #8
+     3e2:	407b      	eors	r3, r7
+     3e4:	6123      	str	r3, [r4, #16]
+     3e6:	6867      	ldr	r7, [r4, #4]
+     3e8:	407b      	eors	r3, r7
+     3ea:	6163      	str	r3, [r4, #20]
+     3ec:	68a7      	ldr	r7, [r4, #8]
+        if( ret == MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED && keybits == 192 )
+     3ee:	407b      	eors	r3, r7
+     3f0:	61a3      	str	r3, [r4, #24]
+     3f2:	4073      	eors	r3, r6
+     3f4:	61e3      	str	r3, [r4, #28]
+            mbedtls_printf( "skipped\n" );
+     3f6:	3410      	adds	r4, #16
+     3f8:	4284      	cmp	r4, r0
+     3fa:	d1dd      	bne.n	3b8 <mbedtls_aes_setkey_enc+0x7c>
+     3fc:	2000      	movs	r0, #0
+     3fe:	e7aa      	b.n	356 <mbedtls_aes_setkey_enc+0x1a>
+     400:	f641 36b8 	movw	r6, #7096	; 0x1bb8
+     404:	f2c0 0600 	movt	r6, #0
+            continue;
+     408:	30c8      	adds	r0, #200	; 0xc8
+            memcpy( buf, aes_test_cfb128_pt, 64 );
+     40a:	0031      	movs	r1, r6
+     40c:	25ff      	movs	r5, #255	; 0xff
+     40e:	3128      	adds	r1, #40	; 0x28
+     410:	6962      	ldr	r2, [r4, #20]
+     412:	ce08      	ldmia	r6!, {r3}
+     414:	6827      	ldr	r7, [r4, #0]
+     416:	407b      	eors	r3, r7
+     418:	0a17      	lsrs	r7, r2, #8
+     41a:	402f      	ands	r7, r5
+     41c:	5dcf      	ldrb	r7, [r1, r7]
+     41e:	407b      	eors	r3, r7
+     420:	0e17      	lsrs	r7, r2, #24
+            aes_tests = aes_test_cfb128_ct[u];
+     422:	5dcf      	ldrb	r7, [r1, r7]
+     424:	043f      	lsls	r7, r7, #16
+     426:	407b      	eors	r3, r7
+     428:	002f      	movs	r7, r5
+     42a:	4017      	ands	r7, r2
+     42c:	5dcf      	ldrb	r7, [r1, r7]
+     42e:	063f      	lsls	r7, r7, #24
+     430:	407b      	eors	r3, r7
+            mbedtls_printf( "passed\n" );
+     432:	0c17      	lsrs	r7, r2, #16
+     434:	402f      	ands	r7, r5
+     436:	5dcf      	ldrb	r7, [r1, r7]
+     438:	023f      	lsls	r7, r7, #8
+     43a:	407b      	eors	r3, r7
+     43c:	61a3      	str	r3, [r4, #24]
+     43e:	6867      	ldr	r7, [r4, #4]
+     440:	407b      	eors	r3, r7
+     442:	61e3      	str	r3, [r4, #28]
+     444:	68a7      	ldr	r7, [r4, #8]
+     446:	407b      	eors	r3, r7
+    }
+
+    if( verbose != 0 )
+     448:	6223      	str	r3, [r4, #32]
+     44a:	68e7      	ldr	r7, [r4, #12]
+            aes_tests = aes_test_cfb128_pt;
+     44c:	407b      	eors	r3, r7
+     */
+    for( i = 0; i < 6; i++ )
+    {
+        u = i >> 1;
+        keybits = 128 + u * 64;
+        mode = i & 1;
+     44e:	6263      	str	r3, [r4, #36]	; 0x24
+     450:	6927      	ldr	r7, [r4, #16]
+
+        if( verbose != 0 )
+            mbedtls_printf( "  AES-OFB-%3d (%s): ", keybits,
+                            ( mode == MBEDTLS_AES_DECRYPT ) ? "dec" : "enc" );
+
+        memcpy( iv,  aes_test_ofb_iv, 16 );
+     452:	407b      	eors	r3, r7
+     454:	62a3      	str	r3, [r4, #40]	; 0x28
+     456:	4053      	eors	r3, r2
+     458:	62e3      	str	r3, [r4, #44]	; 0x2c
+        memcpy( key, aes_test_ofb_key[u], keybits / 8 );
+     45a:	3418      	adds	r4, #24
+     45c:	4284      	cmp	r4, r0
+     45e:	d1d7      	bne.n	410 <STACK_SIZE+0x10>
+        mbedtls_printf( "\n" );
+     460:	2000      	movs	r0, #0
+     462:	e778      	b.n	356 <mbedtls_aes_setkey_enc+0x1a>
+     464:	f641 36b8 	movw	r6, #7096	; 0x1bb8
+     468:	f2c0 0600 	movt	r6, #0
+     46c:	f240 08e8 	movw	r8, #232	; 0xe8
+            mbedtls_printf( "  AES-OFB-%3d (%s): ", keybits,
+     470:	4480      	add	r8, r0
+     472:	0032      	movs	r2, r6
+     474:	25ff      	movs	r5, #255	; 0xff
+     476:	3228      	adds	r2, #40	; 0x28
+     478:	69e1      	ldr	r1, [r4, #28]
+     47a:	ce08      	ldmia	r6!, {r3}
+     47c:	6820      	ldr	r0, [r4, #0]
+     47e:	4043      	eors	r3, r0
+     480:	0a0f      	lsrs	r7, r1, #8
+     482:	402f      	ands	r7, r5
+     484:	5dd7      	ldrb	r7, [r2, r7]
+     486:	407b      	eors	r3, r7
+     488:	0e0f      	lsrs	r7, r1, #24
+        memcpy( iv,  aes_test_ofb_iv, 16 );
+     48a:	5dd7      	ldrb	r7, [r2, r7]
+     48c:	043f      	lsls	r7, r7, #16
+     48e:	407b      	eors	r3, r7
+     490:	002f      	movs	r7, r5
+     492:	400f      	ands	r7, r1
+     494:	5dd7      	ldrb	r7, [r2, r7]
+     496:	063f      	lsls	r7, r7, #24
+        memcpy( key, aes_test_ofb_key[u], keybits / 8 );
+     498:	407b      	eors	r3, r7
+     49a:	0c0f      	lsrs	r7, r1, #16
+     49c:	402f      	ands	r7, r5
+     49e:	5dd7      	ldrb	r7, [r2, r7]
+     4a0:	023f      	lsls	r7, r7, #8
+     4a2:	407b      	eors	r3, r7
+     4a4:	6223      	str	r3, [r4, #32]
+     4a6:	6860      	ldr	r0, [r4, #4]
+     4a8:	4043      	eors	r3, r0
+     4aa:	6263      	str	r3, [r4, #36]	; 0x24
+     4ac:	68a0      	ldr	r0, [r4, #8]
+     4ae:	4043      	eors	r3, r0
+
+        offset = 0;
+     4b0:	62a3      	str	r3, [r4, #40]	; 0x28
+     4b2:	68e0      	ldr	r0, [r4, #12]
+        ret = mbedtls_aes_setkey_enc( &ctx, key, keybits );
+     4b4:	4043      	eors	r3, r0
+     4b6:	62e3      	str	r3, [r4, #44]	; 0x2c
+     4b8:	002f      	movs	r7, r5
+     4ba:	401f      	ands	r7, r3
+     4bc:	5dd7      	ldrb	r7, [r2, r7]
+     4be:	6920      	ldr	r0, [r4, #16]
+     4c0:	4047      	eors	r7, r0
+     4c2:	0e18      	lsrs	r0, r3, #24
+        /*
+         * AES-192 is an optional feature that may be unavailable when
+         * there is an alternative underlying implementation i.e. when
+         * MBEDTLS_AES_ALT is defined.
+         */
+        if( ret == MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED && keybits == 192 )
+     4c4:	5c10      	ldrb	r0, [r2, r0]
+     4c6:	0600      	lsls	r0, r0, #24
+     4c8:	4047      	eors	r7, r0
+        {
+            mbedtls_printf( "skipped\n" );
+            continue;
+        }
+        else if( ret != 0 )
+     4ca:	0a18      	lsrs	r0, r3, #8
+     4cc:	4028      	ands	r0, r5
+     4ce:	5c10      	ldrb	r0, [r2, r0]
+        {
+            goto exit;
+        }
+
+        if( mode == MBEDTLS_AES_DECRYPT )
+     4d0:	0200      	lsls	r0, r0, #8
+     4d2:	4047      	eors	r7, r0
+     4d4:	0c1b      	lsrs	r3, r3, #16
+        {
+            memcpy( buf, aes_test_ofb_ct[u], 64 );
+     4d6:	402b      	ands	r3, r5
+     4d8:	5cd3      	ldrb	r3, [r2, r3]
+     4da:	041b      	lsls	r3, r3, #16
+     4dc:	407b      	eors	r3, r7
+     4de:	6323      	str	r3, [r4, #48]	; 0x30
+     4e0:	6960      	ldr	r0, [r4, #20]
+     4e2:	4043      	eors	r3, r0
+     4e4:	6363      	str	r3, [r4, #52]	; 0x34
+     4e6:	69a0      	ldr	r0, [r4, #24]
+     4e8:	4043      	eors	r3, r0
+     4ea:	63a3      	str	r3, [r4, #56]	; 0x38
+     4ec:	4059      	eors	r1, r3
+     4ee:	63e1      	str	r1, [r4, #60]	; 0x3c
+     4f0:	3420      	adds	r4, #32
+     4f2:	45a0      	cmp	r8, r4
+     4f4:	d1c0      	bne.n	478 <STACK_SIZE+0x78>
+            aes_tests = aes_test_ofb_pt;
+     4f6:	2000      	movs	r0, #0
+     4f8:	e72d      	b.n	356 <mbedtls_aes_setkey_enc+0x1a>
+
+000004fa <mbedtls_aes_setkey_dec>:
+     4fa:	b5f0      	push	{r4, r5, r6, r7, lr}
+     4fc:	46de      	mov	lr, fp
+     4fe:	4657      	mov	r7, sl
+        {
+            memcpy( buf, aes_test_ofb_pt, 64 );
+            aes_tests = aes_test_ofb_ct[u];
+        }
+
+        ret = mbedtls_aes_crypt_ofb( &ctx, 64, &offset, iv, buf, buf );
+     500:	464e      	mov	r6, r9
+     502:	4645      	mov	r5, r8
+     504:	b5e0      	push	{r5, r6, r7, lr}
+     506:	b0cb      	sub	sp, #300	; 0x12c
+     508:	0005      	movs	r5, r0
+     50a:	000c      	movs	r4, r1
+     50c:	0016      	movs	r6, r2
+     50e:	a804      	add	r0, sp, #16
+     510:	f240 3315 	movw	r3, #789	; 0x315
+     514:	f2c0 0300 	movt	r3, #0
+        if( ret != 0 )
+     518:	4798      	blx	r3
+     51a:	002b      	movs	r3, r5
+     51c:	3308      	adds	r3, #8
+            goto exit;
+
+        if( memcmp( buf, aes_tests, 64 ) != 0 )
+     51e:	606b      	str	r3, [r5, #4]
+     520:	0032      	movs	r2, r6
+     522:	0021      	movs	r1, r4
+     524:	a804      	add	r0, sp, #16
+     526:	f240 333d 	movw	r3, #829	; 0x33d
+     52a:	f2c0 0300 	movt	r3, #0
+     52e:	4798      	blx	r3
+     530:	9003      	str	r0, [sp, #12]
+     532:	2800      	cmp	r0, #0
+        {
+            ret = 1;
+            goto exit;
+        }
+
+        if( verbose != 0 )
+     534:	d000      	beq.n	538 <mbedtls_aes_setkey_dec+0x3e>
+    for( i = 0; i < 6; i++ )
+     536:	e080      	b.n	63a <mbedtls_aes_setkey_dec+0x140>
+     538:	9b04      	ldr	r3, [sp, #16]
+     53a:	469a      	mov	sl, r3
+        u = i >> 1;
+     53c:	602b      	str	r3, [r5, #0]
+     53e:	011b      	lsls	r3, r3, #4
+        keybits = 128 + u * 64;
+     540:	469b      	mov	fp, r3
+     542:	9b05      	ldr	r3, [sp, #20]
+        mode = i & 1;
+     544:	445b      	add	r3, fp
+     546:	681a      	ldr	r2, [r3, #0]
+     548:	60aa      	str	r2, [r5, #8]
+        if( verbose != 0 )
+     54a:	685a      	ldr	r2, [r3, #4]
+     54c:	60ea      	str	r2, [r5, #12]
+            mbedtls_printf( "  AES-OFB-%3d (%s): ", keybits,
+     54e:	689a      	ldr	r2, [r3, #8]
+     550:	612a      	str	r2, [r5, #16]
+     552:	f240 0c18 	movw	ip, #24
+     556:	44ac      	add	ip, r5
+     558:	68da      	ldr	r2, [r3, #12]
+     55a:	616a      	str	r2, [r5, #20]
+        if( ret == MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED && keybits == 192 )
+     55c:	2201      	movs	r2, #1
+     55e:	4252      	negs	r2, r2
+     560:	4452      	add	r2, sl
+     562:	4690      	mov	r8, r2
+            mbedtls_printf( "skipped\n" );
+     564:	2210      	movs	r2, #16
+     566:	4252      	negs	r2, r2
+     568:	4691      	mov	r9, r2
+     56a:	4499      	add	r9, r3
+     56c:	464f      	mov	r7, r9
+     56e:	4664      	mov	r4, ip
+     570:	4643      	mov	r3, r8
+     572:	2b00      	cmp	r3, #0
+     574:	dd54      	ble.n	620 <mbedtls_aes_setkey_dec+0x126>
+            continue;
+     576:	f641 35b8 	movw	r5, #7096	; 0x1bb8
+            memcpy( buf, aes_test_ofb_pt, 64 );
+     57a:	f2c0 0500 	movt	r5, #0
+     57e:	26ff      	movs	r6, #255	; 0xff
+     580:	3528      	adds	r5, #40	; 0x28
+     582:	4662      	mov	r2, ip
+     584:	e009      	b.n	59a <mbedtls_aes_setkey_dec+0xa0>
+     586:	001c      	movs	r4, r3
+     588:	9a02      	ldr	r2, [sp, #8]
+     58a:	3410      	adds	r4, #16
+     58c:	2301      	movs	r3, #1
+     58e:	425b      	negs	r3, r3
+            aes_tests = aes_test_ofb_ct[u];
+     590:	469c      	mov	ip, r3
+     592:	44e0      	add	r8, ip
+     594:	3f10      	subs	r7, #16
+     596:	4643      	mov	r3, r8
+     598:	b3bb      	cbz	r3, 60a <mbedtls_aes_setkey_dec+0x110>
+     59a:	2100      	movs	r1, #0
+     59c:	9401      	str	r4, [sp, #4]
+     59e:	9202      	str	r2, [sp, #8]
+            mbedtls_printf( "passed\n" );
+     5a0:	587b      	ldr	r3, [r7, r1]
+     5a2:	0032      	movs	r2, r6
+     5a4:	401a      	ands	r2, r3
+     5a6:	5caa      	ldrb	r2, [r5, r2]
+     5a8:	0092      	lsls	r2, r2, #2
+     5aa:	f641 40b8 	movw	r0, #7352	; 0x1cb8
+     5ae:	f2c0 0000 	movt	r0, #0
+     5b2:	4684      	mov	ip, r0
+     5b4:	4462      	add	r2, ip
+    }
+
+    if( verbose != 0 )
+     5b6:	0e18      	lsrs	r0, r3, #24
+            aes_tests = aes_test_ofb_pt;
+     5b8:	5c28      	ldrb	r0, [r5, r0]
+
+        if( verbose != 0 )
+            mbedtls_printf( "  AES-CTR-128 (%s): ",
+                            ( mode == MBEDTLS_AES_DECRYPT ) ? "dec" : "enc" );
+
+        memcpy( nonce_counter, aes_test_ctr_nonce_counter[u], 16 );
+     5ba:	0080      	lsls	r0, r0, #2
+     5bc:	f242 04b8 	movw	r4, #8376	; 0x20b8
+     5c0:	f2c0 0400 	movt	r4, #0
+        memcpy( key, aes_test_ctr_key[u], 16 );
+     5c4:	46a4      	mov	ip, r4
+     5c6:	4460      	add	r0, ip
+            memcpy( buf, aes_test_ctr_ct[u], len );
+            aes_tests = aes_test_ctr_pt[u];
+        }
+        else
+        {
+            memcpy( buf, aes_test_ctr_pt[u], len );
+     5c8:	6a92      	ldr	r2, [r2, #40]	; 0x28
+     5ca:	6a80      	ldr	r0, [r0, #40]	; 0x28
+     5cc:	4042      	eors	r2, r0
+     5ce:	0a18      	lsrs	r0, r3, #8
+     5d0:	4030      	ands	r0, r6
+     5d2:	5c28      	ldrb	r0, [r5, r0]
+     5d4:	0080      	lsls	r0, r0, #2
+     5d6:	f242 44b8 	movw	r4, #9400	; 0x24b8
+        mbedtls_printf( "\n" );
+     5da:	f2c0 0400 	movt	r4, #0
+     5de:	46a4      	mov	ip, r4
+     5e0:	4460      	add	r0, ip
+     5e2:	6a80      	ldr	r0, [r0, #40]	; 0x28
+     5e4:	4042      	eors	r2, r0
+     5e6:	0c1b      	lsrs	r3, r3, #16
+     5e8:	4033      	ands	r3, r6
+     5ea:	5ceb      	ldrb	r3, [r5, r3]
+     5ec:	009b      	lsls	r3, r3, #2
+     5ee:	f642 00b8 	movw	r0, #10424	; 0x28b8
+            mbedtls_printf( "  AES-CTR-128 (%s): ",
+     5f2:	f2c0 0000 	movt	r0, #0
+     5f6:	4684      	mov	ip, r0
+     5f8:	4463      	add	r3, ip
+     5fa:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+     5fc:	405a      	eors	r2, r3
+     5fe:	9b01      	ldr	r3, [sp, #4]
+     600:	505a      	str	r2, [r3, r1]
+     602:	3104      	adds	r1, #4
+     604:	2910      	cmp	r1, #16
+     606:	d1cb      	bne.n	5a0 <mbedtls_aes_setkey_dec+0xa6>
+     608:	e7bd      	b.n	586 <mbedtls_aes_setkey_dec+0x8c>
+        memcpy( nonce_counter, aes_test_ctr_nonce_counter[u], 16 );
+     60a:	4694      	mov	ip, r2
+     60c:	465b      	mov	r3, fp
+     60e:	3b10      	subs	r3, #16
+     610:	449c      	add	ip, r3
+     612:	4653      	mov	r3, sl
+     614:	011b      	lsls	r3, r3, #4
+     616:	464a      	mov	r2, r9
+     618:	1ad3      	subs	r3, r2, r3
+     61a:	f240 0910 	movw	r9, #16
+     61e:	4499      	add	r9, r3
+     620:	4663      	mov	r3, ip
+     622:	464a      	mov	r2, r9
+        memcpy( key, aes_test_ctr_key[u], 16 );
+     624:	6812      	ldr	r2, [r2, #0]
+     626:	601a      	str	r2, [r3, #0]
+     628:	464a      	mov	r2, r9
+     62a:	6852      	ldr	r2, [r2, #4]
+     62c:	605a      	str	r2, [r3, #4]
+     62e:	464a      	mov	r2, r9
+     630:	6892      	ldr	r2, [r2, #8]
+     632:	609a      	str	r2, [r3, #8]
+     634:	464a      	mov	r2, r9
+        offset = 0;
+     636:	68d2      	ldr	r2, [r2, #12]
+     638:	60da      	str	r2, [r3, #12]
+        if( ( ret = mbedtls_aes_setkey_enc( &ctx, key, 128 ) ) != 0 )
+     63a:	a804      	add	r0, sp, #16
+     63c:	f240 3329 	movw	r3, #809	; 0x329
+     640:	f2c0 0300 	movt	r3, #0
+     644:	4798      	blx	r3
+     646:	9803      	ldr	r0, [sp, #12]
+     648:	b04b      	add	sp, #300	; 0x12c
+     64a:	bc3c      	pop	{r2, r3, r4, r5}
+     64c:	4690      	mov	r8, r2
+     64e:	4699      	mov	r9, r3
+        len = aes_test_ctr_len[u];
+     650:	46a2      	mov	sl, r4
+     652:	46ab      	mov	fp, r5
+     654:	bdf0      	pop	{r4, r5, r6, r7, pc}
+	...
+
+00000658 <mbedtls_internal_aes_encrypt>:
+     658:	b5f0      	push	{r4, r5, r6, r7, lr}
+     65a:	46de      	mov	lr, fp
+     65c:	4657      	mov	r7, sl
+     65e:	464e      	mov	r6, r9
+        if( mode == MBEDTLS_AES_DECRYPT )
+     660:	4645      	mov	r5, r8
+     662:	b5e0      	push	{r5, r6, r7, lr}
+     664:	b085      	sub	sp, #20
+     666:	4691      	mov	r9, r2
+     668:	6846      	ldr	r6, [r0, #4]
+            memcpy( buf, aes_test_ctr_ct[u], len );
+     66a:	784c      	ldrb	r4, [r1, #1]
+     66c:	0224      	lsls	r4, r4, #8
+     66e:	788b      	ldrb	r3, [r1, #2]
+     670:	041b      	lsls	r3, r3, #16
+     672:	431c      	orrs	r4, r3
+     674:	780b      	ldrb	r3, [r1, #0]
+     676:	431c      	orrs	r4, r3
+     678:	78cb      	ldrb	r3, [r1, #3]
+     67a:	061b      	lsls	r3, r3, #24
+     67c:	431c      	orrs	r4, r3
+     67e:	6833      	ldr	r3, [r6, #0]
+     680:	405c      	eors	r4, r3
+     682:	794b      	ldrb	r3, [r1, #5]
+            aes_tests = aes_test_ctr_pt[u];
+     684:	021b      	lsls	r3, r3, #8
+            aes_tests = aes_test_ctr_ct[u];
+        }
+
+        ret = mbedtls_aes_crypt_ctr( &ctx, len, &offset, nonce_counter,
+     686:	798a      	ldrb	r2, [r1, #6]
+     688:	0412      	lsls	r2, r2, #16
+     68a:	4313      	orrs	r3, r2
+     68c:	790a      	ldrb	r2, [r1, #4]
+     68e:	4313      	orrs	r3, r2
+     690:	79ca      	ldrb	r2, [r1, #7]
+     692:	0612      	lsls	r2, r2, #24
+     694:	4313      	orrs	r3, r2
+     696:	6872      	ldr	r2, [r6, #4]
+     698:	4053      	eors	r3, r2
+     69a:	7a4d      	ldrb	r5, [r1, #9]
+     69c:	022d      	lsls	r5, r5, #8
+     69e:	7a8a      	ldrb	r2, [r1, #10]
+     6a0:	0412      	lsls	r2, r2, #16
+                                     stream_block, buf, buf );
+        if( ret != 0 )
+     6a2:	4315      	orrs	r5, r2
+     6a4:	7a0a      	ldrb	r2, [r1, #8]
+     6a6:	4315      	orrs	r5, r2
+            goto exit;
+
+        if( memcmp( buf, aes_tests, len ) != 0 )
+     6a8:	7aca      	ldrb	r2, [r1, #11]
+     6aa:	0612      	lsls	r2, r2, #24
+     6ac:	4315      	orrs	r5, r2
+     6ae:	68b2      	ldr	r2, [r6, #8]
+     6b0:	4055      	eors	r5, r2
+     6b2:	7b4a      	ldrb	r2, [r1, #13]
+     6b4:	0212      	lsls	r2, r2, #8
+     6b6:	7b8f      	ldrb	r7, [r1, #14]
+     6b8:	043f      	lsls	r7, r7, #16
+     6ba:	433a      	orrs	r2, r7
+     6bc:	7b0f      	ldrb	r7, [r1, #12]
+     6be:	433a      	orrs	r2, r7
+        {
+            ret = 1;
+            goto exit;
+        }
+
+        if( verbose != 0 )
+     6c0:	7bc9      	ldrb	r1, [r1, #15]
+    for( i = 0; i < 6; i++ )
+     6c2:	0609      	lsls	r1, r1, #24
+     6c4:	4311      	orrs	r1, r2
+     6c6:	f240 0a10 	movw	sl, #16
+        mode = i & 1;
+     6ca:	44b2      	add	sl, r6
+     6cc:	68f2      	ldr	r2, [r6, #12]
+     6ce:	4051      	eors	r1, r2
+        if( verbose != 0 )
+     6d0:	6802      	ldr	r2, [r0, #0]
+     6d2:	1052      	asrs	r2, r2, #1
+            mbedtls_printf( "  AES-CTR-128 (%s): ",
+     6d4:	9202      	str	r2, [sp, #8]
+     6d6:	3a01      	subs	r2, #1
+     6d8:	4690      	mov	r8, r2
+     6da:	6936      	ldr	r6, [r6, #16]
+     6dc:	2a00      	cmp	r2, #0
+     6de:	dc00      	bgt.n	6e2 <mbedtls_internal_aes_encrypt+0x8a>
+     6e0:	e18c      	b.n	9fc <mbedtls_internal_aes_encrypt+0x3a4>
+     6e2:	46d4      	mov	ip, sl
+     6e4:	22ff      	movs	r2, #255	; 0xff
+     6e6:	4648      	mov	r0, r9
+            memcpy( buf, aes_test_ctr_pt[u], len );
+     6e8:	9003      	str	r0, [sp, #12]
+     6ea:	0016      	movs	r6, r2
+     6ec:	4026      	ands	r6, r4
+     6ee:	00b6      	lsls	r6, r6, #2
+     6f0:	f642 40b8 	movw	r0, #11448	; 0x2cb8
+     6f4:	f2c0 0000 	movt	r0, #0
+     6f8:	4683      	mov	fp, r0
+            aes_tests = aes_test_ctr_ct[u];
+     6fa:	445e      	add	r6, fp
+     6fc:	0e08      	lsrs	r0, r1, #24
+     6fe:	0080      	lsls	r0, r0, #2
+     700:	f243 07b8 	movw	r7, #12472	; 0x30b8
+     704:	f2c0 0700 	movt	r7, #0
+            mbedtls_printf( "passed\n" );
+     708:	46bb      	mov	fp, r7
+     70a:	4458      	add	r0, fp
+     70c:	6ab6      	ldr	r6, [r6, #40]	; 0x28
+     70e:	6a80      	ldr	r0, [r0, #40]	; 0x28
+     710:	4046      	eors	r6, r0
+     712:	4660      	mov	r0, ip
+     714:	6800      	ldr	r0, [r0, #0]
+     716:	4046      	eors	r6, r0
+     718:	0a18      	lsrs	r0, r3, #8
+     71a:	4010      	ands	r0, r2
+     71c:	0080      	lsls	r0, r0, #2
+    }
+
+    if( verbose != 0 )
+     71e:	f243 47b8 	movw	r7, #13496	; 0x34b8
+    mbedtls_aes_xts_context ctx_xts;
+
+    /*
+     * XTS mode
+     */
+    mbedtls_aes_xts_init( &ctx_xts );
+     722:	f2c0 0700 	movt	r7, #0
+     726:	46bb      	mov	fp, r7
+     728:	4458      	add	r0, fp
+     72a:	6a80      	ldr	r0, [r0, #40]	; 0x28
+            mbedtls_printf( "  AES-XTS-128 (%s): ",
+                            ( mode == MBEDTLS_AES_DECRYPT ) ? "dec" : "enc" );
+
+        memset( key, 0, sizeof( key ) );
+        memcpy( key, aes_test_xts_key[u], 32 );
+        data_unit = aes_test_xts_data_unit[u];
+     72c:	4046      	eors	r6, r0
+     72e:	0c28      	lsrs	r0, r5, #16
+     730:	4010      	ands	r0, r2
+     732:	0080      	lsls	r0, r0, #2
+     734:	f643 07b8 	movw	r7, #14520	; 0x38b8
+     738:	f2c0 0700 	movt	r7, #0
+        else
+        {
+            ret = mbedtls_aes_xts_setkey_enc( &ctx_xts, key, 256 );
+            if( ret != 0)
+                goto exit;
+            memcpy( buf, aes_test_xts_pt32[u], len );
+     73c:	46bb      	mov	fp, r7
+     73e:	4458      	add	r0, fp
+     740:	6a80      	ldr	r0, [r0, #40]	; 0x28
+     742:	4046      	eors	r6, r0
+     744:	9601      	str	r6, [sp, #4]
+     746:	0010      	movs	r0, r2
+     748:	4018      	ands	r0, r3
+        mbedtls_printf( "\n" );
+     74a:	0080      	lsls	r0, r0, #2
+     74c:	f642 46b8 	movw	r6, #11448	; 0x2cb8
+     750:	f2c0 0600 	movt	r6, #0
+     754:	46b3      	mov	fp, r6
+     756:	4458      	add	r0, fp
+            mbedtls_printf( "  AES-XTS-128 (%s): ",
+     758:	0e27      	lsrs	r7, r4, #24
+     75a:	00bf      	lsls	r7, r7, #2
+     75c:	f243 06b8 	movw	r6, #12472	; 0x30b8
+     760:	f2c0 0600 	movt	r6, #0
+     764:	46b3      	mov	fp, r6
+     766:	445f      	add	r7, fp
+     768:	6a80      	ldr	r0, [r0, #40]	; 0x28
+     76a:	6abf      	ldr	r7, [r7, #40]	; 0x28
+     76c:	4078      	eors	r0, r7
+     76e:	4666      	mov	r6, ip
+     770:	6876      	ldr	r6, [r6, #4]
+        memcpy( key, aes_test_xts_key[u], 32 );
+     772:	4070      	eors	r0, r6
+     774:	0a2f      	lsrs	r7, r5, #8
+     776:	4017      	ands	r7, r2
+     778:	00bf      	lsls	r7, r7, #2
+     77a:	f243 46b8 	movw	r6, #13496	; 0x34b8
+     77e:	f2c0 0600 	movt	r6, #0
+     782:	46b3      	mov	fp, r6
+     784:	445f      	add	r7, fp
+     786:	6abf      	ldr	r7, [r7, #40]	; 0x28
+     788:	4078      	eors	r0, r7
+     78a:	0c0f      	lsrs	r7, r1, #16
+     78c:	4017      	ands	r7, r2
+     78e:	00bf      	lsls	r7, r7, #2
+     790:	f643 06b8 	movw	r6, #14520	; 0x38b8
+        data_unit = aes_test_xts_data_unit[u];
+     794:	f2c0 0600 	movt	r6, #0
+        if( mode == MBEDTLS_AES_DECRYPT )
+     798:	46b3      	mov	fp, r6
+     79a:	445f      	add	r7, fp
+            ret = mbedtls_aes_xts_setkey_dec( &ctx_xts, key, 256 );
+     79c:	6abf      	ldr	r7, [r7, #40]	; 0x28
+     79e:	4078      	eors	r0, r7
+     7a0:	0017      	movs	r7, r2
+     7a2:	402f      	ands	r7, r5
+     7a4:	00bf      	lsls	r7, r7, #2
+     7a6:	f642 46b8 	movw	r6, #11448	; 0x2cb8
+     7aa:	f2c0 0600 	movt	r6, #0
+     7ae:	46b3      	mov	fp, r6
+            if( ret != 0)
+     7b0:	44bb      	add	fp, r7
+     7b2:	0e1f      	lsrs	r7, r3, #24
+     7b4:	00bf      	lsls	r7, r7, #2
+            memcpy( buf, aes_test_xts_ct32[u], len );
+     7b6:	f243 06b8 	movw	r6, #12472	; 0x30b8
+     7ba:	f2c0 0600 	movt	r6, #0
+     7be:	46b1      	mov	r9, r6
+     7c0:	444f      	add	r7, r9
+     7c2:	465e      	mov	r6, fp
+     7c4:	6ab6      	ldr	r6, [r6, #40]	; 0x28
+     7c6:	6abf      	ldr	r7, [r7, #40]	; 0x28
+     7c8:	4077      	eors	r7, r6
+     7ca:	4666      	mov	r6, ip
+            aes_tests = aes_test_xts_pt32[u];
+     7cc:	68b6      	ldr	r6, [r6, #8]
+            aes_tests = aes_test_xts_ct32[u];
+        }
+
+
+        ret = mbedtls_aes_crypt_xts( &ctx_xts, mode, len, data_unit,
+     7ce:	4077      	eors	r7, r6
+     7d0:	0a0e      	lsrs	r6, r1, #8
+     7d2:	4016      	ands	r6, r2
+     7d4:	00b6      	lsls	r6, r6, #2
+     7d6:	46b3      	mov	fp, r6
+     7d8:	f243 46b8 	movw	r6, #13496	; 0x34b8
+     7dc:	f2c0 0600 	movt	r6, #0
+     7e0:	46b1      	mov	r9, r6
+     7e2:	44cb      	add	fp, r9
+     7e4:	465e      	mov	r6, fp
+     7e6:	6ab6      	ldr	r6, [r6, #40]	; 0x28
+                                     buf, buf );
+        if( ret != 0 )
+     7e8:	4077      	eors	r7, r6
+     7ea:	0c26      	lsrs	r6, r4, #16
+            goto exit;
+
+        if( memcmp( buf, aes_tests, len ) != 0 )
+     7ec:	4016      	ands	r6, r2
+     7ee:	00b6      	lsls	r6, r6, #2
+     7f0:	46b3      	mov	fp, r6
+     7f2:	f643 06b8 	movw	r6, #14520	; 0x38b8
+     7f6:	f2c0 0600 	movt	r6, #0
+     7fa:	46b1      	mov	r9, r6
+     7fc:	44cb      	add	fp, r9
+     7fe:	465e      	mov	r6, fp
+     800:	6ab6      	ldr	r6, [r6, #40]	; 0x28
+        {
+            ret = 1;
+            goto exit;
+        }
+
+        if( verbose != 0 )
+     802:	4077      	eors	r7, r6
+     804:	4011      	ands	r1, r2
+    for( i = 0; i < num_tests << 1; i++ )
+     806:	0089      	lsls	r1, r1, #2
+     808:	f642 46b8 	movw	r6, #11448	; 0x2cb8
+        u = i >> 1;
+     80c:	f2c0 0600 	movt	r6, #0
+        mode = i & 1;
+     810:	46b1      	mov	r9, r6
+        if( verbose != 0 )
+     812:	4449      	add	r1, r9
+     814:	0e2d      	lsrs	r5, r5, #24
+     816:	00ad      	lsls	r5, r5, #2
+            mbedtls_printf( "  AES-XTS-128 (%s): ",
+     818:	f243 06b8 	movw	r6, #12472	; 0x30b8
+     81c:	f2c0 0600 	movt	r6, #0
+     820:	46b1      	mov	r9, r6
+     822:	444d      	add	r5, r9
+     824:	6a89      	ldr	r1, [r1, #40]	; 0x28
+            ret = mbedtls_aes_xts_setkey_enc( &ctx_xts, key, 256 );
+     826:	6aad      	ldr	r5, [r5, #40]	; 0x28
+     828:	4069      	eors	r1, r5
+     82a:	4665      	mov	r5, ip
+     82c:	68ed      	ldr	r5, [r5, #12]
+     82e:	4069      	eors	r1, r5
+     830:	0a24      	lsrs	r4, r4, #8
+     832:	4014      	ands	r4, r2
+     834:	00a4      	lsls	r4, r4, #2
+     836:	f243 45b8 	movw	r5, #13496	; 0x34b8
+            if( ret != 0)
+     83a:	f2c0 0500 	movt	r5, #0
+            memcpy( buf, aes_test_xts_pt32[u], len );
+     83e:	46a9      	mov	r9, r5
+     840:	444c      	add	r4, r9
+     842:	6aa4      	ldr	r4, [r4, #40]	; 0x28
+     844:	4061      	eors	r1, r4
+     846:	0c1b      	lsrs	r3, r3, #16
+     848:	4013      	ands	r3, r2
+     84a:	009b      	lsls	r3, r3, #2
+     84c:	f643 04b8 	movw	r4, #14520	; 0x38b8
+     850:	f2c0 0400 	movt	r4, #0
+            aes_tests = aes_test_xts_ct32[u];
+     854:	46a1      	mov	r9, r4
+     856:	444b      	add	r3, r9
+     858:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+            mbedtls_printf( "passed\n" );
+     85a:	4059      	eors	r1, r3
+     85c:	0014      	movs	r4, r2
+     85e:	9e01      	ldr	r6, [sp, #4]
+     860:	4034      	ands	r4, r6
+     862:	00a4      	lsls	r4, r4, #2
+     864:	f642 43b8 	movw	r3, #11448	; 0x2cb8
+     868:	f2c0 0300 	movt	r3, #0
+     86c:	4699      	mov	r9, r3
+    }
+
+    if( verbose != 0 )
+     86e:	444c      	add	r4, r9
+     870:	0e0b      	lsrs	r3, r1, #24
+        mbedtls_printf( "\n" );
+
+    mbedtls_aes_xts_free( &ctx_xts );
+     872:	009b      	lsls	r3, r3, #2
+     874:	f243 05b8 	movw	r5, #12472	; 0x30b8
+     878:	f2c0 0500 	movt	r5, #0
+     87c:	46a9      	mov	r9, r5
+     87e:	444b      	add	r3, r9
+        mbedtls_printf( "\n" );
+     880:	6aa4      	ldr	r4, [r4, #40]	; 0x28
+     882:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+     884:	405c      	eors	r4, r3
+     886:	4663      	mov	r3, ip
+     888:	691b      	ldr	r3, [r3, #16]
+     88a:	405c      	eors	r4, r3
+     88c:	0a03      	lsrs	r3, r0, #8
+            ret = 1;
+     88e:	4013      	ands	r3, r2
+#endif /* MBEDTLS_CIPHER_MODE_XTS */
+
+    ret = 0;
+
+exit:
+    if( ret != 0 && verbose != 0 )
+     890:	009b      	lsls	r3, r3, #2
+     892:	f243 45b8 	movw	r5, #13496	; 0x34b8
+     896:	f2c0 0500 	movt	r5, #0
+     89a:	46a9      	mov	r9, r5
+     89c:	444b      	add	r3, r9
+        mbedtls_printf( "failed\n" );
+
+    mbedtls_aes_free( &ctx );
+     89e:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+     8a0:	405c      	eors	r4, r3
+     8a2:	0c3b      	lsrs	r3, r7, #16
+     8a4:	4013      	ands	r3, r2
+     8a6:	009b      	lsls	r3, r3, #2
+     8a8:	f643 05b8 	movw	r5, #14520	; 0x38b8
+
+    return( ret );
+}
+     8ac:	f2c0 0500 	movt	r5, #0
+     8b0:	46a9      	mov	r9, r5
+     8b2:	444b      	add	r3, r9
+     8b4:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+     8b6:	405c      	eors	r4, r3
+     8b8:	0013      	movs	r3, r2
+     8ba:	4003      	ands	r3, r0
+     8bc:	009b      	lsls	r3, r3, #2
+     8be:	f642 45b8 	movw	r5, #11448	; 0x2cb8
+     8c2:	f2c0 0500 	movt	r5, #0
+     8c6:	46a9      	mov	r9, r5
+     8c8:	444b      	add	r3, r9
+     8ca:	0e35      	lsrs	r5, r6, #24
+     8cc:	00ad      	lsls	r5, r5, #2
+     8ce:	f243 06b8 	movw	r6, #12472	; 0x30b8
+     8d2:	f2c0 0600 	movt	r6, #0
+     8d6:	46b1      	mov	r9, r6
+     8d8:	444d      	add	r5, r9
+     8da:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+     8dc:	6aad      	ldr	r5, [r5, #40]	; 0x28
+     8de:	406b      	eors	r3, r5
+     8e0:	4665      	mov	r5, ip
+     8e2:	696d      	ldr	r5, [r5, #20]
+     8e4:	406b      	eors	r3, r5
+     8e6:	0a3d      	lsrs	r5, r7, #8
+     8e8:	4015      	ands	r5, r2
+        mbedtls_printf( "failed\n" );
+     8ea:	00ad      	lsls	r5, r5, #2
+     8ec:	f243 46b8 	movw	r6, #13496	; 0x34b8
+     8f0:	f2c0 0600 	movt	r6, #0
+     8f4:	46b1      	mov	r9, r6
+     8f6:	444d      	add	r5, r9
+     8f8:	6aad      	ldr	r5, [r5, #40]	; 0x28
+     8fa:	406b      	eors	r3, r5
+     8fc:	0c0d      	lsrs	r5, r1, #16
+            ret = 1;
+     8fe:	4015      	ands	r5, r2
+     900:	00ad      	lsls	r5, r5, #2
+            ret = 1;
+     902:	f643 06b8 	movw	r6, #14520	; 0x38b8
+     906:	f2c0 0600 	movt	r6, #0
+            ret = 1;
+     90a:	46b1      	mov	r9, r6
+     90c:	444d      	add	r5, r9
+            ret = 1;
+     90e:	6aad      	ldr	r5, [r5, #40]	; 0x28
+     910:	406b      	eors	r3, r5
+     912:	0015      	movs	r5, r2
+            ret = 1;
+     914:	403d      	ands	r5, r7
+     916:	00ad      	lsls	r5, r5, #2
+        AES_FROUND( X0, X1, X2, X3, Y0, Y1, Y2, Y3 );
+     918:	f642 46b8 	movw	r6, #11448	; 0x2cb8
+     91c:	f2c0 0600 	movt	r6, #0
+     920:	46b3      	mov	fp, r6
+     922:	44ab      	add	fp, r5
+     924:	0e05      	lsrs	r5, r0, #24
+     926:	00ad      	lsls	r5, r5, #2
+     928:	f243 06b8 	movw	r6, #12472	; 0x30b8
+     92c:	f2c0 0600 	movt	r6, #0
+     930:	46b1      	mov	r9, r6
+     932:	444d      	add	r5, r9
+     934:	465e      	mov	r6, fp
+     936:	6ab6      	ldr	r6, [r6, #40]	; 0x28
+     938:	6aad      	ldr	r5, [r5, #40]	; 0x28
+     93a:	4075      	eors	r5, r6
+     93c:	4666      	mov	r6, ip
+     93e:	69b6      	ldr	r6, [r6, #24]
+     940:	4075      	eors	r5, r6
+     942:	0a0e      	lsrs	r6, r1, #8
+     944:	4016      	ands	r6, r2
+     946:	00b6      	lsls	r6, r6, #2
+     948:	46b3      	mov	fp, r6
+     94a:	f243 46b8 	movw	r6, #13496	; 0x34b8
+     94e:	f2c0 0600 	movt	r6, #0
+     952:	46b1      	mov	r9, r6
+     954:	44cb      	add	fp, r9
+     956:	465e      	mov	r6, fp
+     958:	6ab6      	ldr	r6, [r6, #40]	; 0x28
+     95a:	4075      	eors	r5, r6
+     95c:	9e01      	ldr	r6, [sp, #4]
+     95e:	0c36      	lsrs	r6, r6, #16
+     960:	4016      	ands	r6, r2
+     962:	00b6      	lsls	r6, r6, #2
+     964:	46b3      	mov	fp, r6
+     966:	f643 06b8 	movw	r6, #14520	; 0x38b8
+     96a:	f2c0 0600 	movt	r6, #0
+     96e:	46b1      	mov	r9, r6
+     970:	44cb      	add	fp, r9
+     972:	465e      	mov	r6, fp
+     974:	6ab6      	ldr	r6, [r6, #40]	; 0x28
+     976:	4075      	eors	r5, r6
+     978:	4011      	ands	r1, r2
+     97a:	0089      	lsls	r1, r1, #2
+     97c:	f642 46b8 	movw	r6, #11448	; 0x2cb8
+     980:	f2c0 0600 	movt	r6, #0
+     984:	46b1      	mov	r9, r6
+     986:	4449      	add	r1, r9
+     988:	0e3f      	lsrs	r7, r7, #24
+     98a:	00bf      	lsls	r7, r7, #2
+     98c:	f243 06b8 	movw	r6, #12472	; 0x30b8
+     990:	f2c0 0600 	movt	r6, #0
+     994:	46b1      	mov	r9, r6
+     996:	444f      	add	r7, r9
+     998:	6a89      	ldr	r1, [r1, #40]	; 0x28
+     99a:	6abf      	ldr	r7, [r7, #40]	; 0x28
+     99c:	4079      	eors	r1, r7
+     99e:	4666      	mov	r6, ip
+     9a0:	69f6      	ldr	r6, [r6, #28]
+     9a2:	4071      	eors	r1, r6
+     9a4:	9e01      	ldr	r6, [sp, #4]
+     9a6:	0a36      	lsrs	r6, r6, #8
+     9a8:	4016      	ands	r6, r2
+     9aa:	00b6      	lsls	r6, r6, #2
+     9ac:	f243 47b8 	movw	r7, #13496	; 0x34b8
+     9b0:	f2c0 0700 	movt	r7, #0
+     9b4:	46b9      	mov	r9, r7
+     9b6:	444e      	add	r6, r9
+     9b8:	6ab6      	ldr	r6, [r6, #40]	; 0x28
+     9ba:	4071      	eors	r1, r6
+     9bc:	0c00      	lsrs	r0, r0, #16
+     9be:	4010      	ands	r0, r2
+     9c0:	0080      	lsls	r0, r0, #2
+     9c2:	f643 06b8 	movw	r6, #14520	; 0x38b8
+     9c6:	f2c0 0600 	movt	r6, #0
+     9ca:	46b1      	mov	r9, r6
+     9cc:	4448      	add	r0, r9
+     9ce:	6a80      	ldr	r0, [r0, #40]	; 0x28
+     9d0:	4041      	eors	r1, r0
+    for( i = ( ctx->nr >> 1 ) - 1; i > 0; i-- )
+     9d2:	2001      	movs	r0, #1
+     9d4:	4240      	negs	r0, r0
+     9d6:	4681      	mov	r9, r0
+     9d8:	44c8      	add	r8, r9
+        AES_FROUND( X0, X1, X2, X3, Y0, Y1, Y2, Y3 );
+     9da:	4660      	mov	r0, ip
+     9dc:	6a06      	ldr	r6, [r0, #32]
+     9de:	f240 0920 	movw	r9, #32
+     9e2:	44cc      	add	ip, r9
+    for( i = ( ctx->nr >> 1 ) - 1; i > 0; i-- )
+     9e4:	4640      	mov	r0, r8
+     9e6:	2800      	cmp	r0, #0
+     9e8:	d000      	beq.n	9ec <mbedtls_internal_aes_encrypt+0x394>
+     9ea:	e67e      	b.n	6ea <mbedtls_internal_aes_encrypt+0x92>
+     9ec:	9a03      	ldr	r2, [sp, #12]
+     9ee:	4691      	mov	r9, r2
+     9f0:	9a02      	ldr	r2, [sp, #8]
+     9f2:	48a3      	ldr	r0, [pc, #652]	; (c80 <mbedtls_internal_aes_encrypt+0x628>)
+     9f4:	4684      	mov	ip, r0
+     9f6:	4462      	add	r2, ip
+     9f8:	0152      	lsls	r2, r2, #5
+     9fa:	4492      	add	sl, r2
+    AES_FROUND( Y0, Y1, Y2, Y3, X0, X1, X2, X3 );
+     9fc:	22ff      	movs	r2, #255	; 0xff
+     9fe:	0010      	movs	r0, r2
+     a00:	4020      	ands	r0, r4
+     a02:	0080      	lsls	r0, r0, #2
+     a04:	f642 47b8 	movw	r7, #11448	; 0x2cb8
+     a08:	f2c0 0700 	movt	r7, #0
+     a0c:	46bc      	mov	ip, r7
+     a0e:	4460      	add	r0, ip
+     a10:	4680      	mov	r8, r0
+     a12:	0e0f      	lsrs	r7, r1, #24
+     a14:	00bf      	lsls	r7, r7, #2
+     a16:	f243 00b8 	movw	r0, #12472	; 0x30b8
+     a1a:	f2c0 0000 	movt	r0, #0
+     a1e:	4684      	mov	ip, r0
+     a20:	4467      	add	r7, ip
+     a22:	4640      	mov	r0, r8
+     a24:	6a80      	ldr	r0, [r0, #40]	; 0x28
+     a26:	6abf      	ldr	r7, [r7, #40]	; 0x28
+     a28:	4078      	eors	r0, r7
+     a2a:	4070      	eors	r0, r6
+     a2c:	0a1e      	lsrs	r6, r3, #8
+     a2e:	4016      	ands	r6, r2
+     a30:	00b6      	lsls	r6, r6, #2
+     a32:	f243 47b8 	movw	r7, #13496	; 0x34b8
+     a36:	f2c0 0700 	movt	r7, #0
+     a3a:	46bc      	mov	ip, r7
+     a3c:	4466      	add	r6, ip
+     a3e:	6ab6      	ldr	r6, [r6, #40]	; 0x28
+     a40:	4070      	eors	r0, r6
+     a42:	0c2e      	lsrs	r6, r5, #16
+     a44:	4016      	ands	r6, r2
+     a46:	00b6      	lsls	r6, r6, #2
+     a48:	f643 07b8 	movw	r7, #14520	; 0x38b8
+     a4c:	f2c0 0700 	movt	r7, #0
+     a50:	46bc      	mov	ip, r7
+     a52:	4466      	add	r6, ip
+     a54:	6ab6      	ldr	r6, [r6, #40]	; 0x28
+     a56:	4070      	eors	r0, r6
+     a58:	4683      	mov	fp, r0
+     a5a:	0016      	movs	r6, r2
+     a5c:	401e      	ands	r6, r3
+     a5e:	00b6      	lsls	r6, r6, #2
+     a60:	f642 40b8 	movw	r0, #11448	; 0x2cb8
+     a64:	f2c0 0000 	movt	r0, #0
+     a68:	4684      	mov	ip, r0
+     a6a:	4466      	add	r6, ip
+     a6c:	0e27      	lsrs	r7, r4, #24
+     a6e:	00bf      	lsls	r7, r7, #2
+     a70:	f243 00b8 	movw	r0, #12472	; 0x30b8
+     a74:	f2c0 0000 	movt	r0, #0
+     a78:	4684      	mov	ip, r0
+     a7a:	4467      	add	r7, ip
+     a7c:	6ab6      	ldr	r6, [r6, #40]	; 0x28
+     a7e:	6abf      	ldr	r7, [r7, #40]	; 0x28
+     a80:	407e      	eors	r6, r7
+     a82:	4650      	mov	r0, sl
+     a84:	6840      	ldr	r0, [r0, #4]
+     a86:	4046      	eors	r6, r0
+     a88:	0a2f      	lsrs	r7, r5, #8
+     a8a:	4017      	ands	r7, r2
+     a8c:	00bf      	lsls	r7, r7, #2
+     a8e:	f243 40b8 	movw	r0, #13496	; 0x34b8
+     a92:	f2c0 0000 	movt	r0, #0
+     a96:	4684      	mov	ip, r0
+     a98:	4467      	add	r7, ip
+     a9a:	6abf      	ldr	r7, [r7, #40]	; 0x28
+     a9c:	407e      	eors	r6, r7
+     a9e:	0c0f      	lsrs	r7, r1, #16
+     aa0:	4017      	ands	r7, r2
+     aa2:	00bf      	lsls	r7, r7, #2
+     aa4:	f643 00b8 	movw	r0, #14520	; 0x38b8
+     aa8:	f2c0 0000 	movt	r0, #0
+     aac:	4684      	mov	ip, r0
+     aae:	4467      	add	r7, ip
+     ab0:	6abf      	ldr	r7, [r7, #40]	; 0x28
+     ab2:	407e      	eors	r6, r7
+     ab4:	0017      	movs	r7, r2
+     ab6:	402f      	ands	r7, r5
+     ab8:	00bf      	lsls	r7, r7, #2
+     aba:	f642 40b8 	movw	r0, #11448	; 0x2cb8
+     abe:	f2c0 0000 	movt	r0, #0
+     ac2:	4684      	mov	ip, r0
+     ac4:	44bc      	add	ip, r7
+     ac6:	0e1f      	lsrs	r7, r3, #24
+     ac8:	00bf      	lsls	r7, r7, #2
+     aca:	f243 00b8 	movw	r0, #12472	; 0x30b8
+     ace:	f2c0 0000 	movt	r0, #0
+     ad2:	4680      	mov	r8, r0
+     ad4:	4447      	add	r7, r8
+     ad6:	4660      	mov	r0, ip
+     ad8:	6a80      	ldr	r0, [r0, #40]	; 0x28
+     ada:	6abf      	ldr	r7, [r7, #40]	; 0x28
+     adc:	4047      	eors	r7, r0
+     ade:	4650      	mov	r0, sl
+     ae0:	6880      	ldr	r0, [r0, #8]
+     ae2:	4047      	eors	r7, r0
+     ae4:	0a08      	lsrs	r0, r1, #8
+     ae6:	4010      	ands	r0, r2
+     ae8:	0080      	lsls	r0, r0, #2
+     aea:	4684      	mov	ip, r0
+     aec:	f243 40b8 	movw	r0, #13496	; 0x34b8
+     af0:	f2c0 0000 	movt	r0, #0
+     af4:	4680      	mov	r8, r0
+     af6:	44c4      	add	ip, r8
+     af8:	4660      	mov	r0, ip
+     afa:	6a80      	ldr	r0, [r0, #40]	; 0x28
+     afc:	4047      	eors	r7, r0
+     afe:	0c20      	lsrs	r0, r4, #16
+     b00:	4010      	ands	r0, r2
+     b02:	0080      	lsls	r0, r0, #2
+     b04:	4684      	mov	ip, r0
+     b06:	f643 00b8 	movw	r0, #14520	; 0x38b8
+     b0a:	f2c0 0000 	movt	r0, #0
+     b0e:	4680      	mov	r8, r0
+     b10:	44c4      	add	ip, r8
+     b12:	4660      	mov	r0, ip
+     b14:	6a80      	ldr	r0, [r0, #40]	; 0x28
+     b16:	4047      	eors	r7, r0
+     b18:	4011      	ands	r1, r2
+     b1a:	0089      	lsls	r1, r1, #2
+     b1c:	f642 40b8 	movw	r0, #11448	; 0x2cb8
+     b20:	f2c0 0000 	movt	r0, #0
+     b24:	4684      	mov	ip, r0
+     b26:	4461      	add	r1, ip
+     b28:	0e2d      	lsrs	r5, r5, #24
+     b2a:	00ad      	lsls	r5, r5, #2
+     b2c:	f243 00b8 	movw	r0, #12472	; 0x30b8
+     b30:	f2c0 0000 	movt	r0, #0
+     b34:	4684      	mov	ip, r0
+     b36:	4465      	add	r5, ip
+     b38:	6a89      	ldr	r1, [r1, #40]	; 0x28
+     b3a:	6aad      	ldr	r5, [r5, #40]	; 0x28
+     b3c:	4069      	eors	r1, r5
+     b3e:	4650      	mov	r0, sl
+     b40:	68c0      	ldr	r0, [r0, #12]
+     b42:	4041      	eors	r1, r0
+     b44:	0a24      	lsrs	r4, r4, #8
+     b46:	4014      	ands	r4, r2
+     b48:	00a4      	lsls	r4, r4, #2
+     b4a:	f243 40b8 	movw	r0, #13496	; 0x34b8
+     b4e:	f2c0 0000 	movt	r0, #0
+     b52:	4684      	mov	ip, r0
+     b54:	4464      	add	r4, ip
+     b56:	6aa4      	ldr	r4, [r4, #40]	; 0x28
+     b58:	4061      	eors	r1, r4
+     b5a:	0c1b      	lsrs	r3, r3, #16
+     b5c:	4013      	ands	r3, r2
+     b5e:	009b      	lsls	r3, r3, #2
+     b60:	4443      	add	r3, r8
+     b62:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+     b64:	4059      	eors	r1, r3
+     b66:	468c      	mov	ip, r1
+            ( (uint32_t) FSb[ ( Y0       ) & 0xFF ]       ) ^
+     b68:	f641 33b8 	movw	r3, #7096	; 0x1bb8
+     b6c:	f2c0 0300 	movt	r3, #0
+     b70:	0011      	movs	r1, r2
+     b72:	4658      	mov	r0, fp
+     b74:	4001      	ands	r1, r0
+     b76:	3328      	adds	r3, #40	; 0x28
+     b78:	5c5d      	ldrb	r5, [r3, r1]
+    X0 = *RK++ ^ \
+     b7a:	4651      	mov	r1, sl
+     b7c:	6909      	ldr	r1, [r1, #16]
+     b7e:	404d      	eors	r5, r1
+            ( (uint32_t) FSb[ ( Y3 >> 24 ) & 0xFF ] << 24 );
+     b80:	4661      	mov	r1, ip
+     b82:	0e09      	lsrs	r1, r1, #24
+     b84:	5c59      	ldrb	r1, [r3, r1]
+     b86:	0609      	lsls	r1, r1, #24
+    X0 = *RK++ ^ \
+     b88:	404d      	eors	r5, r1
+            ( (uint32_t) FSb[ ( Y1 >>  8 ) & 0xFF ] <<  8 ) ^
+     b8a:	0a31      	lsrs	r1, r6, #8
+     b8c:	4011      	ands	r1, r2
+     b8e:	5c59      	ldrb	r1, [r3, r1]
+     b90:	0209      	lsls	r1, r1, #8
+    X0 = *RK++ ^ \
+     b92:	404d      	eors	r5, r1
+            ( (uint32_t) FSb[ ( Y2 >> 16 ) & 0xFF ] << 16 ) ^
+     b94:	0c39      	lsrs	r1, r7, #16
+     b96:	4011      	ands	r1, r2
+     b98:	5c59      	ldrb	r1, [r3, r1]
+     b9a:	0409      	lsls	r1, r1, #16
+    X0 = *RK++ ^ \
+     b9c:	404d      	eors	r5, r1
+            ( (uint32_t) FSb[ ( Y1       ) & 0xFF ]       ) ^
+     b9e:	0011      	movs	r1, r2
+     ba0:	4031      	ands	r1, r6
+     ba2:	5c5c      	ldrb	r4, [r3, r1]
+    X1 = *RK++ ^ \
+     ba4:	4651      	mov	r1, sl
+     ba6:	6949      	ldr	r1, [r1, #20]
+     ba8:	404c      	eors	r4, r1
+            ( (uint32_t) FSb[ ( Y0 >> 24 ) & 0xFF ] << 24 );
+     baa:	0e01      	lsrs	r1, r0, #24
+     bac:	5c59      	ldrb	r1, [r3, r1]
+     bae:	0609      	lsls	r1, r1, #24
+    X1 = *RK++ ^ \
+     bb0:	404c      	eors	r4, r1
+            ( (uint32_t) FSb[ ( Y2 >>  8 ) & 0xFF ] <<  8 ) ^
+     bb2:	0a39      	lsrs	r1, r7, #8
+     bb4:	4011      	ands	r1, r2
+     bb6:	5c59      	ldrb	r1, [r3, r1]
+     bb8:	0209      	lsls	r1, r1, #8
+    X1 = *RK++ ^ \
+     bba:	404c      	eors	r4, r1
+            ( (uint32_t) FSb[ ( Y3 >> 16 ) & 0xFF ] << 16 ) ^
+     bbc:	4661      	mov	r1, ip
+     bbe:	0c09      	lsrs	r1, r1, #16
+     bc0:	4011      	ands	r1, r2
+     bc2:	5c59      	ldrb	r1, [r3, r1]
+     bc4:	0409      	lsls	r1, r1, #16
+    X1 = *RK++ ^ \
+     bc6:	404c      	eors	r4, r1
+            ( (uint32_t) FSb[ ( Y2       ) & 0xFF ]       ) ^
+     bc8:	0011      	movs	r1, r2
+     bca:	4039      	ands	r1, r7
+     bcc:	5c59      	ldrb	r1, [r3, r1]
+    X2 = *RK++ ^ \
+     bce:	4650      	mov	r0, sl
+     bd0:	6980      	ldr	r0, [r0, #24]
+     bd2:	4048      	eors	r0, r1
+            ( (uint32_t) FSb[ ( Y1 >> 24 ) & 0xFF ] << 24 );
+     bd4:	0e31      	lsrs	r1, r6, #24
+     bd6:	5c59      	ldrb	r1, [r3, r1]
+     bd8:	0609      	lsls	r1, r1, #24
+    X2 = *RK++ ^ \
+     bda:	4041      	eors	r1, r0
+            ( (uint32_t) FSb[ ( Y3 >>  8 ) & 0xFF ] <<  8 ) ^
+     bdc:	4660      	mov	r0, ip
+     bde:	0a00      	lsrs	r0, r0, #8
+     be0:	4010      	ands	r0, r2
+     be2:	5c18      	ldrb	r0, [r3, r0]
+     be4:	0200      	lsls	r0, r0, #8
+    X2 = *RK++ ^ \
+     be6:	4041      	eors	r1, r0
+            ( (uint32_t) FSb[ ( Y0 >> 16 ) & 0xFF ] << 16 ) ^
+     be8:	4658      	mov	r0, fp
+     bea:	0c00      	lsrs	r0, r0, #16
+     bec:	4010      	ands	r0, r2
+     bee:	5c18      	ldrb	r0, [r3, r0]
+     bf0:	0400      	lsls	r0, r0, #16
+    X2 = *RK++ ^ \
+     bf2:	4041      	eors	r1, r0
+     bf4:	9101      	str	r1, [sp, #4]
+            ( (uint32_t) FSb[ ( Y3       ) & 0xFF ]       ) ^
+     bf6:	4660      	mov	r0, ip
+     bf8:	4010      	ands	r0, r2
+     bfa:	5c18      	ldrb	r0, [r3, r0]
+     bfc:	4684      	mov	ip, r0
+    X3 = *RK++ ^ \
+     bfe:	4650      	mov	r0, sl
+     c00:	69c0      	ldr	r0, [r0, #28]
+     c02:	4680      	mov	r8, r0
+     c04:	4660      	mov	r0, ip
+     c06:	4641      	mov	r1, r8
+     c08:	4048      	eors	r0, r1
+            ( (uint32_t) FSb[ ( Y2 >> 24 ) & 0xFF ] << 24 );
+     c0a:	0e3f      	lsrs	r7, r7, #24
+     c0c:	5ddf      	ldrb	r7, [r3, r7]
+     c0e:	063f      	lsls	r7, r7, #24
+    X3 = *RK++ ^ \
+     c10:	4047      	eors	r7, r0
+            ( (uint32_t) FSb[ ( Y0 >>  8 ) & 0xFF ] <<  8 ) ^
+     c12:	4658      	mov	r0, fp
+     c14:	0a00      	lsrs	r0, r0, #8
+     c16:	4010      	ands	r0, r2
+     c18:	5c18      	ldrb	r0, [r3, r0]
+     c1a:	0200      	lsls	r0, r0, #8
+    X3 = *RK++ ^ \
+     c1c:	4078      	eors	r0, r7
+            ( (uint32_t) FSb[ ( Y1 >> 16 ) & 0xFF ] << 16 ) ^
+     c1e:	0c36      	lsrs	r6, r6, #16
+     c20:	4032      	ands	r2, r6
+     c22:	5c9b      	ldrb	r3, [r3, r2]
+     c24:	041b      	lsls	r3, r3, #16
+    X3 = *RK++ ^ \
+     c26:	4043      	eors	r3, r0
+    PUT_UINT32_LE( X0, output,  0 );
+     c28:	464a      	mov	r2, r9
+     c2a:	7015      	strb	r5, [r2, #0]
+     c2c:	0a2a      	lsrs	r2, r5, #8
+     c2e:	4649      	mov	r1, r9
+     c30:	704a      	strb	r2, [r1, #1]
+     c32:	0c2a      	lsrs	r2, r5, #16
+     c34:	708a      	strb	r2, [r1, #2]
+     c36:	0e2d      	lsrs	r5, r5, #24
+     c38:	70cd      	strb	r5, [r1, #3]
+    PUT_UINT32_LE( X1, output,  4 );
+     c3a:	710c      	strb	r4, [r1, #4]
+     c3c:	0a22      	lsrs	r2, r4, #8
+     c3e:	714a      	strb	r2, [r1, #5]
+     c40:	0c22      	lsrs	r2, r4, #16
+     c42:	718a      	strb	r2, [r1, #6]
+     c44:	0e24      	lsrs	r4, r4, #24
+     c46:	464a      	mov	r2, r9
+     c48:	71cc      	strb	r4, [r1, #7]
+    PUT_UINT32_LE( X2, output,  8 );
+     c4a:	9801      	ldr	r0, [sp, #4]
+     c4c:	7210      	strb	r0, [r2, #8]
+     c4e:	0a02      	lsrs	r2, r0, #8
+     c50:	4649      	mov	r1, r9
+     c52:	724a      	strb	r2, [r1, #9]
+     c54:	0c02      	lsrs	r2, r0, #16
+     c56:	728a      	strb	r2, [r1, #10]
+     c58:	0e01      	lsrs	r1, r0, #24
+     c5a:	464a      	mov	r2, r9
+     c5c:	72d1      	strb	r1, [r2, #11]
+    PUT_UINT32_LE( X3, output, 12 );
+     c5e:	7313      	strb	r3, [r2, #12]
+     c60:	0a1a      	lsrs	r2, r3, #8
+     c62:	4649      	mov	r1, r9
+     c64:	734a      	strb	r2, [r1, #13]
+     c66:	0c1a      	lsrs	r2, r3, #16
+     c68:	738a      	strb	r2, [r1, #14]
+     c6a:	0e1b      	lsrs	r3, r3, #24
+     c6c:	73cb      	strb	r3, [r1, #15]
+}
+     c6e:	2000      	movs	r0, #0
+     c70:	b005      	add	sp, #20
+     c72:	bc3c      	pop	{r2, r3, r4, r5}
+     c74:	4690      	mov	r8, r2
+     c76:	4699      	mov	r9, r3
+     c78:	46a2      	mov	sl, r4
+     c7a:	46ab      	mov	fp, r5
+     c7c:	bdf0      	pop	{r4, r5, r6, r7, pc}
+     c7e:	46c0      	nop			; (mov r8, r8)
+     c80:	07ffffff 	.word	0x07ffffff
+
+00000c84 <mbedtls_internal_aes_decrypt>:
+{
+     c84:	b5f0      	push	{r4, r5, r6, r7, lr}
+     c86:	46de      	mov	lr, fp
+     c88:	4657      	mov	r7, sl
+     c8a:	464e      	mov	r6, r9
+     c8c:	4645      	mov	r5, r8
+     c8e:	b5e0      	push	{r5, r6, r7, lr}
+     c90:	b085      	sub	sp, #20
+     c92:	4691      	mov	r9, r2
+    RK = ctx->rk;
+     c94:	6846      	ldr	r6, [r0, #4]
+    GET_UINT32_LE( X0, input,  0 ); X0 ^= *RK++;
+     c96:	784d      	ldrb	r5, [r1, #1]
+     c98:	022d      	lsls	r5, r5, #8
+     c9a:	788b      	ldrb	r3, [r1, #2]
+     c9c:	041b      	lsls	r3, r3, #16
+     c9e:	431d      	orrs	r5, r3
+     ca0:	780b      	ldrb	r3, [r1, #0]
+     ca2:	431d      	orrs	r5, r3
+     ca4:	78cb      	ldrb	r3, [r1, #3]
+     ca6:	061b      	lsls	r3, r3, #24
+     ca8:	431d      	orrs	r5, r3
+     caa:	6833      	ldr	r3, [r6, #0]
+     cac:	405d      	eors	r5, r3
+    GET_UINT32_LE( X1, input,  4 ); X1 ^= *RK++;
+     cae:	794b      	ldrb	r3, [r1, #5]
+     cb0:	021b      	lsls	r3, r3, #8
+     cb2:	798a      	ldrb	r2, [r1, #6]
+     cb4:	0412      	lsls	r2, r2, #16
+     cb6:	4313      	orrs	r3, r2
+     cb8:	790a      	ldrb	r2, [r1, #4]
+     cba:	4313      	orrs	r3, r2
+     cbc:	79ca      	ldrb	r2, [r1, #7]
+     cbe:	0612      	lsls	r2, r2, #24
+     cc0:	4313      	orrs	r3, r2
+     cc2:	6872      	ldr	r2, [r6, #4]
+     cc4:	4053      	eors	r3, r2
+    GET_UINT32_LE( X2, input,  8 ); X2 ^= *RK++;
+     cc6:	7a4c      	ldrb	r4, [r1, #9]
+     cc8:	0224      	lsls	r4, r4, #8
+     cca:	7a8a      	ldrb	r2, [r1, #10]
+     ccc:	0412      	lsls	r2, r2, #16
+     cce:	4314      	orrs	r4, r2
+     cd0:	7a0a      	ldrb	r2, [r1, #8]
+     cd2:	4314      	orrs	r4, r2
+     cd4:	7aca      	ldrb	r2, [r1, #11]
+     cd6:	0612      	lsls	r2, r2, #24
+     cd8:	4314      	orrs	r4, r2
+     cda:	68b2      	ldr	r2, [r6, #8]
+     cdc:	4054      	eors	r4, r2
+    GET_UINT32_LE( X3, input, 12 ); X3 ^= *RK++;
+     cde:	7b4a      	ldrb	r2, [r1, #13]
+     ce0:	0212      	lsls	r2, r2, #8
+     ce2:	7b8f      	ldrb	r7, [r1, #14]
+     ce4:	043f      	lsls	r7, r7, #16
+     ce6:	433a      	orrs	r2, r7
+     ce8:	7b0f      	ldrb	r7, [r1, #12]
+     cea:	433a      	orrs	r2, r7
+     cec:	7bc9      	ldrb	r1, [r1, #15]
+     cee:	0609      	lsls	r1, r1, #24
+     cf0:	4311      	orrs	r1, r2
+     cf2:	f240 0a10 	movw	sl, #16
+     cf6:	44b2      	add	sl, r6
+     cf8:	68f2      	ldr	r2, [r6, #12]
+     cfa:	4051      	eors	r1, r2
+    for( i = ( ctx->nr >> 1 ) - 1; i > 0; i-- )
+     cfc:	6802      	ldr	r2, [r0, #0]
+     cfe:	1052      	asrs	r2, r2, #1
+     d00:	9202      	str	r2, [sp, #8]
+     d02:	3a01      	subs	r2, #1
+     d04:	4690      	mov	r8, r2
+    GET_UINT32_LE( X3, input, 12 ); X3 ^= *RK++;
+     d06:	6930      	ldr	r0, [r6, #16]
+    for( i = ( ctx->nr >> 1 ) - 1; i > 0; i-- )
+     d08:	2a00      	cmp	r2, #0
+     d0a:	dc00      	bgt.n	d0e <mbedtls_internal_aes_decrypt+0x8a>
+     d0c:	e18f      	b.n	102e <mbedtls_internal_aes_decrypt+0x3aa>
+     d0e:	46d4      	mov	ip, sl
+        AES_RROUND( Y0, Y1, Y2, Y3, X0, X1, X2, X3 );
+     d10:	22ff      	movs	r2, #255	; 0xff
+     d12:	4648      	mov	r0, r9
+     d14:	9003      	str	r0, [sp, #12]
+     d16:	0016      	movs	r6, r2
+     d18:	402e      	ands	r6, r5
+     d1a:	00b6      	lsls	r6, r6, #2
+     d1c:	f641 40b8 	movw	r0, #7352	; 0x1cb8
+     d20:	f2c0 0000 	movt	r0, #0
+     d24:	4683      	mov	fp, r0
+     d26:	445e      	add	r6, fp
+     d28:	0e18      	lsrs	r0, r3, #24
+     d2a:	0080      	lsls	r0, r0, #2
+     d2c:	f242 07b8 	movw	r7, #8376	; 0x20b8
+     d30:	f2c0 0700 	movt	r7, #0
+     d34:	46bb      	mov	fp, r7
+     d36:	4458      	add	r0, fp
+     d38:	6ab7      	ldr	r7, [r6, #40]	; 0x28
+     d3a:	6a80      	ldr	r0, [r0, #40]	; 0x28
+     d3c:	4047      	eors	r7, r0
+     d3e:	4660      	mov	r0, ip
+     d40:	6800      	ldr	r0, [r0, #0]
+     d42:	4047      	eors	r7, r0
+     d44:	0a08      	lsrs	r0, r1, #8
+     d46:	4010      	ands	r0, r2
+     d48:	0080      	lsls	r0, r0, #2
+     d4a:	f242 46b8 	movw	r6, #9400	; 0x24b8
+     d4e:	f2c0 0600 	movt	r6, #0
+     d52:	46b3      	mov	fp, r6
+     d54:	4458      	add	r0, fp
+     d56:	6a80      	ldr	r0, [r0, #40]	; 0x28
+     d58:	4047      	eors	r7, r0
+     d5a:	0c20      	lsrs	r0, r4, #16
+     d5c:	4010      	ands	r0, r2
+     d5e:	0080      	lsls	r0, r0, #2
+     d60:	f642 06b8 	movw	r6, #10424	; 0x28b8
+     d64:	f2c0 0600 	movt	r6, #0
+     d68:	46b3      	mov	fp, r6
+     d6a:	4458      	add	r0, fp
+     d6c:	6a80      	ldr	r0, [r0, #40]	; 0x28
+     d6e:	4047      	eors	r7, r0
+     d70:	9701      	str	r7, [sp, #4]
+     d72:	0010      	movs	r0, r2
+     d74:	4018      	ands	r0, r3
+     d76:	0080      	lsls	r0, r0, #2
+     d78:	f641 46b8 	movw	r6, #7352	; 0x1cb8
+     d7c:	f2c0 0600 	movt	r6, #0
+     d80:	46b3      	mov	fp, r6
+     d82:	4458      	add	r0, fp
+     d84:	0e26      	lsrs	r6, r4, #24
+     d86:	00b6      	lsls	r6, r6, #2
+     d88:	f242 07b8 	movw	r7, #8376	; 0x20b8
+     d8c:	f2c0 0700 	movt	r7, #0
+     d90:	46bb      	mov	fp, r7
+     d92:	445e      	add	r6, fp
+     d94:	6a80      	ldr	r0, [r0, #40]	; 0x28
+     d96:	6ab6      	ldr	r6, [r6, #40]	; 0x28
+     d98:	4070      	eors	r0, r6
+     d9a:	4666      	mov	r6, ip
+     d9c:	6876      	ldr	r6, [r6, #4]
+     d9e:	4070      	eors	r0, r6
+     da0:	0a2e      	lsrs	r6, r5, #8
+     da2:	4016      	ands	r6, r2
+     da4:	00b6      	lsls	r6, r6, #2
+     da6:	f242 47b8 	movw	r7, #9400	; 0x24b8
+     daa:	f2c0 0700 	movt	r7, #0
+     dae:	46bb      	mov	fp, r7
+     db0:	445e      	add	r6, fp
+     db2:	6ab6      	ldr	r6, [r6, #40]	; 0x28
+     db4:	4070      	eors	r0, r6
+     db6:	0c0e      	lsrs	r6, r1, #16
+     db8:	4016      	ands	r6, r2
+     dba:	00b6      	lsls	r6, r6, #2
+     dbc:	f642 07b8 	movw	r7, #10424	; 0x28b8
+     dc0:	f2c0 0700 	movt	r7, #0
+     dc4:	46bb      	mov	fp, r7
+     dc6:	445e      	add	r6, fp
+     dc8:	6ab6      	ldr	r6, [r6, #40]	; 0x28
+     dca:	4070      	eors	r0, r6
+     dcc:	0016      	movs	r6, r2
+     dce:	4026      	ands	r6, r4
+     dd0:	00b6      	lsls	r6, r6, #2
+     dd2:	f641 47b8 	movw	r7, #7352	; 0x1cb8
+     dd6:	f2c0 0700 	movt	r7, #0
+     dda:	46bb      	mov	fp, r7
+     ddc:	44b3      	add	fp, r6
+     dde:	0e0e      	lsrs	r6, r1, #24
+     de0:	00b6      	lsls	r6, r6, #2
+     de2:	f242 07b8 	movw	r7, #8376	; 0x20b8
+     de6:	f2c0 0700 	movt	r7, #0
+     dea:	46b9      	mov	r9, r7
+     dec:	444e      	add	r6, r9
+     dee:	465f      	mov	r7, fp
+     df0:	6abf      	ldr	r7, [r7, #40]	; 0x28
+     df2:	6ab6      	ldr	r6, [r6, #40]	; 0x28
+     df4:	407e      	eors	r6, r7
+     df6:	4667      	mov	r7, ip
+     df8:	68bf      	ldr	r7, [r7, #8]
+     dfa:	407e      	eors	r6, r7
+     dfc:	0a1f      	lsrs	r7, r3, #8
+     dfe:	4017      	ands	r7, r2
+     e00:	00bf      	lsls	r7, r7, #2
+     e02:	46bb      	mov	fp, r7
+     e04:	f242 47b8 	movw	r7, #9400	; 0x24b8
+     e08:	f2c0 0700 	movt	r7, #0
+     e0c:	46b9      	mov	r9, r7
+     e0e:	44cb      	add	fp, r9
+     e10:	465f      	mov	r7, fp
+     e12:	6abf      	ldr	r7, [r7, #40]	; 0x28
+     e14:	407e      	eors	r6, r7
+     e16:	0c2f      	lsrs	r7, r5, #16
+     e18:	4017      	ands	r7, r2
+     e1a:	00bf      	lsls	r7, r7, #2
+     e1c:	46bb      	mov	fp, r7
+     e1e:	f642 07b8 	movw	r7, #10424	; 0x28b8
+     e22:	f2c0 0700 	movt	r7, #0
+     e26:	46b9      	mov	r9, r7
+     e28:	44cb      	add	fp, r9
+     e2a:	465f      	mov	r7, fp
+     e2c:	6abf      	ldr	r7, [r7, #40]	; 0x28
+     e2e:	407e      	eors	r6, r7
+     e30:	4011      	ands	r1, r2
+     e32:	0089      	lsls	r1, r1, #2
+     e34:	f641 47b8 	movw	r7, #7352	; 0x1cb8
+     e38:	f2c0 0700 	movt	r7, #0
+     e3c:	46b9      	mov	r9, r7
+     e3e:	4449      	add	r1, r9
+     e40:	0e2d      	lsrs	r5, r5, #24
+     e42:	00ad      	lsls	r5, r5, #2
+     e44:	f242 07b8 	movw	r7, #8376	; 0x20b8
+     e48:	f2c0 0700 	movt	r7, #0
+     e4c:	46b9      	mov	r9, r7
+     e4e:	444d      	add	r5, r9
+     e50:	6a89      	ldr	r1, [r1, #40]	; 0x28
+     e52:	6aad      	ldr	r5, [r5, #40]	; 0x28
+     e54:	4069      	eors	r1, r5
+     e56:	4665      	mov	r5, ip
+     e58:	68ed      	ldr	r5, [r5, #12]
+     e5a:	4069      	eors	r1, r5
+     e5c:	0a24      	lsrs	r4, r4, #8
+     e5e:	4014      	ands	r4, r2
+     e60:	00a4      	lsls	r4, r4, #2
+     e62:	f242 45b8 	movw	r5, #9400	; 0x24b8
+     e66:	f2c0 0500 	movt	r5, #0
+     e6a:	46a9      	mov	r9, r5
+     e6c:	444c      	add	r4, r9
+     e6e:	6aa4      	ldr	r4, [r4, #40]	; 0x28
+     e70:	4061      	eors	r1, r4
+     e72:	0c1b      	lsrs	r3, r3, #16
+     e74:	4013      	ands	r3, r2
+     e76:	009b      	lsls	r3, r3, #2
+     e78:	f642 04b8 	movw	r4, #10424	; 0x28b8
+     e7c:	f2c0 0400 	movt	r4, #0
+     e80:	46a1      	mov	r9, r4
+     e82:	444b      	add	r3, r9
+     e84:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+     e86:	4059      	eors	r1, r3
+        AES_RROUND( X0, X1, X2, X3, Y0, Y1, Y2, Y3 );
+     e88:	0014      	movs	r4, r2
+     e8a:	9f01      	ldr	r7, [sp, #4]
+     e8c:	403c      	ands	r4, r7
+     e8e:	00a4      	lsls	r4, r4, #2
+     e90:	f641 43b8 	movw	r3, #7352	; 0x1cb8
+     e94:	f2c0 0300 	movt	r3, #0
+     e98:	4699      	mov	r9, r3
+     e9a:	444c      	add	r4, r9
+     e9c:	0e03      	lsrs	r3, r0, #24
+     e9e:	009b      	lsls	r3, r3, #2
+     ea0:	f242 05b8 	movw	r5, #8376	; 0x20b8
+     ea4:	f2c0 0500 	movt	r5, #0
+     ea8:	46a9      	mov	r9, r5
+     eaa:	444b      	add	r3, r9
+     eac:	6aa5      	ldr	r5, [r4, #40]	; 0x28
+     eae:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+     eb0:	405d      	eors	r5, r3
+     eb2:	4663      	mov	r3, ip
+     eb4:	691b      	ldr	r3, [r3, #16]
+     eb6:	405d      	eors	r5, r3
+     eb8:	0a0b      	lsrs	r3, r1, #8
+     eba:	4013      	ands	r3, r2
+     ebc:	009b      	lsls	r3, r3, #2
+     ebe:	f242 44b8 	movw	r4, #9400	; 0x24b8
+     ec2:	f2c0 0400 	movt	r4, #0
+     ec6:	46a1      	mov	r9, r4
+     ec8:	444b      	add	r3, r9
+     eca:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+     ecc:	405d      	eors	r5, r3
+     ece:	0c33      	lsrs	r3, r6, #16
+     ed0:	4013      	ands	r3, r2
+     ed2:	009b      	lsls	r3, r3, #2
+     ed4:	f642 04b8 	movw	r4, #10424	; 0x28b8
+     ed8:	f2c0 0400 	movt	r4, #0
+     edc:	46a1      	mov	r9, r4
+     ede:	444b      	add	r3, r9
+     ee0:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+     ee2:	405d      	eors	r5, r3
+     ee4:	0013      	movs	r3, r2
+     ee6:	4003      	ands	r3, r0
+     ee8:	009b      	lsls	r3, r3, #2
+     eea:	f641 44b8 	movw	r4, #7352	; 0x1cb8
+     eee:	f2c0 0400 	movt	r4, #0
+     ef2:	46a1      	mov	r9, r4
+     ef4:	444b      	add	r3, r9
+     ef6:	0e34      	lsrs	r4, r6, #24
+     ef8:	00a4      	lsls	r4, r4, #2
+     efa:	f242 07b8 	movw	r7, #8376	; 0x20b8
+     efe:	f2c0 0700 	movt	r7, #0
+     f02:	46b9      	mov	r9, r7
+     f04:	444c      	add	r4, r9
+     f06:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+     f08:	6aa4      	ldr	r4, [r4, #40]	; 0x28
+     f0a:	4063      	eors	r3, r4
+     f0c:	4664      	mov	r4, ip
+     f0e:	6964      	ldr	r4, [r4, #20]
+     f10:	4063      	eors	r3, r4
+     f12:	9f01      	ldr	r7, [sp, #4]
+     f14:	0a3c      	lsrs	r4, r7, #8
+     f16:	4014      	ands	r4, r2
+     f18:	00a4      	lsls	r4, r4, #2
+     f1a:	f242 47b8 	movw	r7, #9400	; 0x24b8
+     f1e:	f2c0 0700 	movt	r7, #0
+     f22:	46b9      	mov	r9, r7
+     f24:	444c      	add	r4, r9
+     f26:	6aa4      	ldr	r4, [r4, #40]	; 0x28
+     f28:	4063      	eors	r3, r4
+     f2a:	0c0c      	lsrs	r4, r1, #16
+     f2c:	4014      	ands	r4, r2
+     f2e:	00a4      	lsls	r4, r4, #2
+     f30:	f642 07b8 	movw	r7, #10424	; 0x28b8
+     f34:	f2c0 0700 	movt	r7, #0
+     f38:	46b9      	mov	r9, r7
+     f3a:	444c      	add	r4, r9
+     f3c:	6aa4      	ldr	r4, [r4, #40]	; 0x28
+     f3e:	4063      	eors	r3, r4
+     f40:	0014      	movs	r4, r2
+     f42:	4034      	ands	r4, r6
+     f44:	00a4      	lsls	r4, r4, #2
+     f46:	f641 47b8 	movw	r7, #7352	; 0x1cb8
+     f4a:	f2c0 0700 	movt	r7, #0
+     f4e:	46bb      	mov	fp, r7
+     f50:	44a3      	add	fp, r4
+     f52:	0e0c      	lsrs	r4, r1, #24
+     f54:	00a4      	lsls	r4, r4, #2
+     f56:	f242 07b8 	movw	r7, #8376	; 0x20b8
+     f5a:	f2c0 0700 	movt	r7, #0
+     f5e:	46b9      	mov	r9, r7
+     f60:	444c      	add	r4, r9
+     f62:	465f      	mov	r7, fp
+     f64:	6abf      	ldr	r7, [r7, #40]	; 0x28
+     f66:	6aa4      	ldr	r4, [r4, #40]	; 0x28
+     f68:	407c      	eors	r4, r7
+     f6a:	4667      	mov	r7, ip
+     f6c:	69bf      	ldr	r7, [r7, #24]
+     f6e:	407c      	eors	r4, r7
+     f70:	0a07      	lsrs	r7, r0, #8
+     f72:	4017      	ands	r7, r2
+     f74:	00bf      	lsls	r7, r7, #2
+     f76:	46bb      	mov	fp, r7
+     f78:	f242 47b8 	movw	r7, #9400	; 0x24b8
+     f7c:	f2c0 0700 	movt	r7, #0
+     f80:	46b9      	mov	r9, r7
+     f82:	44cb      	add	fp, r9
+     f84:	465f      	mov	r7, fp
+     f86:	6abf      	ldr	r7, [r7, #40]	; 0x28
+     f88:	407c      	eors	r4, r7
+     f8a:	9f01      	ldr	r7, [sp, #4]
+     f8c:	0c3f      	lsrs	r7, r7, #16
+     f8e:	4017      	ands	r7, r2
+     f90:	00bf      	lsls	r7, r7, #2
+     f92:	46bb      	mov	fp, r7
+     f94:	f642 07b8 	movw	r7, #10424	; 0x28b8
+     f98:	f2c0 0700 	movt	r7, #0
+     f9c:	46b9      	mov	r9, r7
+     f9e:	44cb      	add	fp, r9
+     fa0:	465f      	mov	r7, fp
+     fa2:	6abf      	ldr	r7, [r7, #40]	; 0x28
+     fa4:	407c      	eors	r4, r7
+     fa6:	4011      	ands	r1, r2
+     fa8:	0089      	lsls	r1, r1, #2
+     faa:	f641 47b8 	movw	r7, #7352	; 0x1cb8
+     fae:	f2c0 0700 	movt	r7, #0
+     fb2:	46b9      	mov	r9, r7
+     fb4:	468b      	mov	fp, r1
+     fb6:	44cb      	add	fp, r9
+     fb8:	9901      	ldr	r1, [sp, #4]
+     fba:	0e0f      	lsrs	r7, r1, #24
+     fbc:	00bf      	lsls	r7, r7, #2
+     fbe:	f242 01b8 	movw	r1, #8376	; 0x20b8
+     fc2:	f2c0 0100 	movt	r1, #0
+     fc6:	4689      	mov	r9, r1
+     fc8:	444f      	add	r7, r9
+     fca:	4659      	mov	r1, fp
+     fcc:	6a89      	ldr	r1, [r1, #40]	; 0x28
+     fce:	6abf      	ldr	r7, [r7, #40]	; 0x28
+     fd0:	4079      	eors	r1, r7
+     fd2:	4667      	mov	r7, ip
+     fd4:	69ff      	ldr	r7, [r7, #28]
+     fd6:	4079      	eors	r1, r7
+     fd8:	0a36      	lsrs	r6, r6, #8
+     fda:	4016      	ands	r6, r2
+     fdc:	00b6      	lsls	r6, r6, #2
+     fde:	f242 47b8 	movw	r7, #9400	; 0x24b8
+     fe2:	f2c0 0700 	movt	r7, #0
+     fe6:	46b9      	mov	r9, r7
+     fe8:	444e      	add	r6, r9
+     fea:	6ab6      	ldr	r6, [r6, #40]	; 0x28
+     fec:	4071      	eors	r1, r6
+     fee:	0c00      	lsrs	r0, r0, #16
+     ff0:	4010      	ands	r0, r2
+     ff2:	0080      	lsls	r0, r0, #2
+     ff4:	f642 06b8 	movw	r6, #10424	; 0x28b8
+     ff8:	f2c0 0600 	movt	r6, #0
+     ffc:	46b1      	mov	r9, r6
+     ffe:	4448      	add	r0, r9
+    1000:	6a80      	ldr	r0, [r0, #40]	; 0x28
+    1002:	4041      	eors	r1, r0
+    for( i = ( ctx->nr >> 1 ) - 1; i > 0; i-- )
+    1004:	2001      	movs	r0, #1
+    1006:	4240      	negs	r0, r0
+    1008:	4681      	mov	r9, r0
+    100a:	44c8      	add	r8, r9
+        AES_RROUND( X0, X1, X2, X3, Y0, Y1, Y2, Y3 );
+    100c:	4660      	mov	r0, ip
+    100e:	6a00      	ldr	r0, [r0, #32]
+    1010:	f240 0920 	movw	r9, #32
+    1014:	44cc      	add	ip, r9
+    for( i = ( ctx->nr >> 1 ) - 1; i > 0; i-- )
+    1016:	4646      	mov	r6, r8
+    1018:	2e00      	cmp	r6, #0
+    101a:	d000      	beq.n	101e <mbedtls_internal_aes_decrypt+0x39a>
+    101c:	e67b      	b.n	d16 <mbedtls_internal_aes_decrypt+0x92>
+    101e:	9a03      	ldr	r2, [sp, #12]
+    1020:	4691      	mov	r9, r2
+    1022:	9a02      	ldr	r2, [sp, #8]
+    1024:	4ea4      	ldr	r6, [pc, #656]	; (12b8 <mbedtls_internal_aes_decrypt+0x634>)
+    1026:	46b4      	mov	ip, r6
+    1028:	4462      	add	r2, ip
+    102a:	0152      	lsls	r2, r2, #5
+    102c:	4492      	add	sl, r2
+    AES_RROUND( Y0, Y1, Y2, Y3, X0, X1, X2, X3 );
+    102e:	22ff      	movs	r2, #255	; 0xff
+    1030:	0017      	movs	r7, r2
+    1032:	402f      	ands	r7, r5
+    1034:	00bf      	lsls	r7, r7, #2
+    1036:	f641 46b8 	movw	r6, #7352	; 0x1cb8
+    103a:	f2c0 0600 	movt	r6, #0
+    103e:	46b4      	mov	ip, r6
+    1040:	4467      	add	r7, ip
+    1042:	0e1e      	lsrs	r6, r3, #24
+    1044:	00b6      	lsls	r6, r6, #2
+    1046:	46b0      	mov	r8, r6
+    1048:	f242 06b8 	movw	r6, #8376	; 0x20b8
+    104c:	f2c0 0600 	movt	r6, #0
+    1050:	46b4      	mov	ip, r6
+    1052:	4646      	mov	r6, r8
+    1054:	4466      	add	r6, ip
+    1056:	6abf      	ldr	r7, [r7, #40]	; 0x28
+    1058:	6ab6      	ldr	r6, [r6, #40]	; 0x28
+    105a:	4077      	eors	r7, r6
+    105c:	4047      	eors	r7, r0
+    105e:	0a08      	lsrs	r0, r1, #8
+    1060:	4010      	ands	r0, r2
+    1062:	0080      	lsls	r0, r0, #2
+    1064:	f242 46b8 	movw	r6, #9400	; 0x24b8
+    1068:	f2c0 0600 	movt	r6, #0
+    106c:	46b4      	mov	ip, r6
+    106e:	4460      	add	r0, ip
+    1070:	6a80      	ldr	r0, [r0, #40]	; 0x28
+    1072:	4047      	eors	r7, r0
+    1074:	0c20      	lsrs	r0, r4, #16
+    1076:	4010      	ands	r0, r2
+    1078:	0080      	lsls	r0, r0, #2
+    107a:	f642 06b8 	movw	r6, #10424	; 0x28b8
+    107e:	f2c0 0600 	movt	r6, #0
+    1082:	46b4      	mov	ip, r6
+    1084:	4460      	add	r0, ip
+    1086:	6a80      	ldr	r0, [r0, #40]	; 0x28
+    1088:	4047      	eors	r7, r0
+    108a:	46bb      	mov	fp, r7
+    108c:	0016      	movs	r6, r2
+    108e:	401e      	ands	r6, r3
+    1090:	00b6      	lsls	r6, r6, #2
+    1092:	f641 40b8 	movw	r0, #7352	; 0x1cb8
+    1096:	f2c0 0000 	movt	r0, #0
+    109a:	4684      	mov	ip, r0
+    109c:	4466      	add	r6, ip
+    109e:	0e20      	lsrs	r0, r4, #24
+    10a0:	0080      	lsls	r0, r0, #2
+    10a2:	f242 07b8 	movw	r7, #8376	; 0x20b8
+    10a6:	f2c0 0700 	movt	r7, #0
+    10aa:	46bc      	mov	ip, r7
+    10ac:	4460      	add	r0, ip
+    10ae:	6ab6      	ldr	r6, [r6, #40]	; 0x28
+    10b0:	6a80      	ldr	r0, [r0, #40]	; 0x28
+    10b2:	4046      	eors	r6, r0
+    10b4:	4650      	mov	r0, sl
+    10b6:	6840      	ldr	r0, [r0, #4]
+    10b8:	4046      	eors	r6, r0
+    10ba:	0a28      	lsrs	r0, r5, #8
+    10bc:	4010      	ands	r0, r2
+    10be:	0080      	lsls	r0, r0, #2
+    10c0:	f242 47b8 	movw	r7, #9400	; 0x24b8
+    10c4:	f2c0 0700 	movt	r7, #0
+    10c8:	46bc      	mov	ip, r7
+    10ca:	4460      	add	r0, ip
+    10cc:	6a80      	ldr	r0, [r0, #40]	; 0x28
+    10ce:	4046      	eors	r6, r0
+    10d0:	0c08      	lsrs	r0, r1, #16
+    10d2:	4010      	ands	r0, r2
+    10d4:	0080      	lsls	r0, r0, #2
+    10d6:	f642 07b8 	movw	r7, #10424	; 0x28b8
+    10da:	f2c0 0700 	movt	r7, #0
+    10de:	46bc      	mov	ip, r7
+    10e0:	4460      	add	r0, ip
+    10e2:	6a80      	ldr	r0, [r0, #40]	; 0x28
+    10e4:	4046      	eors	r6, r0
+    10e6:	0010      	movs	r0, r2
+    10e8:	4020      	ands	r0, r4
+    10ea:	0080      	lsls	r0, r0, #2
+    10ec:	f641 47b8 	movw	r7, #7352	; 0x1cb8
+    10f0:	f2c0 0700 	movt	r7, #0
+    10f4:	46bc      	mov	ip, r7
+    10f6:	4484      	add	ip, r0
+    10f8:	0e08      	lsrs	r0, r1, #24
+    10fa:	0080      	lsls	r0, r0, #2
+    10fc:	f242 07b8 	movw	r7, #8376	; 0x20b8
+    1100:	f2c0 0700 	movt	r7, #0
+    1104:	46b8      	mov	r8, r7
+    1106:	4440      	add	r0, r8
+    1108:	4667      	mov	r7, ip
+    110a:	6abf      	ldr	r7, [r7, #40]	; 0x28
+    110c:	6a80      	ldr	r0, [r0, #40]	; 0x28
+    110e:	4078      	eors	r0, r7
+    1110:	4657      	mov	r7, sl
+    1112:	68bf      	ldr	r7, [r7, #8]
+    1114:	4078      	eors	r0, r7
+    1116:	0a1f      	lsrs	r7, r3, #8
+    1118:	4017      	ands	r7, r2
+    111a:	00bf      	lsls	r7, r7, #2
+    111c:	46bc      	mov	ip, r7
+    111e:	f242 47b8 	movw	r7, #9400	; 0x24b8
+    1122:	f2c0 0700 	movt	r7, #0
+    1126:	46b8      	mov	r8, r7
+    1128:	44c4      	add	ip, r8
+    112a:	4667      	mov	r7, ip
+    112c:	6abf      	ldr	r7, [r7, #40]	; 0x28
+    112e:	4078      	eors	r0, r7
+    1130:	0c2f      	lsrs	r7, r5, #16
+    1132:	4017      	ands	r7, r2
+    1134:	00bf      	lsls	r7, r7, #2
+    1136:	46bc      	mov	ip, r7
+    1138:	f642 07b8 	movw	r7, #10424	; 0x28b8
+    113c:	f2c0 0700 	movt	r7, #0
+    1140:	46b8      	mov	r8, r7
+    1142:	44c4      	add	ip, r8
+    1144:	4667      	mov	r7, ip
+    1146:	6abf      	ldr	r7, [r7, #40]	; 0x28
+    1148:	4078      	eors	r0, r7
+    114a:	4011      	ands	r1, r2
+    114c:	0089      	lsls	r1, r1, #2
+    114e:	f641 47b8 	movw	r7, #7352	; 0x1cb8
+    1152:	f2c0 0700 	movt	r7, #0
+    1156:	46bc      	mov	ip, r7
+    1158:	4461      	add	r1, ip
+    115a:	0e2d      	lsrs	r5, r5, #24
+    115c:	00ad      	lsls	r5, r5, #2
+    115e:	f242 07b8 	movw	r7, #8376	; 0x20b8
+    1162:	f2c0 0700 	movt	r7, #0
+    1166:	46bc      	mov	ip, r7
+    1168:	4465      	add	r5, ip
+    116a:	6a89      	ldr	r1, [r1, #40]	; 0x28
+    116c:	6aad      	ldr	r5, [r5, #40]	; 0x28
+    116e:	4069      	eors	r1, r5
+    1170:	4655      	mov	r5, sl
+    1172:	68ed      	ldr	r5, [r5, #12]
+    1174:	4069      	eors	r1, r5
+    1176:	0a24      	lsrs	r4, r4, #8
+    1178:	4014      	ands	r4, r2
+    117a:	00a4      	lsls	r4, r4, #2
+    117c:	f242 45b8 	movw	r5, #9400	; 0x24b8
+    1180:	f2c0 0500 	movt	r5, #0
+    1184:	46ac      	mov	ip, r5
+    1186:	4464      	add	r4, ip
+    1188:	6aa4      	ldr	r4, [r4, #40]	; 0x28
+    118a:	4061      	eors	r1, r4
+    118c:	0c1b      	lsrs	r3, r3, #16
+    118e:	4013      	ands	r3, r2
+    1190:	009b      	lsls	r3, r3, #2
+    1192:	4443      	add	r3, r8
+    1194:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+    1196:	4059      	eors	r1, r3
+    1198:	468c      	mov	ip, r1
+            ( (uint32_t) RSb[ ( Y0       ) & 0xFF ]       ) ^
+    119a:	f643 43b8 	movw	r3, #15544	; 0x3cb8
+    119e:	f2c0 0300 	movt	r3, #0
+    11a2:	0011      	movs	r1, r2
+    11a4:	465c      	mov	r4, fp
+    11a6:	4021      	ands	r1, r4
+    11a8:	3328      	adds	r3, #40	; 0x28
+    11aa:	5c5d      	ldrb	r5, [r3, r1]
+    X0 = *RK++ ^ \
+    11ac:	4651      	mov	r1, sl
+    11ae:	6909      	ldr	r1, [r1, #16]
+    11b0:	404d      	eors	r5, r1
+            ( (uint32_t) RSb[ ( Y1 >> 24 ) & 0xFF ] << 24 );
+    11b2:	0e31      	lsrs	r1, r6, #24
+    11b4:	5c59      	ldrb	r1, [r3, r1]
+    11b6:	0609      	lsls	r1, r1, #24
+    X0 = *RK++ ^ \
+    11b8:	404d      	eors	r5, r1
+            ( (uint32_t) RSb[ ( Y3 >>  8 ) & 0xFF ] <<  8 ) ^
+    11ba:	4661      	mov	r1, ip
+    11bc:	0a09      	lsrs	r1, r1, #8
+    11be:	4011      	ands	r1, r2
+    11c0:	5c59      	ldrb	r1, [r3, r1]
+    11c2:	0209      	lsls	r1, r1, #8
+    X0 = *RK++ ^ \
+    11c4:	404d      	eors	r5, r1
+            ( (uint32_t) RSb[ ( Y2 >> 16 ) & 0xFF ] << 16 ) ^
+    11c6:	0c01      	lsrs	r1, r0, #16
+    11c8:	4011      	ands	r1, r2
+    11ca:	5c59      	ldrb	r1, [r3, r1]
+    11cc:	0409      	lsls	r1, r1, #16
+    X0 = *RK++ ^ \
+    11ce:	404d      	eors	r5, r1
+            ( (uint32_t) RSb[ ( Y1       ) & 0xFF ]       ) ^
+    11d0:	0011      	movs	r1, r2
+    11d2:	4031      	ands	r1, r6
+    11d4:	5c5c      	ldrb	r4, [r3, r1]
+    X1 = *RK++ ^ \
+    11d6:	4651      	mov	r1, sl
+    11d8:	6949      	ldr	r1, [r1, #20]
+    11da:	404c      	eors	r4, r1
+            ( (uint32_t) RSb[ ( Y2 >> 24 ) & 0xFF ] << 24 );
+    11dc:	0e01      	lsrs	r1, r0, #24
+    11de:	5c59      	ldrb	r1, [r3, r1]
+    11e0:	0609      	lsls	r1, r1, #24
+    X1 = *RK++ ^ \
+    11e2:	404c      	eors	r4, r1
+            ( (uint32_t) RSb[ ( Y0 >>  8 ) & 0xFF ] <<  8 ) ^
+    11e4:	4659      	mov	r1, fp
+    11e6:	0a09      	lsrs	r1, r1, #8
+    11e8:	4011      	ands	r1, r2
+    11ea:	5c59      	ldrb	r1, [r3, r1]
+    11ec:	0209      	lsls	r1, r1, #8
+    X1 = *RK++ ^ \
+    11ee:	404c      	eors	r4, r1
+            ( (uint32_t) RSb[ ( Y3 >> 16 ) & 0xFF ] << 16 ) ^
+    11f0:	4661      	mov	r1, ip
+    11f2:	0c09      	lsrs	r1, r1, #16
+    11f4:	4011      	ands	r1, r2
+    11f6:	5c59      	ldrb	r1, [r3, r1]
+    11f8:	0409      	lsls	r1, r1, #16
+    X1 = *RK++ ^ \
+    11fa:	404c      	eors	r4, r1
+            ( (uint32_t) RSb[ ( Y2       ) & 0xFF ]       ) ^
+    11fc:	0011      	movs	r1, r2
+    11fe:	4001      	ands	r1, r0
+    1200:	5c59      	ldrb	r1, [r3, r1]
+    X2 = *RK++ ^ \
+    1202:	4657      	mov	r7, sl
+    1204:	69bf      	ldr	r7, [r7, #24]
+    1206:	404f      	eors	r7, r1
+            ( (uint32_t) RSb[ ( Y3 >> 24 ) & 0xFF ] << 24 );
+    1208:	4661      	mov	r1, ip
+    120a:	0e09      	lsrs	r1, r1, #24
+    120c:	5c59      	ldrb	r1, [r3, r1]
+    120e:	0609      	lsls	r1, r1, #24
+    X2 = *RK++ ^ \
+    1210:	4079      	eors	r1, r7
+            ( (uint32_t) RSb[ ( Y1 >>  8 ) & 0xFF ] <<  8 ) ^
+    1212:	0a37      	lsrs	r7, r6, #8
+    1214:	4017      	ands	r7, r2
+    1216:	5ddf      	ldrb	r7, [r3, r7]
+    1218:	023f      	lsls	r7, r7, #8
+    X2 = *RK++ ^ \
+    121a:	4079      	eors	r1, r7
+            ( (uint32_t) RSb[ ( Y0 >> 16 ) & 0xFF ] << 16 ) ^
+    121c:	465f      	mov	r7, fp
+    121e:	0c3f      	lsrs	r7, r7, #16
+    1220:	4017      	ands	r7, r2
+    1222:	5ddf      	ldrb	r7, [r3, r7]
+    1224:	043f      	lsls	r7, r7, #16
+    X2 = *RK++ ^ \
+    1226:	4079      	eors	r1, r7
+    1228:	9101      	str	r1, [sp, #4]
+            ( (uint32_t) RSb[ ( Y3       ) & 0xFF ]       ) ^
+    122a:	4667      	mov	r7, ip
+    122c:	4017      	ands	r7, r2
+    122e:	5ddf      	ldrb	r7, [r3, r7]
+    1230:	46bc      	mov	ip, r7
+    X3 = *RK++ ^ \
+    1232:	4657      	mov	r7, sl
+    1234:	69ff      	ldr	r7, [r7, #28]
+    1236:	46b8      	mov	r8, r7
+    1238:	4667      	mov	r7, ip
+    123a:	4641      	mov	r1, r8
+    123c:	404f      	eors	r7, r1
+    123e:	46bc      	mov	ip, r7
+            ( (uint32_t) RSb[ ( Y0 >> 24 ) & 0xFF ] << 24 );
+    1240:	465f      	mov	r7, fp
+    1242:	0e3f      	lsrs	r7, r7, #24
+    1244:	5ddf      	ldrb	r7, [r3, r7]
+    1246:	063f      	lsls	r7, r7, #24
+    X3 = *RK++ ^ \
+    1248:	4661      	mov	r1, ip
+    124a:	404f      	eors	r7, r1
+            ( (uint32_t) RSb[ ( Y2 >>  8 ) & 0xFF ] <<  8 ) ^
+    124c:	0a00      	lsrs	r0, r0, #8
+    124e:	4010      	ands	r0, r2
+    1250:	5c18      	ldrb	r0, [r3, r0]
+    1252:	0200      	lsls	r0, r0, #8
+    X3 = *RK++ ^ \
+    1254:	4078      	eors	r0, r7
+            ( (uint32_t) RSb[ ( Y1 >> 16 ) & 0xFF ] << 16 ) ^
+    1256:	0c36      	lsrs	r6, r6, #16
+    1258:	4032      	ands	r2, r6
+    125a:	5c9b      	ldrb	r3, [r3, r2]
+    125c:	041b      	lsls	r3, r3, #16
+    X3 = *RK++ ^ \
+    125e:	4043      	eors	r3, r0
+    PUT_UINT32_LE( X0, output,  0 );
+    1260:	464a      	mov	r2, r9
+    1262:	7015      	strb	r5, [r2, #0]
+    1264:	0a2a      	lsrs	r2, r5, #8
+    1266:	4649      	mov	r1, r9
+    1268:	704a      	strb	r2, [r1, #1]
+    126a:	0c2a      	lsrs	r2, r5, #16
+    126c:	708a      	strb	r2, [r1, #2]
+    126e:	0e2d      	lsrs	r5, r5, #24
+    1270:	70cd      	strb	r5, [r1, #3]
+    PUT_UINT32_LE( X1, output,  4 );
+    1272:	710c      	strb	r4, [r1, #4]
+    1274:	0a22      	lsrs	r2, r4, #8
+    1276:	714a      	strb	r2, [r1, #5]
+    1278:	0c22      	lsrs	r2, r4, #16
+    127a:	718a      	strb	r2, [r1, #6]
+    127c:	0e24      	lsrs	r4, r4, #24
+    127e:	464a      	mov	r2, r9
+    1280:	71cc      	strb	r4, [r1, #7]
+    PUT_UINT32_LE( X2, output,  8 );
+    1282:	9801      	ldr	r0, [sp, #4]
+    1284:	7210      	strb	r0, [r2, #8]
+    1286:	0a02      	lsrs	r2, r0, #8
+    1288:	4649      	mov	r1, r9
+    128a:	724a      	strb	r2, [r1, #9]
+    128c:	0c02      	lsrs	r2, r0, #16
+    128e:	728a      	strb	r2, [r1, #10]
+    1290:	0e01      	lsrs	r1, r0, #24
+    1292:	464a      	mov	r2, r9
+    1294:	72d1      	strb	r1, [r2, #11]
+    PUT_UINT32_LE( X3, output, 12 );
+    1296:	7313      	strb	r3, [r2, #12]
+    1298:	0a1a      	lsrs	r2, r3, #8
+    129a:	4649      	mov	r1, r9
+    129c:	734a      	strb	r2, [r1, #13]
+    129e:	0c1a      	lsrs	r2, r3, #16
+    12a0:	738a      	strb	r2, [r1, #14]
+    12a2:	0e1b      	lsrs	r3, r3, #24
+    12a4:	73cb      	strb	r3, [r1, #15]
+}
+    12a6:	2000      	movs	r0, #0
+    12a8:	b005      	add	sp, #20
+    12aa:	bc3c      	pop	{r2, r3, r4, r5}
+    12ac:	4690      	mov	r8, r2
+    12ae:	4699      	mov	r9, r3
+    12b0:	46a2      	mov	sl, r4
+    12b2:	46ab      	mov	fp, r5
+    12b4:	bdf0      	pop	{r4, r5, r6, r7, pc}
+    12b6:	46c0      	nop			; (mov r8, r8)
+    12b8:	07ffffff 	.word	0x07ffffff
+
+000012bc <mbedtls_aes_crypt_ecb>:
+{
+    12bc:	b510      	push	{r4, lr}
+    12be:	0014      	movs	r4, r2
+    if( mode == MBEDTLS_AES_ENCRYPT )
+    12c0:	2901      	cmp	r1, #1
+    12c2:	d007      	beq.n	12d4 <mbedtls_aes_crypt_ecb+0x18>
+        return( mbedtls_internal_aes_decrypt( ctx, input, output ) );
+    12c4:	001a      	movs	r2, r3
+    12c6:	0021      	movs	r1, r4
+    12c8:	f640 4385 	movw	r3, #3205	; 0xc85
+    12cc:	f2c0 0300 	movt	r3, #0
+    12d0:	4798      	blx	r3
+}
+    12d2:	bd10      	pop	{r4, pc}
+        return( mbedtls_internal_aes_encrypt( ctx, input, output ) );
+    12d4:	001a      	movs	r2, r3
+    12d6:	0021      	movs	r1, r4
+    12d8:	f240 6359 	movw	r3, #1625	; 0x659
+    12dc:	f2c0 0300 	movt	r3, #0
+    12e0:	4798      	blx	r3
+    12e2:	e7f6      	b.n	12d2 <mbedtls_aes_crypt_ecb+0x16>
+
+000012e4 <mbedtls_platform_zeroize>:
+ * platform and needs.
+ */
+static void * (* const volatile memset_func)( void *, int, size_t ) = memset;
+
+void mbedtls_platform_zeroize( void *buf, size_t len )
+{
+    12e4:	b510      	push	{r4, lr}
+    12e6:	000a      	movs	r2, r1
+    memset_func( buf, 0, len );
+    12e8:	f240 0300 	movw	r3, #0
+    12ec:	f2c2 0300 	movt	r3, #8192	; 0x2000
+    12f0:	681b      	ldr	r3, [r3, #0]
+    12f2:	2100      	movs	r1, #0
+    12f4:	4798      	blx	r3
+}
+    12f6:	bd10      	pop	{r4, pc}
+
+000012f8 <atmel_start_init>:
+
+/**
+ * Initializes MCU, drivers and middleware in the project
+ **/
+void atmel_start_init(void)
+{
+    12f8:	b510      	push	{r4, lr}
+	system_init();
+    12fa:	f241 430f 	movw	r3, #5135	; 0x140f
+    12fe:	f2c0 0300 	movt	r3, #0
+    1302:	4798      	blx	r3
+ * \brief TrustZone Manager Initialization.
+ */
+static inline void trustzone_manager_init(void)
+{
+	/* Setup Port Security Attribution of I/O Pins */
+	PORT_SEC->Group[0].NONSEC.reg = CONF_PORT_INIT_NONSEC0_VAL;
+    1304:	f243 2300 	movw	r3, #12800	; 0x3200
+    1308:	f2c4 0300 	movt	r3, #16384	; 0x4000
+    130c:	2200      	movs	r2, #0
+    130e:	66da      	str	r2, [r3, #108]	; 0x6c
+
+	/* Setup NVIC Interrupt Target Non-Secure state */
+	NVIC->ITNS[0] = CONF_NVIC_INIT_ITNS0_VAL;
+    1310:	f24e 1300 	movw	r3, #57600	; 0xe100
+    1314:	f2ce 0300 	movt	r3, #57344	; 0xe000
+    1318:	f240 2180 	movw	r1, #640	; 0x280
+    131c:	505a      	str	r2, [r3, r1]
+	NVIC->ITNS[1] = CONF_NVIC_INIT_ITNS1_VAL;
+    131e:	3104      	adds	r1, #4
+    1320:	505a      	str	r2, [r3, r1]
+	trustzone_manager_init();
+	
+	gpio_init();
+    1322:	f240 2381 	movw	r3, #641	; 0x281
+    1326:	f2c0 0300 	movt	r3, #0
+    132a:	4798      	blx	r3
+}
+    132c:	bd10      	pop	{r4, pc}
+
+0000132e <Dummy_Handler>:
+
+/**
+ * \brief Default interrupt handler for unused IRQs.
+ */
+void Dummy_Handler(void)
+{
+    132e:	e7fe      	b.n	132e <Dummy_Handler>
+
+00001330 <Reset_Handler>:
+{
+    1330:	b510      	push	{r4, lr}
+        if (pSrc != pDest) {
+    1332:	f244 42ec 	movw	r2, #17644	; 0x44ec
+    1336:	f2c0 0200 	movt	r2, #0
+    133a:	f240 0300 	movw	r3, #0
+    133e:	f2c2 0300 	movt	r3, #8192	; 0x2000
+    1342:	429a      	cmp	r2, r3
+    1344:	d020      	beq.n	1388 <Reset_Handler+0x58>
+                for (; pDest < &_erelocate;) {
+    1346:	001a      	movs	r2, r3
+    1348:	f240 0368 	movw	r3, #104	; 0x68
+    134c:	f2c2 0300 	movt	r3, #8192	; 0x2000
+    1350:	429a      	cmp	r2, r3
+    1352:	d219      	bcs.n	1388 <Reset_Handler+0x58>
+    1354:	f240 0368 	movw	r3, #104	; 0x68
+    1358:	f2c2 0300 	movt	r3, #8192	; 0x2000
+    135c:	3303      	adds	r3, #3
+    135e:	4a24      	ldr	r2, [pc, #144]	; (13f0 <Reset_Handler+0xc0>)
+    1360:	1a9b      	subs	r3, r3, r2
+    1362:	089b      	lsrs	r3, r3, #2
+    1364:	3301      	adds	r3, #1
+    1366:	009b      	lsls	r3, r3, #2
+    1368:	2200      	movs	r2, #0
+                        *pDest++ = *pSrc++;
+    136a:	f240 0100 	movw	r1, #0
+    136e:	f2c2 0100 	movt	r1, #8192	; 0x2000
+    1372:	1851      	adds	r1, r2, r1
+    1374:	f244 40ec 	movw	r0, #17644	; 0x44ec
+    1378:	f2c0 0000 	movt	r0, #0
+    137c:	1810      	adds	r0, r2, r0
+    137e:	6800      	ldr	r0, [r0, #0]
+    1380:	6008      	str	r0, [r1, #0]
+    1382:	3204      	adds	r2, #4
+                for (; pDest < &_erelocate;) {
+    1384:	429a      	cmp	r2, r3
+    1386:	d1f0      	bne.n	136a <Reset_Handler+0x3a>
+        for (pDest = &_szero; pDest < &_ezero;) {
+    1388:	f240 0268 	movw	r2, #104	; 0x68
+    138c:	f2c2 0200 	movt	r2, #8192	; 0x2000
+    1390:	f240 23c8 	movw	r3, #712	; 0x2c8
+    1394:	f2c2 0300 	movt	r3, #8192	; 0x2000
+    1398:	429a      	cmp	r2, r3
+    139a:	d213      	bcs.n	13c4 <Reset_Handler+0x94>
+    139c:	f240 0268 	movw	r2, #104	; 0x68
+    13a0:	f2c2 0200 	movt	r2, #8192	; 0x2000
+    13a4:	43d3      	mvns	r3, r2
+    13a6:	f240 21c8 	movw	r1, #712	; 0x2c8
+    13aa:	f2c2 0100 	movt	r1, #8192	; 0x2000
+    13ae:	468c      	mov	ip, r1
+    13b0:	4463      	add	r3, ip
+    13b2:	2103      	movs	r1, #3
+    13b4:	438b      	bics	r3, r1
+    13b6:	3304      	adds	r3, #4
+    13b8:	4694      	mov	ip, r2
+    13ba:	4463      	add	r3, ip
+                *pDest++ = 0;
+    13bc:	2100      	movs	r1, #0
+    13be:	c202      	stmia	r2!, {r1}
+        for (pDest = &_szero; pDest < &_ezero;) {
+    13c0:	4293      	cmp	r3, r2
+    13c2:	d1fc      	bne.n	13be <Reset_Handler+0x8e>
+        SCB->VTOR = ((uint32_t) pSrc & SCB_VTOR_TBLOFF_Msk);
+    13c4:	f240 0300 	movw	r3, #0
+    13c8:	f2c0 0300 	movt	r3, #0
+    13cc:	227f      	movs	r2, #127	; 0x7f
+    13ce:	4393      	bics	r3, r2
+    13d0:	f64e 5200 	movw	r2, #60672	; 0xed00
+    13d4:	f2ce 0200 	movt	r2, #57344	; 0xe000
+    13d8:	6093      	str	r3, [r2, #8]
+        __libc_init_array();
+    13da:	f641 13bd 	movw	r3, #6589	; 0x19bd
+    13de:	f2c0 0300 	movt	r3, #0
+    13e2:	4798      	blx	r3
+        main();
+    13e4:	f241 7311 	movw	r3, #5905	; 0x1711
+    13e8:	f2c0 0300 	movt	r3, #0
+    13ec:	4798      	blx	r3
+    13ee:	e7fe      	b.n	13ee <Reset_Handler+0xbe>
+    13f0:	20000004 	.word	0x20000004
+
+000013f4 <FLASH_0_clock_init>:
+}
+
+static inline void hri_mclk_set_AHBMASK_NVMCTRL_bit(const void *const hw)
+{
+	MCLK_CRITICAL_SECTION_ENTER();
+	((Mclk *)hw)->AHBMASK.reg |= MCLK_AHBMASK_NVMCTRL;
+    13f4:	f640 0300 	movw	r3, #2048	; 0x800
+    13f8:	f2c4 0300 	movt	r3, #16384	; 0x4000
+    13fc:	691a      	ldr	r2, [r3, #16]
+    13fe:	2180      	movs	r1, #128	; 0x80
+    1400:	430a      	orrs	r2, r1
+    1402:	611a      	str	r2, [r3, #16]
+}
+
+static inline void hri_mclk_set_APBBMASK_NVMCTRL_bit(const void *const hw)
+{
+	MCLK_CRITICAL_SECTION_ENTER();
+	((Mclk *)hw)->APBBMASK.reg |= MCLK_APBBMASK_NVMCTRL;
+    1404:	699a      	ldr	r2, [r3, #24]
+    1406:	397c      	subs	r1, #124	; 0x7c
+    1408:	430a      	orrs	r2, r1
+    140a:	619a      	str	r2, [r3, #24]
+{
+#if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U))
+	hri_mclk_set_AHBMASK_NVMCTRL_bit(MCLK);
+	hri_mclk_set_APBBMASK_NVMCTRL_bit(MCLK);
+#endif
+}
+    140c:	4770      	bx	lr
+
+0000140e <system_init>:
+
+void system_init(void)
+{
+    140e:	b510      	push	{r4, lr}
+ * Currently the following initialization functions are supported:
+ *  - System clock initialization
+ */
+static inline void init_mcu(void)
+{
+	_init_chip();
+    1410:	f241 43a7 	movw	r3, #5287	; 0x14a7
+    1414:	f2c0 0300 	movt	r3, #0
+    1418:	4798      	blx	r3
+#if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U))
+	/* Only initialize MCU clock when the project is TrustZone secure project  */
+	init_mcu();
+#endif
+
+	FLASH_0_clock_init();
+    141a:	f241 33f5 	movw	r3, #5109	; 0x13f5
+    141e:	f2c0 0300 	movt	r3, #0
+    1422:	4798      	blx	r3
+	FLASH_0_init();
+    1424:	f241 532d 	movw	r3, #5421	; 0x152d
+    1428:	f2c0 0300 	movt	r3, #0
+    142c:	4798      	blx	r3
+}
+    142e:	bd10      	pop	{r4, pc}
+
+00001430 <delay_ms>:
+
+/**
+ * \brief Perform delay in ms
+ */
+void delay_ms(const uint16_t ms)
+{
+    1430:	b510      	push	{r4, lr}
+	_delay_cycles(hardware, _get_cycles_for_ms(ms));
+    1432:	f240 0384 	movw	r3, #132	; 0x84
+    1436:	f2c2 0300 	movt	r3, #8192	; 0x2000
+    143a:	681c      	ldr	r4, [r3, #0]
+    143c:	f241 4389 	movw	r3, #5257	; 0x1489
+    1440:	f2c0 0300 	movt	r3, #0
+    1444:	4798      	blx	r3
+    1446:	0001      	movs	r1, r0
+    1448:	0020      	movs	r0, r4
+    144a:	f241 43a1 	movw	r3, #5281	; 0x14a1
+    144e:	f2c0 0300 	movt	r3, #0
+    1452:	4798      	blx	r3
+}
+    1454:	bd10      	pop	{r4, pc}
+
+00001456 <_sbrk>:
+
+/**
+ * \brief Replacement of C library of _sbrk
+ */
+extern caddr_t _sbrk(int incr)
+{
+    1456:	0002      	movs	r2, r0
+	static unsigned char *heap = NULL;
+	unsigned char *       prev_heap;
+
+	if (heap == NULL) {
+    1458:	f240 0388 	movw	r3, #136	; 0x88
+    145c:	f2c2 0300 	movt	r3, #8192	; 0x2000
+    1460:	681b      	ldr	r3, [r3, #0]
+    1462:	b13b      	cbz	r3, 1474 <_sbrk+0x1e>
+		heap = (unsigned char *)&_end;
+	}
+	prev_heap = heap;
+    1464:	f240 0388 	movw	r3, #136	; 0x88
+    1468:	f2c2 0300 	movt	r3, #8192	; 0x2000
+    146c:	6818      	ldr	r0, [r3, #0]
+
+	heap += incr;
+    146e:	1882      	adds	r2, r0, r2
+    1470:	601a      	str	r2, [r3, #0]
+
+	return (caddr_t)prev_heap;
+}
+    1472:	4770      	bx	lr
+		heap = (unsigned char *)&_end;
+    1474:	f240 0388 	movw	r3, #136	; 0x88
+    1478:	f2c2 0300 	movt	r3, #8192	; 0x2000
+    147c:	f640 01c8 	movw	r1, #2248	; 0x8c8
+    1480:	f2c2 0100 	movt	r1, #8192	; 0x2000
+    1484:	6019      	str	r1, [r3, #0]
+    1486:	e7ed      	b.n	1464 <_sbrk+0xe>
+
+00001488 <_get_cycles_for_ms>:
+
+/**
+ * \brief Retrieve the amount of cycles to delay for the given amount of ms
+ */
+uint32_t _get_cycles_for_ms(const uint16_t ms)
+{
+    1488:	0003      	movs	r3, r0
+		return (ms * (freq / 10000) + 2) / 3 * 10;
+    148a:	f240 1090 	movw	r0, #400	; 0x190
+    148e:	4358      	muls	r0, r3
+    1490:	3002      	adds	r0, #2
+    1492:	2303      	movs	r3, #3
+    1494:	fbb0 f0f3 	udiv	r0, r0, r3
+    1498:	0083      	lsls	r3, r0, #2
+    149a:	1818      	adds	r0, r3, r0
+    149c:	0040      	lsls	r0, r0, #1
+	return _get_cycles_for_ms_internal(ms, CONF_CPU_FREQUENCY, CPU_FREQ_POWER);
+}
+    149e:	4770      	bx	lr
+
+000014a0 <_delay_cycles>:
+#if defined(__GNUC__) && (__ARMCOMPILER_VERSION > 6000000) /*  Keil MDK with ARM Compiler 6 */
+	__asm("__delay:\n"
+	      "subs r1, r1, #1\n"
+	      "bhi __delay\n");
+#elif defined __GNUC__
+	__asm(".syntax unified\n"
+    14a0:	3901      	subs	r1, #1
+    14a2:	d8fd      	bhi.n	14a0 <_delay_cycles>
+	__asm("__delay:\n"
+	      "subs r1, r1, #1\n"
+	      "bhi __delay\n");
+#endif
+#endif
+}
+    14a4:	4770      	bx	lr
+
+000014a6 <_init_chip>:
+
+/**
+ * \brief Initialize the hardware abstraction layer
+ */
+void _init_chip(void)
+{
+    14a6:	b510      	push	{r4, lr}
+}
+
+static inline void hri_nvmctrl_set_CTRLB_RWS_bf(const void *const hw, hri_nvmctrl_ctrlb_reg_t mask)
+{
+	NVMCTRL_CRITICAL_SECTION_ENTER();
+	((Nvmctrl *)hw)->CTRLB.reg |= NVMCTRL_CTRLB_RWS(mask);
+    14a8:	f245 0300 	movw	r3, #20480	; 0x5000
+    14ac:	f2c4 1300 	movt	r3, #16640	; 0x4100
+    14b0:	685a      	ldr	r2, [r3, #4]
+    14b2:	605a      	str	r2, [r3, #4]
+	hri_nvmctrl_set_CTRLB_RWS_bf(NVMCTRL_SEC, CONF_NVM_WAIT_STATE);
+#else
+	hri_nvmctrl_set_CTRLB_RWS_bf(NVMCTRL, CONF_NVM_WAIT_STATE);
+#endif
+
+	_set_performance_level(CONF_PERFORMANCE_LEVEL);
+    14b4:	2000      	movs	r0, #0
+    14b6:	f241 63d7 	movw	r3, #5847	; 0x16d7
+    14ba:	f2c0 0300 	movt	r3, #0
+    14be:	4798      	blx	r3
+
+	_osc32kctrl_init_sources();
+    14c0:	f241 638f 	movw	r3, #5775	; 0x168f
+    14c4:	f2c0 0300 	movt	r3, #0
+    14c8:	4798      	blx	r3
+	_oscctrl_init_sources();
+    14ca:	f241 63a7 	movw	r3, #5799	; 0x16a7
+    14ce:	f2c0 0300 	movt	r3, #0
+    14d2:	4798      	blx	r3
+	_mclk_init();
+    14d4:	f241 531f 	movw	r3, #5407	; 0x151f
+    14d8:	f2c0 0300 	movt	r3, #0
+    14dc:	4798      	blx	r3
+#if _GCLK_INIT_1ST
+	_gclk_init_generators_by_fref(_GCLK_INIT_1ST);
+#endif
+	_oscctrl_init_referenced_generators();
+    14de:	f241 63d5 	movw	r3, #5845	; 0x16d5
+    14e2:	f2c0 0300 	movt	r3, #0
+    14e6:	4798      	blx	r3
+	_gclk_init_generators_by_fref(_GCLK_INIT_LAST);
+    14e8:	201f      	movs	r0, #31
+    14ea:	f241 43f7 	movw	r3, #5367	; 0x14f7
+    14ee:	f2c0 0300 	movt	r3, #0
+    14f2:	4798      	blx	r3
+#endif
+
+#if (CONF_PORT_EVCTRL_PORT_0 | CONF_PORT_EVCTRL_PORT_1 | CONF_PORT_EVCTRL_PORT_2 | CONF_PORT_EVCTRL_PORT_3)
+	_port_event_init();
+#endif
+}
+    14f4:	bd10      	pop	{r4, pc}
+
+000014f6 <_gclk_init_generators_by_fref>:
+
+void _gclk_init_generators_by_fref(uint32_t bm)
+{
+
+#if CONF_GCLK_GENERATOR_0_CONFIG == 1
+	if (bm & (1ul << 0)) {
+    14f6:	07c3      	lsls	r3, r0, #31
+    14f8:	d510      	bpl.n	151c <_gclk_init_generators_by_fref+0x26>
+	((Gclk *)hw)->GENCTRL[index].reg = data;
+    14fa:	f641 4300 	movw	r3, #7168	; 0x1c00
+    14fe:	f2c4 0300 	movt	r3, #16384	; 0x4000
+    1502:	f240 1205 	movw	r2, #261	; 0x105
+    1506:	f2c0 0201 	movt	r2, #1
+    150a:	621a      	str	r2, [r3, #32]
+	while (((Gclk *)hw)->SYNCBUSY.reg & reg) {
+    150c:	f641 4200 	movw	r2, #7168	; 0x1c00
+    1510:	f2c4 0200 	movt	r2, #16384	; 0x4000
+    1514:	217d      	movs	r1, #125	; 0x7d
+    1516:	6853      	ldr	r3, [r2, #4]
+    1518:	4219      	tst	r1, r3
+    151a:	d1fc      	bne.n	1516 <_gclk_init_generators_by_fref+0x20>
+		        | (CONF_GCLK_GEN_4_DIVSEL << GCLK_GENCTRL_DIVSEL_Pos) | (CONF_GCLK_GEN_4_OE << GCLK_GENCTRL_OE_Pos)
+		        | (CONF_GCLK_GEN_4_OOV << GCLK_GENCTRL_OOV_Pos) | (CONF_GCLK_GEN_4_IDC << GCLK_GENCTRL_IDC_Pos)
+		        | (CONF_GCLK_GENERATOR_4_CONFIG << GCLK_GENCTRL_GENEN_Pos) | CONF_GCLK_GEN_4_SOURCE);
+	}
+#endif
+}
+    151c:	4770      	bx	lr
+
+0000151e <_mclk_init>:
+	((Mclk *)hw)->CPUDIV.reg = data;
+    151e:	f640 0300 	movw	r3, #2048	; 0x800
+    1522:	f2c4 0300 	movt	r3, #16384	; 0x4000
+    1526:	2201      	movs	r2, #1
+    1528:	711a      	strb	r2, [r3, #4]
+ */
+void _mclk_init(void)
+{
+	void *hw = (void *)MCLK;
+	hri_mclk_write_CPUDIV_reg(hw, MCLK_CPUDIV_CPUDIV(CONF_MCLK_CPUDIV));
+}
+    152a:	4770      	bx	lr
+
+0000152c <FLASH_0_init>:
+	//		 | 0 << NVMCTRL_SECCTRL_DSCEN_Pos /* Setting: disabled */
+	//		 | 0 << NVMCTRL_SECCTRL_SILACC_Pos /* Setting: disabled */
+	//		 | 0 << NVMCTRL_SECCTRL_TAMPEEN_Pos); /* Setting: disabled */
+
+	return ERR_NONE;
+}
+    152c:	2000      	movs	r0, #0
+    152e:	4770      	bx	lr
+
+00001530 <FLASH_0_exec_cmd>:
+
+/**
+ * \brief Execute a command on the NVM controller
+ */
+int32_t FLASH_0_exec_cmd(const enum nvm_cmd cmd, uint32_t dst_addr)
+{
+    1530:	b510      	push	{r4, lr}
+	return (((Nvmctrl *)hw)->STATUS.reg & NVMCTRL_STATUS_READY_Msk) >> NVMCTRL_STATUS_READY_Pos;
+    1532:	f245 0200 	movw	r2, #20480	; 0x5000
+    1536:	f2c4 1200 	movt	r2, #16640	; 0x4100
+	/* Wait until this module isn't busy */
+	while (!hri_nvmctrl_get_STATUS_READY_bit(_NVMCTRL)) {
+    153a:	2404      	movs	r4, #4
+    153c:	8b13      	ldrh	r3, [r2, #24]
+    153e:	4223      	tst	r3, r4
+    1540:	d0fc      	beq.n	153c <FLASH_0_exec_cmd+0xc>
+	((Nvmctrl *)hw)->INTFLAG.reg = mask;
+    1542:	f245 0300 	movw	r3, #20480	; 0x5000
+    1546:	f2c4 1300 	movt	r3, #16640	; 0x4100
+    154a:	223f      	movs	r2, #63	; 0x3f
+    154c:	751a      	strb	r2, [r3, #20]
+
+	/* Clear flags */
+	hri_nvmctrl_clear_INTFLAG_reg(_NVMCTRL, NVMCTRL_INTFLAG_MASK);
+
+	/* Commands requiring address */
+	if ((cmd == NVM_CMD_ERASE_ROW) || (cmd == NVM_CMD_WRITE_PAGE)) {
+    154e:	1e83      	subs	r3, r0, #2
+    1550:	32be      	adds	r2, #190	; 0xbe
+    1552:	4213      	tst	r3, r2
+    1554:	d016      	beq.n	1584 <FLASH_0_exec_cmd+0x54>
+		hri_nvmctrl_write_ADDR_reg(_NVMCTRL, dst_addr);
+	}
+
+	/* Set command */
+	hri_nvmctrl_write_CTRLA_reg(_NVMCTRL, cmd | NVMCTRL_CTRLA_CMDEX_KEY);
+    1556:	f24a 5300 	movw	r3, #42240	; 0xa500
+    155a:	4318      	orrs	r0, r3
+}
+
+static inline void hri_nvmctrl_write_CTRLA_reg(const void *const hw, hri_nvmctrl_ctrla_reg_t data)
+{
+	NVMCTRL_CRITICAL_SECTION_ENTER();
+	((Nvmctrl *)hw)->CTRLA.reg = data;
+    155c:	f245 0300 	movw	r3, #20480	; 0x5000
+    1560:	f2c4 1300 	movt	r3, #16640	; 0x4100
+    1564:	8018      	strh	r0, [r3, #0]
+	return (((Nvmctrl *)hw)->INTFLAG.reg & NVMCTRL_INTFLAG_DONE_Msk) >> NVMCTRL_INTFLAG_DONE_Pos;
+    1566:	f245 0300 	movw	r3, #20480	; 0x5000
+    156a:	f2c4 1300 	movt	r3, #16640	; 0x4100
+
+	/* Wait until the command done */
+	while (!hri_nvmctrl_get_interrupt_DONE_bit(_NVMCTRL)) {
+    156e:	2101      	movs	r1, #1
+	tmp &= mask;
+    1570:	201e      	movs	r0, #30
+	return (((Nvmctrl *)hw)->INTFLAG.reg & NVMCTRL_INTFLAG_DONE_Msk) >> NVMCTRL_INTFLAG_DONE_Pos;
+    1572:	7d1a      	ldrb	r2, [r3, #20]
+    1574:	420a      	tst	r2, r1
+    1576:	d10b      	bne.n	1590 <FLASH_0_exec_cmd+0x60>
+	tmp = ((Nvmctrl *)hw)->INTFLAG.reg;
+    1578:	7d1a      	ldrb	r2, [r3, #20]
+		/* Check if there is error in NVM erase operation */
+		if (hri_nvmctrl_get_INTFLAG_reg(
+    157a:	4202      	tst	r2, r0
+    157c:	d0f9      	beq.n	1572 <FLASH_0_exec_cmd+0x42>
+		        _NVMCTRL, NVMCTRL_INTFLAG_LOCKE | NVMCTRL_INTFLAG_NVME | NVMCTRL_INTFLAG_PROGE | NVMCTRL_INTFLAG_KEYE)
+		    != 0) {
+			return ERR_FAILURE;
+    157e:	201e      	movs	r0, #30
+    1580:	4240      	negs	r0, r0
+    1582:	e006      	b.n	1592 <FLASH_0_exec_cmd+0x62>
+	((Nvmctrl *)hw)->ADDR.reg = data;
+    1584:	f245 0300 	movw	r3, #20480	; 0x5000
+    1588:	f2c4 1300 	movt	r3, #16640	; 0x4100
+    158c:	61d9      	str	r1, [r3, #28]
+    158e:	e7e2      	b.n	1556 <FLASH_0_exec_cmd+0x26>
+		}
+	}
+
+	return ERR_NONE;
+    1590:	2000      	movs	r0, #0
+}
+    1592:	bd10      	pop	{r4, pc}
+
+00001594 <FLASH_0_erase_row>:
+
+/**
+ * \brief Erase a row in NVM memory
+ */
+int32_t FLASH_0_erase_row(const uint32_t dst_addr)
+{
+    1594:	b510      	push	{r4, lr}
+    1596:	0001      	movs	r1, r0
+	return FLASH_0_exec_cmd(NVM_CMD_ERASE_ROW, dst_addr);
+    1598:	2002      	movs	r0, #2
+    159a:	f241 5331 	movw	r3, #5425	; 0x1531
+    159e:	f2c0 0300 	movt	r3, #0
+    15a2:	4798      	blx	r3
+}
+    15a4:	bd10      	pop	{r4, pc}
+
+000015a6 <FLASH_0_write_page_buffer>:
+
+/**
+ * \brief Write a page buffer in NVM memory
+ */
+int32_t FLASH_0_write_page_buffer(const uint32_t dst_addr, const uint8_t *buffer, const uint16_t length)
+{
+    15a6:	b570      	push	{r4, r5, r6, lr}
+    15a8:	0006      	movs	r6, r0
+    15aa:	000c      	movs	r4, r1
+    15ac:	0015      	movs	r5, r2
+	/* Check if the write address not aligned to the start of a page */
+	if (dst_addr & (NVMCTRL_PAGE_SIZE - 1)) {
+    15ae:	0683      	lsls	r3, r0, #26
+    15b0:	d121      	bne.n	15f6 <FLASH_0_write_page_buffer+0x50>
+		return ERR_INVALID_ARG;
+	}
+
+	/* Check if the write length is longer than an NVM page */
+	if (length > NVMCTRL_PAGE_SIZE) {
+    15b2:	2a40      	cmp	r2, #64	; 0x40
+    15b4:	d822      	bhi.n	15fc <FLASH_0_write_page_buffer+0x56>
+		return ERR_INVALID_ARG;
+	}
+
+	/* Erase the page buffer before buffering new data */
+	FLASH_0_exec_cmd(NVM_CMD_PAGE_BUFFER_CLEAR, dst_addr);
+    15b6:	0001      	movs	r1, r0
+    15b8:	2044      	movs	r0, #68	; 0x44
+    15ba:	f241 5331 	movw	r3, #5425	; 0x1531
+    15be:	f2c0 0300 	movt	r3, #0
+    15c2:	4798      	blx	r3
+
+	uint32_t nvm_addr = dst_addr / 2;
+	/* NVM _must_ be accessed as a series of 16-bit words, perform manual copy
+	 * to ensure alignment */
+	for (uint16_t i = 0; i < length; i += 2) {
+    15c4:	b1ed      	cbz	r5, 1602 <FLASH_0_write_page_buffer+0x5c>
+    15c6:	0021      	movs	r1, r4
+    15c8:	2301      	movs	r3, #1
+    15ca:	0030      	movs	r0, r6
+    15cc:	4398      	bics	r0, r3
+    15ce:	2300      	movs	r3, #0
+		uint16_t data;
+
+		data = buffer[i];
+		if (i < (length - 1)) {
+    15d0:	1e6e      	subs	r6, r5, #1
+    15d2:	e009      	b.n	15e8 <FLASH_0_write_page_buffer+0x42>
+			data |= (buffer[i + 1] << 8);
+    15d4:	784c      	ldrb	r4, [r1, #1]
+    15d6:	0224      	lsls	r4, r4, #8
+    15d8:	4322      	orrs	r2, r4
+    15da:	181c      	adds	r4, r3, r0
+		}
+		NVM_MEMORY[nvm_addr++] = data;
+    15dc:	8022      	strh	r2, [r4, #0]
+    15de:	3102      	adds	r1, #2
+    15e0:	3302      	adds	r3, #2
+	for (uint16_t i = 0; i < length; i += 2) {
+    15e2:	b29a      	uxth	r2, r3
+    15e4:	4295      	cmp	r5, r2
+    15e6:	d904      	bls.n	15f2 <FLASH_0_write_page_buffer+0x4c>
+		data = buffer[i];
+    15e8:	780a      	ldrb	r2, [r1, #0]
+		if (i < (length - 1)) {
+    15ea:	429e      	cmp	r6, r3
+    15ec:	dcf2      	bgt.n	15d4 <FLASH_0_write_page_buffer+0x2e>
+		data = buffer[i];
+    15ee:	b292      	uxth	r2, r2
+    15f0:	e7f3      	b.n	15da <FLASH_0_write_page_buffer+0x34>
+	}
+
+	return ERR_NONE;
+    15f2:	2000      	movs	r0, #0
+}
+    15f4:	bd70      	pop	{r4, r5, r6, pc}
+		return ERR_INVALID_ARG;
+    15f6:	200d      	movs	r0, #13
+    15f8:	4240      	negs	r0, r0
+    15fa:	e7fb      	b.n	15f4 <FLASH_0_write_page_buffer+0x4e>
+		return ERR_INVALID_ARG;
+    15fc:	200d      	movs	r0, #13
+    15fe:	4240      	negs	r0, r0
+    1600:	e7f8      	b.n	15f4 <FLASH_0_write_page_buffer+0x4e>
+	return ERR_NONE;
+    1602:	2000      	movs	r0, #0
+    1604:	e7f6      	b.n	15f4 <FLASH_0_write_page_buffer+0x4e>
+
+00001606 <FLASH_0_write_page>:
+
+/**
+ * \brief Write (program) a page in NVM memory
+ */
+int32_t FLASH_0_write_page(const uint32_t dst_addr, const uint8_t *buffer, const uint16_t length)
+{
+    1606:	b570      	push	{r4, r5, r6, lr}
+    1608:	0004      	movs	r4, r0
+    160a:	0015      	movs	r5, r2
+	int32_t rc = ERR_NONE;
+
+	rc = FLASH_0_write_page_buffer(dst_addr, buffer, length);
+    160c:	f241 53a7 	movw	r3, #5543	; 0x15a7
+    1610:	f2c0 0300 	movt	r3, #0
+    1614:	4798      	blx	r3
+	if (rc != ERR_NONE) {
+    1616:	b978      	cbnz	r0, 1638 <FLASH_0_write_page+0x32>
+	tmp = ((Nvmctrl *)hw)->CTRLC.reg;
+    1618:	f245 0300 	movw	r3, #20480	; 0x5000
+    161c:	f2c4 1300 	movt	r3, #16640	; 0x4100
+    1620:	7a1b      	ldrb	r3, [r3, #8]
+		return rc;
+	} else {
+		/* Execute NVM write page command */
+		if ((hri_nvmctrl_get_CTRLC_MANW_bit(_NVMCTRL) == 1) || (length < NVMCTRL_PAGE_SIZE)) {
+    1622:	07db      	lsls	r3, r3, #31
+    1624:	d401      	bmi.n	162a <FLASH_0_write_page+0x24>
+    1626:	2d3f      	cmp	r5, #63	; 0x3f
+    1628:	d806      	bhi.n	1638 <FLASH_0_write_page+0x32>
+			rc = FLASH_0_exec_cmd(NVM_CMD_WRITE_PAGE, dst_addr);
+    162a:	0021      	movs	r1, r4
+    162c:	2004      	movs	r0, #4
+    162e:	f241 5331 	movw	r3, #5425	; 0x1531
+    1632:	f2c0 0300 	movt	r3, #0
+    1636:	4798      	blx	r3
+		}
+	}
+
+	return rc;
+}
+    1638:	bd70      	pop	{r4, r5, r6, pc}
+
+0000163a <FLASH_0_read>:
+
+/**
+ * \brief Read a number of bytes from a page in the NVM memory
+ */
+int32_t FLASH_0_read(uint32_t src_addr, uint8_t *buffer, uint32_t length)
+{
+    163a:	b570      	push	{r4, r5, r6, lr}
+	uint32_t nvm_addr = src_addr / 2;
+    163c:	0845      	lsrs	r5, r0, #1
+	return (((Nvmctrl *)hw)->STATUS.reg & NVMCTRL_STATUS_READY_Msk) >> NVMCTRL_STATUS_READY_Pos;
+    163e:	f245 0400 	movw	r4, #20480	; 0x5000
+    1642:	f2c4 1400 	movt	r4, #16640	; 0x4100
+	uint32_t i;
+	uint16_t data;
+
+	/* Wait until this module isn't busy */
+	while (!hri_nvmctrl_get_STATUS_READY_bit(_NVMCTRL)) {
+    1646:	2604      	movs	r6, #4
+    1648:	8b23      	ldrh	r3, [r4, #24]
+    164a:	4233      	tst	r3, r6
+    164c:	d0fc      	beq.n	1648 <FLASH_0_read+0xe>
+	if (src_addr % 2) {
+		data      = NVM_MEMORY[nvm_addr++];
+		buffer[0] = data >> 8;
+		i         = 1;
+	} else {
+		i = 0;
+    164e:	2400      	movs	r4, #0
+	if (src_addr % 2) {
+    1650:	07c3      	lsls	r3, r0, #31
+    1652:	d506      	bpl.n	1662 <FLASH_0_read+0x28>
+		data      = NVM_MEMORY[nvm_addr++];
+    1654:	3501      	adds	r5, #1
+    1656:	2301      	movs	r3, #1
+    1658:	4398      	bics	r0, r3
+    165a:	8803      	ldrh	r3, [r0, #0]
+		buffer[0] = data >> 8;
+    165c:	0a1b      	lsrs	r3, r3, #8
+    165e:	700b      	strb	r3, [r1, #0]
+		i         = 1;
+    1660:	3401      	adds	r4, #1
+	}
+
+	/* NVM _must_ be accessed as a series of 16-bit words, perform manual copy
+	 * to ensure alignment */
+	while (i < length) {
+    1662:	4294      	cmp	r4, r2
+    1664:	d211      	bcs.n	168a <FLASH_0_read+0x50>
+    1666:	1909      	adds	r1, r1, r4
+    1668:	006d      	lsls	r5, r5, #1
+    166a:	1b28      	subs	r0, r5, r4
+		data      = NVM_MEMORY[nvm_addr++];
+		buffer[i] = (data & 0xFF);
+		if (i < (length - 1)) {
+    166c:	1e55      	subs	r5, r2, #1
+    166e:	e003      	b.n	1678 <FLASH_0_read+0x3e>
+			buffer[i + 1] = (data >> 8);
+		}
+		i += 2;
+    1670:	3402      	adds	r4, #2
+    1672:	3102      	adds	r1, #2
+	while (i < length) {
+    1674:	42a2      	cmp	r2, r4
+    1676:	d908      	bls.n	168a <FLASH_0_read+0x50>
+    1678:	1903      	adds	r3, r0, r4
+		data      = NVM_MEMORY[nvm_addr++];
+    167a:	881b      	ldrh	r3, [r3, #0]
+    167c:	b29b      	uxth	r3, r3
+		buffer[i] = (data & 0xFF);
+    167e:	700b      	strb	r3, [r1, #0]
+		if (i < (length - 1)) {
+    1680:	42a5      	cmp	r5, r4
+    1682:	d9f5      	bls.n	1670 <FLASH_0_read+0x36>
+			buffer[i + 1] = (data >> 8);
+    1684:	0a1b      	lsrs	r3, r3, #8
+    1686:	704b      	strb	r3, [r1, #1]
+    1688:	e7f2      	b.n	1670 <FLASH_0_read+0x36>
+	}
+
+	return ERR_NONE;
+}
+    168a:	2000      	movs	r0, #0
+    168c:	bd70      	pop	{r4, r5, r6, pc}
+
+0000168e <_osc32kctrl_init_sources>:
+}
+
+static inline hri_osc32kctrl_osculp32k_reg_t hri_osc32kctrl_read_OSCULP32K_CALIB_bf(const void *const hw)
+{
+	uint32_t tmp;
+	tmp = ((Osc32kctrl *)hw)->OSCULP32K.reg;
+    168e:	f241 4300 	movw	r3, #5120	; 0x1400
+    1692:	f2c4 0300 	movt	r3, #16384	; 0x4000
+    1696:	69da      	ldr	r2, [r3, #28]
+	hri_osc32kctrl_write_EVCTRL_reg(hw, (CONF_XOSC32K_CFDEO << OSC32KCTRL_EVCTRL_CFDEO_Pos));
+#endif
+
+#if CONF_OSCULP32K_CONFIG == 1
+	calib = hri_osc32kctrl_read_OSCULP32K_CALIB_bf(hw);
+	hri_osc32kctrl_write_OSCULP32K_reg(hw,
+    1698:	f641 7100 	movw	r1, #7936	; 0x1f00
+    169c:	400a      	ands	r2, r1
+}
+
+static inline void hri_osc32kctrl_write_OSCULP32K_reg(const void *const hw, hri_osc32kctrl_osculp32k_reg_t data)
+{
+	OSC32KCTRL_CRITICAL_SECTION_ENTER();
+	((Osc32kctrl *)hw)->OSCULP32K.reg = data;
+    169e:	61da      	str	r2, [r3, #28]
+	((Osc32kctrl *)hw)->RTCCTRL.reg = data;
+    16a0:	2200      	movs	r2, #0
+    16a2:	741a      	strb	r2, [r3, #16]
+#endif
+#endif
+
+	hri_osc32kctrl_write_RTCCTRL_reg(hw, OSC32KCTRL_RTCCTRL_RTCSEL(CONF_RTCCTRL));
+	(void)calib;
+}
+    16a4:	4770      	bx	lr
+
+000016a6 <_oscctrl_init_sources>:
+}
+
+static inline void hri_oscctrl_write_OSC16MCTRL_reg(const void *const hw, hri_oscctrl_osc16mctrl_reg_t data)
+{
+	OSCCTRL_CRITICAL_SECTION_ENTER();
+	((Oscctrl *)hw)->OSC16MCTRL.reg = data;
+    16a6:	f241 0300 	movw	r3, #4096	; 0x1000
+    16aa:	f2c4 0300 	movt	r3, #16384	; 0x4000
+    16ae:	2202      	movs	r2, #2
+    16b0:	761a      	strb	r2, [r3, #24]
+	return (((Oscctrl *)hw)->STATUS.reg & OSCCTRL_STATUS_OSC16MRDY_Msk) >> OSCCTRL_STATUS_OSC16MRDY_Pos;
+    16b2:	f241 0200 	movw	r2, #4096	; 0x1000
+    16b6:	f2c4 0200 	movt	r2, #16384	; 0x4000
+#endif
+#endif
+
+#if CONF_OSC16M_CONFIG == 1
+#if CONF_OSC16M_ENABLE == 1
+	while (!hri_oscctrl_get_STATUS_OSC16MRDY_bit(hw))
+    16ba:	2110      	movs	r1, #16
+    16bc:	6913      	ldr	r3, [r2, #16]
+    16be:	4219      	tst	r1, r3
+    16c0:	d0fc      	beq.n	16bc <_oscctrl_init_sources+0x16>
+	((Oscctrl *)hw)->OSC16MCTRL.reg |= OSCCTRL_OSC16MCTRL_ONDEMAND_Msk;
+    16c2:	f241 0300 	movw	r3, #4096	; 0x1000
+    16c6:	f2c4 0300 	movt	r3, #16384	; 0x4000
+    16ca:	7e1a      	ldrb	r2, [r3, #24]
+    16cc:	2180      	movs	r1, #128	; 0x80
+    16ce:	430a      	orrs	r2, r1
+    16d0:	761a      	strb	r2, [r3, #24]
+#if CONF_OSC16M_ONDEMAND == 1
+	hri_oscctrl_set_OSC16MCTRL_ONDEMAND_bit(hw);
+#endif
+#endif
+	(void)hw;
+}
+    16d2:	4770      	bx	lr
+
+000016d4 <_oscctrl_init_referenced_generators>:
+#if CONF_DFLL_CONFIG == 1
+	while (hri_gclk_read_SYNCBUSY_reg(GCLK))
+		;
+#endif
+	(void)hw, (void)tmp;
+}
+    16d4:	4770      	bx	lr
+
+000016d6 <_set_performance_level>:
+}
+
+static inline hri_pm_plcfg_reg_t hri_pm_get_PLCFG_PLSEL_bf(const void *const hw, hri_pm_plcfg_reg_t mask)
+{
+	uint8_t tmp;
+	tmp = ((Pm *)hw)->PLCFG.reg;
+    16d6:	f240 4300 	movw	r3, #1024	; 0x400
+    16da:	f2c4 0300 	movt	r3, #16384	; 0x4000
+    16de:	789b      	ldrb	r3, [r3, #2]
+/**
+ * \brief Set performance level
+ */
+void _set_performance_level(const uint8_t level)
+{
+	if (hri_pm_get_PLCFG_PLSEL_bf(PM, PM_PLCFG_PLSEL_Msk) != level) {
+    16e0:	2203      	movs	r2, #3
+    16e2:	4013      	ands	r3, r2
+    16e4:	4298      	cmp	r0, r3
+    16e6:	d012      	beq.n	170e <_set_performance_level+0x38>
+	((Pm *)hw)->INTFLAG.reg = mask;
+    16e8:	f240 4200 	movw	r2, #1024	; 0x400
+    16ec:	f2c4 0200 	movt	r2, #16384	; 0x4000
+    16f0:	23ff      	movs	r3, #255	; 0xff
+    16f2:	7193      	strb	r3, [r2, #6]
+
+static inline void hri_pm_write_PLCFG_PLSEL_bf(const void *const hw, hri_pm_plcfg_reg_t data)
+{
+	uint8_t tmp;
+	PM_CRITICAL_SECTION_ENTER();
+	tmp = ((Pm *)hw)->PLCFG.reg;
+    16f4:	7893      	ldrb	r3, [r2, #2]
+	tmp &= ~PM_PLCFG_PLSEL_Msk;
+    16f6:	2103      	movs	r1, #3
+    16f8:	438b      	bics	r3, r1
+	tmp |= PM_PLCFG_PLSEL(data);
+    16fa:	4008      	ands	r0, r1
+    16fc:	4318      	orrs	r0, r3
+	((Pm *)hw)->PLCFG.reg = tmp;
+    16fe:	7090      	strb	r0, [r2, #2]
+	return ((Pm *)hw)->INTFLAG.reg;
+    1700:	f240 4200 	movw	r2, #1024	; 0x400
+    1704:	f2c4 0200 	movt	r2, #16384	; 0x4000
+    1708:	7993      	ldrb	r3, [r2, #6]
+		hri_pm_clear_INTFLAG_reg(PM, 0xFF);
+		hri_pm_write_PLCFG_PLSEL_bf(PM, level);
+		while (!hri_pm_read_INTFLAG_reg(PM))
+    170a:	2b00      	cmp	r3, #0
+    170c:	d0fc      	beq.n	1708 <_set_performance_level+0x32>
+			;
+	}
+}
+    170e:	4770      	bx	lr
+
+00001710 <main>:
+
+static uint8_t iv[16] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f };
+static uint8_t iv2[16] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f };
+
+int main(void)
+{
+    1710:	b5f0      	push	{r4, r5, r6, r7, lr}
+    1712:	46de      	mov	lr, fp
+    1714:	4657      	mov	r7, sl
+    1716:	464e      	mov	r6, r9
+    1718:	4645      	mov	r5, r8
+    171a:	b5e0      	push	{r5, r6, r7, lr}
+    171c:	b085      	sub	sp, #20
+	/* Initializes MCU, drivers and middleware */
+	atmel_start_init();
+    171e:	f241 23f9 	movw	r3, #4857	; 0x12f9
+    1722:	f2c0 0300 	movt	r3, #0
+    1726:	4798      	blx	r3
+	
+	mbedtls_aes_setkey_enc( &aes, key, AES_KEY_SIZE );
+    1728:	f244 445c 	movw	r4, #17500	; 0x445c
+    172c:	f2c0 0400 	movt	r4, #0
+    1730:	f240 008c 	movw	r0, #140	; 0x8c
+    1734:	f2c2 0000 	movt	r0, #8192	; 0x2000
+    1738:	2280      	movs	r2, #128	; 0x80
+    173a:	0021      	movs	r1, r4
+    173c:	f240 333d 	movw	r3, #829	; 0x33d
+    1740:	f2c0 0300 	movt	r3, #0
+    1744:	4798      	blx	r3
+	mbedtls_aes_setkey_dec( &aes2, key, AES_KEY_SIZE );
+    1746:	f240 108c 	movw	r0, #396	; 0x18c
+    174a:	f2c2 0000 	movt	r0, #8192	; 0x2000
+    174e:	3018      	adds	r0, #24
+    1750:	2280      	movs	r2, #128	; 0x80
+    1752:	0021      	movs	r1, r4
+    1754:	f240 43fb 	movw	r3, #1275	; 0x4fb
+    1758:	f2c0 0300 	movt	r3, #0
+    175c:	4798      	blx	r3
+	
+	// Allocate MAX_AES_BLOCKS * MBEDTLS_AES_BLOCK_SIZE bytes.
+	uint8_t *input = malloc(sizeof(uint8_t) * MAX_NUM_BYTES);
+    175e:	f241 7070 	movw	r0, #6000	; 0x1770
+    1762:	f641 230d 	movw	r3, #6669	; 0x1a0d
+    1766:	f2c0 0300 	movt	r3, #0
+    176a:	4798      	blx	r3
+    176c:	9002      	str	r0, [sp, #8]
+	
+	delay_ms(10);
+    176e:	200a      	movs	r0, #10
+    1770:	f241 4331 	movw	r3, #5169	; 0x1431
+    1774:	f2c0 0300 	movt	r3, #0
+    1778:	4798      	blx	r3
+	
+	for (size_t num_bytes = MIN_NUM_BYTES; num_bytes <= MAX_NUM_BYTES; num_bytes += STEP_SIZE) {
+    177a:	f240 0a10 	movw	sl, #16
+		for (size_t byte = 0; byte < num_bytes; byte++) {
+			input[byte] = byte; // Will wrap at 0xff.
+			//input[byte] = 0xfa;
+		}
+
+		START_MEASURE(DGI_GPIO2);
+    177e:	f241 4331 	movw	r3, #5169	; 0x1431
+    1782:	f2c0 0300 	movt	r3, #0
+    1786:	9301      	str	r3, [sp, #4]
+		STOP_MEASURE(DGI_GPIO3);
+		
+		START_MEASURE(DGI_GPIO2);
+		// Decrypt in place.
+		for (size_t count = 0;  count < num_bytes/STEP_SIZE; count++) {
+			mbedtls_aes_crypt_ecb( &aes2, MBEDTLS_AES_DECRYPT,input + (count*STEP_SIZE), input + (count*STEP_SIZE));
+    1788:	f240 138c 	movw	r3, #396	; 0x18c
+    178c:	f2c2 0300 	movt	r3, #8192	; 0x2000
+    1790:	3318      	adds	r3, #24
+    1792:	9300      	str	r3, [sp, #0]
+    1794:	e065      	b.n	1862 <main+0x152>
+			FLASH_0_write_page(target_addr + page_index * FLASH_PAGE_SIZE, &input[page_index * FLASH_PAGE_SIZE], FLASH_PAGE_SIZE);
+    1796:	2240      	movs	r2, #64	; 0x40
+    1798:	0039      	movs	r1, r7
+    179a:	0030      	movs	r0, r6
+    179c:	47c8      	blx	r9
+		for (uint32_t page_index = 0; page_index * FLASH_PAGE_SIZE < num_bytes; page_index += 1) {
+    179e:	3401      	adds	r4, #1
+    17a0:	3640      	adds	r6, #64	; 0x40
+    17a2:	3740      	adds	r7, #64	; 0x40
+    17a4:	01a3      	lsls	r3, r4, #6
+    17a6:	42ab      	cmp	r3, r5
+    17a8:	d205      	bcs.n	17b6 <main+0xa6>
+			if (page_index % NVMCTRL_ROW_PAGES == 0) {
+    17aa:	2303      	movs	r3, #3
+    17ac:	4223      	tst	r3, r4
+    17ae:	d1f2      	bne.n	1796 <main+0x86>
+				FLASH_0_erase_row(target_addr + page_index * FLASH_PAGE_SIZE);
+    17b0:	0030      	movs	r0, r6
+    17b2:	47d8      	blx	fp
+    17b4:	e7ef      	b.n	1796 <main+0x86>
+    17b6:	002b      	movs	r3, r5
+    17b8:	4655      	mov	r5, sl
+    17ba:	469a      	mov	sl, r3
+	((Port *)hw)->Group[submodule_index].OUTCLR.reg = mask;
+    17bc:	f240 2300 	movw	r3, #512	; 0x200
+    17c0:	f2c6 0300 	movt	r3, #24576	; 0x6000
+    17c4:	2280      	movs	r2, #128	; 0x80
+    17c6:	0512      	lsls	r2, r2, #20
+    17c8:	615a      	str	r2, [r3, #20]
+		STOP_MEASURE(DGI_GPIO3);
+    17ca:	2002      	movs	r0, #2
+    17cc:	9c01      	ldr	r4, [sp, #4]
+    17ce:	47a0      	blx	r4
+		SLEEP
+    17d0:	2002      	movs	r0, #2
+    17d2:	47a0      	blx	r4
+    17d4:	9b02      	ldr	r3, [sp, #8]
+    17d6:	4453      	add	r3, sl
+    17d8:	001a      	movs	r2, r3
+			input[byte] = 0xfe;
+    17da:	23fe      	movs	r3, #254	; 0xfe
+    17dc:	702b      	strb	r3, [r5, #0]
+    17de:	3501      	adds	r5, #1
+		for (size_t byte = 0; byte < num_bytes; byte++) {
+    17e0:	4295      	cmp	r5, r2
+    17e2:	d1fb      	bne.n	17dc <main+0xcc>
+		START_MEASURE(DGI_GPIO3);
+    17e4:	2002      	movs	r0, #2
+    17e6:	9e01      	ldr	r6, [sp, #4]
+    17e8:	47b0      	blx	r6
+	((Port *)hw)->Group[submodule_index].OUTSET.reg = mask;
+    17ea:	f240 2400 	movw	r4, #512	; 0x200
+    17ee:	f2c6 0400 	movt	r4, #24576	; 0x6000
+    17f2:	2580      	movs	r5, #128	; 0x80
+    17f4:	052d      	lsls	r5, r5, #20
+    17f6:	61a5      	str	r5, [r4, #24]
+		FLASH_0_read(target_addr, input, num_bytes);
+    17f8:	4652      	mov	r2, sl
+    17fa:	9f02      	ldr	r7, [sp, #8]
+    17fc:	0039      	movs	r1, r7
+    17fe:	9803      	ldr	r0, [sp, #12]
+    1800:	f241 633b 	movw	r3, #5691	; 0x163b
+    1804:	f2c0 0300 	movt	r3, #0
+    1808:	4798      	blx	r3
+	((Port *)hw)->Group[submodule_index].OUTCLR.reg = mask;
+    180a:	6165      	str	r5, [r4, #20]
+		STOP_MEASURE(DGI_GPIO3);
+    180c:	2002      	movs	r0, #2
+    180e:	47b0      	blx	r6
+		START_MEASURE(DGI_GPIO2);
+    1810:	2002      	movs	r0, #2
+    1812:	47b0      	blx	r6
+	((Port *)hw)->Group[submodule_index].OUTSET.reg = mask;
+    1814:	2380      	movs	r3, #128	; 0x80
+    1816:	041b      	lsls	r3, r3, #16
+    1818:	61a3      	str	r3, [r4, #24]
+		for (size_t count = 0;  count < num_bytes/STEP_SIZE; count++) {
+    181a:	4643      	mov	r3, r8
+    181c:	b17b      	cbz	r3, 183e <main+0x12e>
+    181e:	003c      	movs	r4, r7
+    1820:	2500      	movs	r5, #0
+			mbedtls_aes_crypt_ecb( &aes2, MBEDTLS_AES_DECRYPT,input + (count*STEP_SIZE), input + (count*STEP_SIZE));
+    1822:	f241 26bd 	movw	r6, #4797	; 0x12bd
+    1826:	f2c0 0600 	movt	r6, #0
+    182a:	4647      	mov	r7, r8
+    182c:	0023      	movs	r3, r4
+    182e:	0022      	movs	r2, r4
+    1830:	2100      	movs	r1, #0
+    1832:	9800      	ldr	r0, [sp, #0]
+    1834:	47b0      	blx	r6
+		for (size_t count = 0;  count < num_bytes/STEP_SIZE; count++) {
+    1836:	3501      	adds	r5, #1
+    1838:	3410      	adds	r4, #16
+    183a:	42bd      	cmp	r5, r7
+    183c:	d1f6      	bne.n	182c <main+0x11c>
+	((Port *)hw)->Group[submodule_index].OUTCLR.reg = mask;
+    183e:	f240 2300 	movw	r3, #512	; 0x200
+    1842:	f2c6 0300 	movt	r3, #24576	; 0x6000
+    1846:	2280      	movs	r2, #128	; 0x80
+    1848:	0412      	lsls	r2, r2, #16
+    184a:	615a      	str	r2, [r3, #20]
+		}
+		//mbedtls_aes_crypt_ecb( &aes2, MBEDTLS_AES_DECRYPT, input, input);
+		STOP_MEASURE(DGI_GPIO2);
+    184c:	2002      	movs	r0, #2
+    184e:	9b01      	ldr	r3, [sp, #4]
+    1850:	4798      	blx	r3
+	for (size_t num_bytes = MIN_NUM_BYTES; num_bytes <= MAX_NUM_BYTES; num_bytes += STEP_SIZE) {
+    1852:	f240 0c10 	movw	ip, #16
+    1856:	44e2      	add	sl, ip
+    1858:	f241 7380 	movw	r3, #6016	; 0x1780
+    185c:	459a      	cmp	sl, r3
+    185e:	d100      	bne.n	1862 <main+0x152>
+    1860:	e088      	b.n	1974 <main+0x264>
+		for (size_t byte = 0; byte < num_bytes; byte++) {
+    1862:	2300      	movs	r3, #0
+    1864:	4652      	mov	r2, sl
+    1866:	2a00      	cmp	r2, #0
+    1868:	d050      	beq.n	190c <main+0x1fc>
+    186a:	9a02      	ldr	r2, [sp, #8]
+    186c:	4651      	mov	r1, sl
+			input[byte] = byte; // Will wrap at 0xff.
+    186e:	54d3      	strb	r3, [r2, r3]
+		for (size_t byte = 0; byte < num_bytes; byte++) {
+    1870:	3301      	adds	r3, #1
+    1872:	428b      	cmp	r3, r1
+    1874:	d1fb      	bne.n	186e <main+0x15e>
+    1876:	468a      	mov	sl, r1
+		START_MEASURE(DGI_GPIO2);
+    1878:	2002      	movs	r0, #2
+    187a:	9b01      	ldr	r3, [sp, #4]
+    187c:	4798      	blx	r3
+	((Port *)hw)->Group[submodule_index].OUTSET.reg = mask;
+    187e:	f240 2300 	movw	r3, #512	; 0x200
+    1882:	f2c6 0300 	movt	r3, #24576	; 0x6000
+    1886:	2280      	movs	r2, #128	; 0x80
+    1888:	0412      	lsls	r2, r2, #16
+    188a:	619a      	str	r2, [r3, #24]
+		for (size_t count = 0;  count < num_bytes/STEP_SIZE; count++) {
+    188c:	4653      	mov	r3, sl
+    188e:	091b      	lsrs	r3, r3, #4
+    1890:	4698      	mov	r8, r3
+    1892:	b1b3      	cbz	r3, 18c2 <main+0x1b2>
+    1894:	9c02      	ldr	r4, [sp, #8]
+    1896:	2500      	movs	r5, #0
+			mbedtls_aes_crypt_ecb( &aes, MBEDTLS_AES_ENCRYPT,input + (count*STEP_SIZE), input + (count*STEP_SIZE));
+    1898:	f240 078c 	movw	r7, #140	; 0x8c
+    189c:	f2c2 0700 	movt	r7, #8192	; 0x2000
+    18a0:	f241 26bd 	movw	r6, #4797	; 0x12bd
+    18a4:	f2c0 0600 	movt	r6, #0
+    18a8:	46b9      	mov	r9, r7
+    18aa:	0037      	movs	r7, r6
+    18ac:	001e      	movs	r6, r3
+    18ae:	0023      	movs	r3, r4
+    18b0:	0022      	movs	r2, r4
+    18b2:	2101      	movs	r1, #1
+    18b4:	4648      	mov	r0, r9
+    18b6:	47b8      	blx	r7
+		for (size_t count = 0;  count < num_bytes/STEP_SIZE; count++) {
+    18b8:	3501      	adds	r5, #1
+    18ba:	3410      	adds	r4, #16
+    18bc:	42b5      	cmp	r5, r6
+    18be:	d1f6      	bne.n	18ae <main+0x19e>
+    18c0:	46b0      	mov	r8, r6
+	((Port *)hw)->Group[submodule_index].OUTCLR.reg = mask;
+    18c2:	f240 2400 	movw	r4, #512	; 0x200
+    18c6:	f2c6 0400 	movt	r4, #24576	; 0x6000
+    18ca:	2380      	movs	r3, #128	; 0x80
+    18cc:	041b      	lsls	r3, r3, #16
+    18ce:	6163      	str	r3, [r4, #20]
+		STOP_MEASURE(DGI_GPIO2);
+    18d0:	2002      	movs	r0, #2
+    18d2:	9d01      	ldr	r5, [sp, #4]
+    18d4:	47a8      	blx	r5
+		START_MEASURE(DGI_GPIO3);
+    18d6:	2002      	movs	r0, #2
+    18d8:	47a8      	blx	r5
+	((Port *)hw)->Group[submodule_index].OUTSET.reg = mask;
+    18da:	2380      	movs	r3, #128	; 0x80
+    18dc:	051b      	lsls	r3, r3, #20
+    18de:	61a3      	str	r3, [r4, #24]
+		target_addr -= target_addr % NVMCTRL_ROW_SIZE;
+    18e0:	2380      	movs	r3, #128	; 0x80
+    18e2:	025b      	lsls	r3, r3, #9
+    18e4:	4652      	mov	r2, sl
+    18e6:	1a9b      	subs	r3, r3, r2
+    18e8:	22ff      	movs	r2, #255	; 0xff
+    18ea:	4393      	bics	r3, r2
+    18ec:	9303      	str	r3, [sp, #12]
+    18ee:	9f02      	ldr	r7, [sp, #8]
+    18f0:	001e      	movs	r6, r3
+    18f2:	2400      	movs	r4, #0
+				FLASH_0_erase_row(target_addr + page_index * FLASH_PAGE_SIZE);
+    18f4:	f241 5b95 	movw	fp, #5525	; 0x1595
+    18f8:	f2c0 0b00 	movt	fp, #0
+			FLASH_0_write_page(target_addr + page_index * FLASH_PAGE_SIZE, &input[page_index * FLASH_PAGE_SIZE], FLASH_PAGE_SIZE);
+    18fc:	f241 6907 	movw	r9, #5639	; 0x1607
+    1900:	f2c0 0900 	movt	r9, #0
+    1904:	4653      	mov	r3, sl
+    1906:	46ba      	mov	sl, r7
+    1908:	001d      	movs	r5, r3
+    190a:	e74e      	b.n	17aa <main+0x9a>
+		START_MEASURE(DGI_GPIO2);
+    190c:	2002      	movs	r0, #2
+    190e:	9f01      	ldr	r7, [sp, #4]
+    1910:	47b8      	blx	r7
+    1912:	f240 2400 	movw	r4, #512	; 0x200
+    1916:	f2c6 0400 	movt	r4, #24576	; 0x6000
+    191a:	2580      	movs	r5, #128	; 0x80
+    191c:	042d      	lsls	r5, r5, #16
+    191e:	61a5      	str	r5, [r4, #24]
+	((Port *)hw)->Group[submodule_index].OUTCLR.reg = mask;
+    1920:	6165      	str	r5, [r4, #20]
+		STOP_MEASURE(DGI_GPIO2);
+    1922:	2002      	movs	r0, #2
+    1924:	47b8      	blx	r7
+		START_MEASURE(DGI_GPIO3);
+    1926:	2002      	movs	r0, #2
+    1928:	47b8      	blx	r7
+	((Port *)hw)->Group[submodule_index].OUTSET.reg = mask;
+    192a:	2680      	movs	r6, #128	; 0x80
+    192c:	0536      	lsls	r6, r6, #20
+    192e:	61a6      	str	r6, [r4, #24]
+	((Port *)hw)->Group[submodule_index].OUTCLR.reg = mask;
+    1930:	6166      	str	r6, [r4, #20]
+		STOP_MEASURE(DGI_GPIO3);
+    1932:	2002      	movs	r0, #2
+    1934:	47b8      	blx	r7
+		SLEEP
+    1936:	2002      	movs	r0, #2
+    1938:	47b8      	blx	r7
+		START_MEASURE(DGI_GPIO3);
+    193a:	2002      	movs	r0, #2
+    193c:	47b8      	blx	r7
+	((Port *)hw)->Group[submodule_index].OUTSET.reg = mask;
+    193e:	61a6      	str	r6, [r4, #24]
+		target_addr -= target_addr % NVMCTRL_ROW_SIZE;
+    1940:	2080      	movs	r0, #128	; 0x80
+    1942:	0240      	lsls	r0, r0, #9
+    1944:	4653      	mov	r3, sl
+    1946:	1ac0      	subs	r0, r0, r3
+    1948:	23ff      	movs	r3, #255	; 0xff
+    194a:	4398      	bics	r0, r3
+		FLASH_0_read(target_addr, input, num_bytes);
+    194c:	4652      	mov	r2, sl
+    194e:	9902      	ldr	r1, [sp, #8]
+    1950:	f241 633b 	movw	r3, #5691	; 0x163b
+    1954:	f2c0 0300 	movt	r3, #0
+    1958:	4798      	blx	r3
+	((Port *)hw)->Group[submodule_index].OUTCLR.reg = mask;
+    195a:	6166      	str	r6, [r4, #20]
+		STOP_MEASURE(DGI_GPIO3);
+    195c:	2002      	movs	r0, #2
+    195e:	47b8      	blx	r7
+		START_MEASURE(DGI_GPIO2);
+    1960:	2002      	movs	r0, #2
+    1962:	47b8      	blx	r7
+	((Port *)hw)->Group[submodule_index].OUTSET.reg = mask;
+    1964:	61a5      	str	r5, [r4, #24]
+	((Port *)hw)->Group[submodule_index].OUTCLR.reg = mask;
+    1966:	6165      	str	r5, [r4, #20]
+		STOP_MEASURE(DGI_GPIO2);
+    1968:	2002      	movs	r0, #2
+    196a:	47b8      	blx	r7
+	for (size_t num_bytes = MIN_NUM_BYTES; num_bytes <= MAX_NUM_BYTES; num_bytes += STEP_SIZE) {
+    196c:	f240 0c10 	movw	ip, #16
+    1970:	44e2      	add	sl, ip
+    1972:	e776      	b.n	1862 <main+0x152>
+		//	}
+		//}
+	}
+	
+	// Free the memory
+	free(input);
+    1974:	9802      	ldr	r0, [sp, #8]
+    1976:	f641 2321 	movw	r3, #6689	; 0x1a21
+    197a:	f2c0 0300 	movt	r3, #0
+    197e:	4798      	blx	r3
+
+	END_MEASUREMENT;
+    1980:	200a      	movs	r0, #10
+    1982:	f241 4331 	movw	r3, #5169	; 0x1431
+    1986:	f2c0 0300 	movt	r3, #0
+    198a:	4798      	blx	r3
+	((Port *)hw)->Group[submodule_index].OUTSET.reg = mask;
+    198c:	f240 2300 	movw	r3, #512	; 0x200
+    1990:	f2c6 0300 	movt	r3, #24576	; 0x6000
+    1994:	f240 4200 	movw	r2, #1024	; 0x400
+    1998:	619a      	str	r2, [r3, #24]
+    199a:	f640 0200 	movw	r2, #2048	; 0x800
+    199e:	619a      	str	r2, [r3, #24]
+    19a0:	2280      	movs	r2, #128	; 0x80
+    19a2:	0412      	lsls	r2, r2, #16
+    19a4:	619a      	str	r2, [r3, #24]
+    19a6:	2280      	movs	r2, #128	; 0x80
+    19a8:	0512      	lsls	r2, r2, #20
+    19aa:	619a      	str	r2, [r3, #24]
+}
+    19ac:	2000      	movs	r0, #0
+    19ae:	b005      	add	sp, #20
+    19b0:	bc3c      	pop	{r2, r3, r4, r5}
+    19b2:	4690      	mov	r8, r2
+    19b4:	4699      	mov	r9, r3
+    19b6:	46a2      	mov	sl, r4
+    19b8:	46ab      	mov	fp, r5
+    19ba:	bdf0      	pop	{r4, r5, r6, r7, pc}
+
+000019bc <__libc_init_array>:
+    19bc:	b570      	push	{r4, r5, r6, lr}
+    19be:	2500      	movs	r5, #0
+    19c0:	4b0e      	ldr	r3, [pc, #56]	; (19fc <__libc_init_array+0x40>)
+    19c2:	4c0f      	ldr	r4, [pc, #60]	; (1a00 <__libc_init_array+0x44>)
+    19c4:	1ae4      	subs	r4, r4, r3
+    19c6:	10a4      	asrs	r4, r4, #2
+    19c8:	42a5      	cmp	r5, r4
+    19ca:	d109      	bne.n	19e0 <__libc_init_array+0x24>
+    19cc:	2500      	movs	r5, #0
+    19ce:	f002 fd7d 	bl	44cc <_init>
+    19d2:	4c0c      	ldr	r4, [pc, #48]	; (1a04 <__libc_init_array+0x48>)
+    19d4:	4b0c      	ldr	r3, [pc, #48]	; (1a08 <__libc_init_array+0x4c>)
+    19d6:	1ae4      	subs	r4, r4, r3
+    19d8:	10a4      	asrs	r4, r4, #2
+    19da:	42a5      	cmp	r5, r4
+    19dc:	d107      	bne.n	19ee <__libc_init_array+0x32>
+    19de:	bd70      	pop	{r4, r5, r6, pc}
+    19e0:	4a06      	ldr	r2, [pc, #24]	; (19fc <__libc_init_array+0x40>)
+    19e2:	00ab      	lsls	r3, r5, #2
+    19e4:	189b      	adds	r3, r3, r2
+    19e6:	681b      	ldr	r3, [r3, #0]
+    19e8:	4798      	blx	r3
+    19ea:	3501      	adds	r5, #1
+    19ec:	e7ec      	b.n	19c8 <__libc_init_array+0xc>
+    19ee:	4a06      	ldr	r2, [pc, #24]	; (1a08 <__libc_init_array+0x4c>)
+    19f0:	00ab      	lsls	r3, r5, #2
+    19f2:	189b      	adds	r3, r3, r2
+    19f4:	681b      	ldr	r3, [r3, #0]
+    19f6:	4798      	blx	r3
+    19f8:	3501      	adds	r5, #1
+    19fa:	e7ee      	b.n	19da <__libc_init_array+0x1e>
+    19fc:	000044d8 	.word	0x000044d8
+    1a00:	000044d8 	.word	0x000044d8
+    1a04:	000044dc 	.word	0x000044dc
+    1a08:	000044d8 	.word	0x000044d8
+
+00001a0c <malloc>:
+    1a0c:	b510      	push	{r4, lr}
+    1a0e:	4b03      	ldr	r3, [pc, #12]	; (1a1c <malloc+0x10>)
+    1a10:	0001      	movs	r1, r0
+    1a12:	6818      	ldr	r0, [r3, #0]
+    1a14:	f000 f860 	bl	1ad8 <_malloc_r>
+    1a18:	bd10      	pop	{r4, pc}
+    1a1a:	46c0      	nop			; (mov r8, r8)
+    1a1c:	20000004 	.word	0x20000004
+
+00001a20 <free>:
+    1a20:	b510      	push	{r4, lr}
+    1a22:	4b03      	ldr	r3, [pc, #12]	; (1a30 <free+0x10>)
+    1a24:	0001      	movs	r1, r0
+    1a26:	6818      	ldr	r0, [r3, #0]
+    1a28:	f000 f80c 	bl	1a44 <_free_r>
+    1a2c:	bd10      	pop	{r4, pc}
+    1a2e:	46c0      	nop			; (mov r8, r8)
+    1a30:	20000004 	.word	0x20000004
+
+00001a34 <memset>:
+    1a34:	0003      	movs	r3, r0
+    1a36:	1882      	adds	r2, r0, r2
+    1a38:	4293      	cmp	r3, r2
+    1a3a:	d100      	bne.n	1a3e <memset+0xa>
+    1a3c:	4770      	bx	lr
+    1a3e:	7019      	strb	r1, [r3, #0]
+    1a40:	3301      	adds	r3, #1
+    1a42:	e7f9      	b.n	1a38 <memset+0x4>
+
+00001a44 <_free_r>:
+    1a44:	b570      	push	{r4, r5, r6, lr}
+    1a46:	0005      	movs	r5, r0
+    1a48:	b181      	cbz	r1, 1a6c <_free_r+0x28>
+    1a4a:	1f0c      	subs	r4, r1, #4
+    1a4c:	6823      	ldr	r3, [r4, #0]
+    1a4e:	2b00      	cmp	r3, #0
+    1a50:	da00      	bge.n	1a54 <_free_r+0x10>
+    1a52:	18e4      	adds	r4, r4, r3
+    1a54:	0028      	movs	r0, r5
+    1a56:	f000 f8ad 	bl	1bb4 <__malloc_lock>
+    1a5a:	4a1e      	ldr	r2, [pc, #120]	; (1ad4 <_free_r+0x90>)
+    1a5c:	6813      	ldr	r3, [r2, #0]
+    1a5e:	0011      	movs	r1, r2
+    1a60:	b92b      	cbnz	r3, 1a6e <_free_r+0x2a>
+    1a62:	6063      	str	r3, [r4, #4]
+    1a64:	6014      	str	r4, [r2, #0]
+    1a66:	0028      	movs	r0, r5
+    1a68:	f000 f8a5 	bl	1bb6 <__malloc_unlock>
+    1a6c:	bd70      	pop	{r4, r5, r6, pc}
+    1a6e:	42a3      	cmp	r3, r4
+    1a70:	d90b      	bls.n	1a8a <_free_r+0x46>
+    1a72:	6822      	ldr	r2, [r4, #0]
+    1a74:	18a0      	adds	r0, r4, r2
+    1a76:	4283      	cmp	r3, r0
+    1a78:	d103      	bne.n	1a82 <_free_r+0x3e>
+    1a7a:	6818      	ldr	r0, [r3, #0]
+    1a7c:	685b      	ldr	r3, [r3, #4]
+    1a7e:	1882      	adds	r2, r0, r2
+    1a80:	6022      	str	r2, [r4, #0]
+    1a82:	6063      	str	r3, [r4, #4]
+    1a84:	600c      	str	r4, [r1, #0]
+    1a86:	e7ee      	b.n	1a66 <_free_r+0x22>
+    1a88:	0013      	movs	r3, r2
+    1a8a:	685a      	ldr	r2, [r3, #4]
+    1a8c:	b10a      	cbz	r2, 1a92 <_free_r+0x4e>
+    1a8e:	42a2      	cmp	r2, r4
+    1a90:	d9fa      	bls.n	1a88 <_free_r+0x44>
+    1a92:	6819      	ldr	r1, [r3, #0]
+    1a94:	1858      	adds	r0, r3, r1
+    1a96:	42a0      	cmp	r0, r4
+    1a98:	d10b      	bne.n	1ab2 <_free_r+0x6e>
+    1a9a:	6820      	ldr	r0, [r4, #0]
+    1a9c:	1809      	adds	r1, r1, r0
+    1a9e:	1858      	adds	r0, r3, r1
+    1aa0:	6019      	str	r1, [r3, #0]
+    1aa2:	4282      	cmp	r2, r0
+    1aa4:	d1df      	bne.n	1a66 <_free_r+0x22>
+    1aa6:	6810      	ldr	r0, [r2, #0]
+    1aa8:	6852      	ldr	r2, [r2, #4]
+    1aaa:	1841      	adds	r1, r0, r1
+    1aac:	6019      	str	r1, [r3, #0]
+    1aae:	605a      	str	r2, [r3, #4]
+    1ab0:	e7d9      	b.n	1a66 <_free_r+0x22>
+    1ab2:	42a0      	cmp	r0, r4
+    1ab4:	d902      	bls.n	1abc <_free_r+0x78>
+    1ab6:	230c      	movs	r3, #12
+    1ab8:	602b      	str	r3, [r5, #0]
+    1aba:	e7d4      	b.n	1a66 <_free_r+0x22>
+    1abc:	6821      	ldr	r1, [r4, #0]
+    1abe:	1860      	adds	r0, r4, r1
+    1ac0:	4282      	cmp	r2, r0
+    1ac2:	d103      	bne.n	1acc <_free_r+0x88>
+    1ac4:	6810      	ldr	r0, [r2, #0]
+    1ac6:	6852      	ldr	r2, [r2, #4]
+    1ac8:	1841      	adds	r1, r0, r1
+    1aca:	6021      	str	r1, [r4, #0]
+    1acc:	6062      	str	r2, [r4, #4]
+    1ace:	605c      	str	r4, [r3, #4]
+    1ad0:	e7c9      	b.n	1a66 <_free_r+0x22>
+    1ad2:	46c0      	nop			; (mov r8, r8)
+    1ad4:	200002bc 	.word	0x200002bc
+
+00001ad8 <_malloc_r>:
+    1ad8:	2303      	movs	r3, #3
+    1ada:	b570      	push	{r4, r5, r6, lr}
+    1adc:	1ccd      	adds	r5, r1, #3
+    1ade:	439d      	bics	r5, r3
+    1ae0:	3508      	adds	r5, #8
+    1ae2:	0006      	movs	r6, r0
+    1ae4:	2d0c      	cmp	r5, #12
+    1ae6:	d21c      	bcs.n	1b22 <_malloc_r+0x4a>
+    1ae8:	250c      	movs	r5, #12
+    1aea:	42a9      	cmp	r1, r5
+    1aec:	d81b      	bhi.n	1b26 <_malloc_r+0x4e>
+    1aee:	0030      	movs	r0, r6
+    1af0:	f000 f860 	bl	1bb4 <__malloc_lock>
+    1af4:	4a25      	ldr	r2, [pc, #148]	; (1b8c <_malloc_r+0xb4>)
+    1af6:	6814      	ldr	r4, [r2, #0]
+    1af8:	0021      	movs	r1, r4
+    1afa:	b9c1      	cbnz	r1, 1b2e <_malloc_r+0x56>
+    1afc:	4c24      	ldr	r4, [pc, #144]	; (1b90 <_malloc_r+0xb8>)
+    1afe:	6823      	ldr	r3, [r4, #0]
+    1b00:	b91b      	cbnz	r3, 1b0a <_malloc_r+0x32>
+    1b02:	0030      	movs	r0, r6
+    1b04:	f000 f846 	bl	1b94 <_sbrk_r>
+    1b08:	6020      	str	r0, [r4, #0]
+    1b0a:	0029      	movs	r1, r5
+    1b0c:	0030      	movs	r0, r6
+    1b0e:	f000 f841 	bl	1b94 <_sbrk_r>
+    1b12:	1c43      	adds	r3, r0, #1
+    1b14:	d12d      	bne.n	1b72 <_malloc_r+0x9a>
+    1b16:	230c      	movs	r3, #12
+    1b18:	0030      	movs	r0, r6
+    1b1a:	6033      	str	r3, [r6, #0]
+    1b1c:	f000 f84b 	bl	1bb6 <__malloc_unlock>
+    1b20:	e003      	b.n	1b2a <_malloc_r+0x52>
+    1b22:	2d00      	cmp	r5, #0
+    1b24:	dae1      	bge.n	1aea <_malloc_r+0x12>
+    1b26:	230c      	movs	r3, #12
+    1b28:	6033      	str	r3, [r6, #0]
+    1b2a:	2000      	movs	r0, #0
+    1b2c:	bd70      	pop	{r4, r5, r6, pc}
+    1b2e:	680b      	ldr	r3, [r1, #0]
+    1b30:	1b5b      	subs	r3, r3, r5
+    1b32:	d41b      	bmi.n	1b6c <_malloc_r+0x94>
+    1b34:	2b0b      	cmp	r3, #11
+    1b36:	d903      	bls.n	1b40 <_malloc_r+0x68>
+    1b38:	600b      	str	r3, [r1, #0]
+    1b3a:	18cc      	adds	r4, r1, r3
+    1b3c:	6025      	str	r5, [r4, #0]
+    1b3e:	e003      	b.n	1b48 <_malloc_r+0x70>
+    1b40:	428c      	cmp	r4, r1
+    1b42:	d10f      	bne.n	1b64 <_malloc_r+0x8c>
+    1b44:	6863      	ldr	r3, [r4, #4]
+    1b46:	6013      	str	r3, [r2, #0]
+    1b48:	0030      	movs	r0, r6
+    1b4a:	f000 f834 	bl	1bb6 <__malloc_unlock>
+    1b4e:	0020      	movs	r0, r4
+    1b50:	2207      	movs	r2, #7
+    1b52:	300b      	adds	r0, #11
+    1b54:	1d23      	adds	r3, r4, #4
+    1b56:	4390      	bics	r0, r2
+    1b58:	1ac3      	subs	r3, r0, r3
+    1b5a:	2b00      	cmp	r3, #0
+    1b5c:	d0e6      	beq.n	1b2c <_malloc_r+0x54>
+    1b5e:	425a      	negs	r2, r3
+    1b60:	50e2      	str	r2, [r4, r3]
+    1b62:	e7e3      	b.n	1b2c <_malloc_r+0x54>
+    1b64:	684b      	ldr	r3, [r1, #4]
+    1b66:	6063      	str	r3, [r4, #4]
+    1b68:	000c      	movs	r4, r1
+    1b6a:	e7ed      	b.n	1b48 <_malloc_r+0x70>
+    1b6c:	000c      	movs	r4, r1
+    1b6e:	6849      	ldr	r1, [r1, #4]
+    1b70:	e7c3      	b.n	1afa <_malloc_r+0x22>
+    1b72:	2303      	movs	r3, #3
+    1b74:	1cc4      	adds	r4, r0, #3
+    1b76:	439c      	bics	r4, r3
+    1b78:	42a0      	cmp	r0, r4
+    1b7a:	d0df      	beq.n	1b3c <_malloc_r+0x64>
+    1b7c:	1a21      	subs	r1, r4, r0
+    1b7e:	0030      	movs	r0, r6
+    1b80:	f000 f808 	bl	1b94 <_sbrk_r>
+    1b84:	1c43      	adds	r3, r0, #1
+    1b86:	d1d9      	bne.n	1b3c <_malloc_r+0x64>
+    1b88:	e7c5      	b.n	1b16 <_malloc_r+0x3e>
+    1b8a:	46c0      	nop			; (mov r8, r8)
+    1b8c:	200002bc 	.word	0x200002bc
+    1b90:	200002c0 	.word	0x200002c0
+
+00001b94 <_sbrk_r>:
+    1b94:	2300      	movs	r3, #0
+    1b96:	b570      	push	{r4, r5, r6, lr}
+    1b98:	4c05      	ldr	r4, [pc, #20]	; (1bb0 <_sbrk_r+0x1c>)
+    1b9a:	0005      	movs	r5, r0
+    1b9c:	0008      	movs	r0, r1
+    1b9e:	6023      	str	r3, [r4, #0]
+    1ba0:	f7ff fc59 	bl	1456 <_sbrk>
+    1ba4:	1c43      	adds	r3, r0, #1
+    1ba6:	d102      	bne.n	1bae <_sbrk_r+0x1a>
+    1ba8:	6823      	ldr	r3, [r4, #0]
+    1baa:	b103      	cbz	r3, 1bae <_sbrk_r+0x1a>
+    1bac:	602b      	str	r3, [r5, #0]
+    1bae:	bd70      	pop	{r4, r5, r6, pc}
+    1bb0:	200002c4 	.word	0x200002c4
+
+00001bb4 <__malloc_lock>:
+    1bb4:	4770      	bx	lr
+
+00001bb6 <__malloc_unlock>:
+    1bb6:	4770      	bx	lr
+
+00001bb8 <RCON>:
+    1bb8:	0001 0000 0002 0000 0004 0000 0008 0000     ................
+    1bc8:	0010 0000 0020 0000 0040 0000 0080 0000     .... ...@.......
+    1bd8:	001b 0000 0036 0000                         ....6...
+
+00001be0 <FSb>:
+    1be0:	7c63 7b77 6bf2 c56f 0130 2b67 d7fe 76ab     c|w{.ko.0.g+...v
+    1bf0:	82ca 7dc9 59fa f047 d4ad afa2 a49c c072     ...}.YG.......r.
+    1c00:	fdb7 2693 3f36 ccf7 a534 f1e5 d871 1531     ...&6?..4...q.1.
+    1c10:	c704 c323 9618 9a05 1207 e280 27eb 75b2     ..#..........'.u
+    1c20:	8309 1a2c 6e1b a05a 3b52 b3d6 e329 842f     ..,..nZ.R;..)./.
+    1c30:	d153 ed00 fc20 5bb1 cb6a 39be 4c4a cf58     S... ..[j..9JLX.
+    1c40:	efd0 fbaa 4d43 8533 f945 7f02 3c50 a89f     ....CM3.E...P<..
+    1c50:	a351 8f40 9d92 f538 b6bc 21da ff10 d2f3     Q.@...8....!....
+    1c60:	0ccd ec13 975f 1744 a7c4 3d7e 5d64 7319     ...._.D...~=d].s
+    1c70:	8160 dc4f 2a22 8890 ee46 14b8 5ede db0b     `.O."*..F....^..
+    1c80:	32e0 0a3a 0649 5c24 d3c2 62ac 9591 79e4     .2:.I.$\...b...y
+    1c90:	c8e7 6d37 d58d a94e 566c eaf4 7a65 08ae     ..7m..N.lV..ez..
+    1ca0:	78ba 2e25 a61c c6b4 dde8 1f74 bd4b 8a8b     .x%.......t.K...
+    1cb0:	3e70 66b5 0348 0ef6 3561 b957 c186 9e1d     p>.fH...a5W.....
+    1cc0:	f8e1 1198 d969 948e 1e9b e987 55ce df28     ....i........U(.
+    1cd0:	a18c 0d89 e6bf 6842 9941 0f2d 54b0 16bb     ......BhA.-..T..
+
+00001ce0 <RT0>:
+    1ce0:	f451 50a7 417e 5365 171a c3a4 273a 965e     Q..P~AeS....:'^.
+    1cf0:	ab3b cb6b 9d1f f145 faac ab58 e34b 9303     ;.k...E...X.K...
+    1d00:	3020 55fa 76ad f66d cc88 9176 02f5 254c      0.U.vm...v...L%
+    1d10:	e54f fcd7 2ac5 d7cb 3526 8044 62b5 8fa3     O....*..&5D..b..
+    1d20:	b1de 495a ba25 671b ea45 980e fe5d e1c0     ..ZI%..gE...]...
+    1d30:	2fc3 0275 4c81 12f0 468d a397 d36b c6f9     ./u..L...F..k...
+    1d40:	8f03 e75f 9215 959c 6dbf eb7a 5295 da59     .._......mz..RY.
+    1d50:	bed4 2d83 7458 d321 e049 2969 c98e 44c8     ...-Xt!.I.i)...D
+    1d60:	c275 6a89 8ef4 7879 5899 6b3e b927 dd71     u..j..yx.X>k'.q.
+    1d70:	e1be b64f 88f0 17ad 20c9 66ac ce7d b43a     ..O...... .f}.:.
+    1d80:	df63 184a 1ae5 8231 5197 6033 5362 457f     c.J...1..Q3`bS.E
+    1d90:	64b1 e077 6bbb 84ae 81fe 1ca0 08f9 942b     .dw..k........+.
+    1da0:	4870 5868 458f 19fd de94 876c 7b52 b7f8     pHhX.E....l.R{..
+    1db0:	73ab 23d3 4b72 e202 1fe3 578f 5566 2aab     .s.#rK.....WfU.*
+    1dc0:	ebb2 0728 b52f 03c2 c586 9a7b 37d3 a508     ..(./.....{..7..
+    1dd0:	2830 f287 bf23 b2a5 0302 ba6a 16ed 5c82     0(..#.....j....\
+    1de0:	cf8a 2b1c 79a7 92b4 07f3 f0f2 694e a1e2     ...+.y......Ni..
+    1df0:	da65 cdf4 0506 d5be 34d1 1f62 a6c4 8afe     e........4b.....
+    1e00:	2e34 9d53 f3a2 a055 8a05 32e1 f6a4 75eb     4.S...U....2...u
+    1e10:	830b 39ec 6040 aaef 715e 069f 6ebd 5110     ...9@`..^q...n.Q
+    1e20:	213e f98a dd96 3d06 3edd ae05 e64d 46bd     >!.....=.>..M..F
+    1e30:	5491 b58d c471 055d 0604 6fd4 5060 ff15     .T..q.]....o`P..
+    1e40:	9819 24fb bdd6 97e9 4089 cc43 d967 779e     ...$.....@C.g..w
+    1e50:	e8b0 bd42 8907 888b 19e7 385b c879 dbee     ..B.......[8y...
+    1e60:	7ca1 470a 427c e90f 84f8 c91e 0000 0000     .|.G|B..........
+    1e70:	8009 8386 2b32 48ed 111e ac70 5a6c 4e72     ....2+.H..p.lZrN
+    1e80:	0efd fbff 850f 5638 ae3d 1ed5 2d36 2739     ......8V=...6-9'
+    1e90:	0f0a 64d9 5c68 21a6 5b9b d154 3624 3a2e     ...dh\.!.[T.$6.:
+    1ea0:	0a0c b167 5793 0fe7 eeb4 d296 9b1b 9e91     ..g..W..........
+    1eb0:	c080 4fc5 dc61 a220 775a 694b 121c 161a     ...Oa. .ZwKi....
+    1ec0:	93e2 0aba a0c0 e52a 223c 43e0 1b12 1d17     ......*.<".C....
+    1ed0:	090e 0b0d 8bf2 adc7 b62d b9a8 1e14 c8a9     ........-.......
+    1ee0:	f157 8519 75af 4c07 99ee bbdd 7fa3 fd60     W....u.L......`.
+    1ef0:	01f7 9f26 725c bcf5 6644 c53b fb5b 347e     ..&.\r..Df;.[.~4
+    1f00:	438b 7629 23cb dcc6 edb6 68fc e4b8 63f1     .C)v.#.....h...c
+    1f10:	31d7 cadc 6342 1085 9713 4022 c684 2011     .1..Bc...."@... 
+    1f20:	4a85 7d24 bbd2 f83d f9ae 1132 29c7 6da1     .J$}..=...2..).m
+    1f30:	9e1d 4b2f b2dc f330 860d ec52 c177 d0e3     ../K..0...R.w...
+    1f40:	b32b 6c16 70a9 99b9 9411 fa48 e947 2264     +..l.p....H.G.d"
+    1f50:	fca8 c48c f0a0 1a3f 7d56 d82c 3322 ef90     ......?.V},."3..
+    1f60:	4987 c74e 38d9 c1d1 ca8c fea2 d498 360b     .IN..8.........6
+    1f70:	f5a6 cf81 7aa5 28de b7da 268e ad3f a4bf     .....z.(...&?...
+    1f80:	3a2c e49d 7850 0d92 5f6a 9bcc 7e54 6246     ,:..Px..j_..T~Fb
+    1f90:	8df6 c213 d890 e8b8 392e 5ef7 c382 f5af     .........9.^....
+    1fa0:	5d9f be80 d069 7c93 d56f a92d 25cf b312     .]..i..|o.-..%..
+    1fb0:	acc8 3b99 1810 a77d 9ce8 6e63 3bdb 7bbb     ...;..}...cn.;.{
+    1fc0:	26cd 0978 596e f418 9aec 01b7 4f83 a89a     .&x.nY.......O..
+    1fd0:	95e6 656e ffaa 7ee6 bc21 08cf 15ef e6e8     ..ne...~!.......
+    1fe0:	e7ba d99b 6f4a ce36 9fea d409 b029 d67c     ....Jo6.....).|.
+    1ff0:	a431 afb2 3f2a 3123 a5c6 3094 a235 c066     1...*?#1...05.f.
+    2000:	4e74 37bc 82fc a6ca 90e0 b0d0 a733 15d8     tN.7........3...
+    2010:	04f1 4a98 ec41 f7da cd7f 0e50 9117 2ff6     ...JA.....P..../
+    2020:	4d76 8dd6 ef43 4db0 aacc 544d 96e4 df04     vM..C..M..MT....
+    2030:	d19e e3b5 6a4c 1b88 2cc1 b81f 6546 7f51     ....Lj...,..FeQ.
+    2040:	5e9d 04ea 8c01 5d35 87fa 7374 0bfb 2e41     .^....5]..ts..A.
+    2050:	67b3 5a1d db92 52d2 10e9 3356 d66d 1347     .g.Z...R..V3m.G.
+    2060:	d79a 8c61 a137 7a0c f859 8e14 13eb 893c     ..a.7..zY.....<.
+    2070:	a9ce ee27 61b7 35c9 1ce1 ede5 477a 3cb1     ..'..a.5....zG.<
+    2080:	d29c 59df f255 3f73 1418 79ce c773 bf37     ...YU.s?...ys.7.
+    2090:	f753 eacd fd5f 5baa 3ddf 146f 4478 86db     S..._..[.=o.xD..
+    20a0:	afca 81f3 68b9 3ec4 2438 2c34 a3c2 5f40     .....h.>8$4,..@_
+    20b0:	1d16 72c3 e2bc 0c25 3c28 8b49 0dff 4195     ...r..%.(<I....A
+    20c0:	a839 7101 0c08 deb3 b4d8 9ce4 5664 90c1     9..q........dV..
+    20d0:	cb7b 6184 32d5 70b6 6c48 745c b8d0 4257     {..a.2.pHl\t..WB
+
+000020e0 <RT3>:
+    20e0:	a7f4 5150 6541 7e53 a417 1ac3 5e27 3a96     ..PQAeS~....'^.:
+    20f0:	6bab 3bcb 459d 1ff1 58fa acab 03e3 4b93     .k.;.E...X.....K
+    2100:	fa30 2055 6d76 adf6 76cc 8891 4c02 f525     0.U vm...v...L%.
+    2110:	d7e5 4ffc cb2a c5d7 4435 2680 a362 b58f     ...O*...5D.&b...
+    2120:	5ab1 de49 1bba 2567 0eea 4598 c0fe 5de1     .ZI...g%...E...]
+    2130:	752f c302 f04c 8112 9746 8da3 f9d3 6bc6     /u..L...F......k
+    2140:	5f8f 03e7 9c92 1595 7a6d bfeb 5952 95da     ._......mz..RY..
+    2150:	83be d42d 2174 58d3 69e0 4929 c8c9 8e44     ..-.t!.X.i)I..D.
+    2160:	89c2 756a 798e f478 3e58 996b 71b9 27dd     ..ju.yx.X>k..q.'
+    2170:	4fe1 beb6 ad88 f017 ac20 c966 3ace 7db4     .O...... .f..:.}
+    2180:	4adf 6318 311a e582 3351 9760 7f53 6245     .J.c.1..Q3`.S.Eb
+    2190:	7764 b1e0 ae6b bb84 a081 fe1c 2b08 f994     dw..k........+..
+    21a0:	6848 7058 fd45 8f19 6cde 9487 f87b 52b7     HhXpE....l..{..R
+    21b0:	d373 ab23 024b 72e2 8f1f e357 ab55 662a     s.#.K..r..W.U.*f
+    21c0:	28eb b207 c2b5 2f03 7bc5 869a 0837 d3a5     .(...../.{..7...
+    21d0:	8728 30f2 a5bf 23b2 6a03 02ba 8216 ed5c     (..0...#.j....\.
+    21e0:	1ccf 8a2b b479 a792 f207 f3f0 e269 4ea1     ..+.y.......i..N
+    21f0:	f4da 65cd be05 06d5 6234 d11f fea6 c48a     ...e....4b......
+    2200:	532e 349d 55f3 a2a0 e18a 0532 ebf6 a475     .S.4.U....2...u.
+    2210:	ec83 0b39 ef60 40aa 9f71 5e06 106e bd51     ..9.`..@q..^n.Q.
+    2220:	8a21 3ef9 06dd 963d 053e ddae bde6 4d46     !..>..=.>.....FM
+    2230:	8d54 91b5 5dc4 7105 d406 046f 1550 60ff     T....].q..o.P..`
+    2240:	fb98 1924 e9bd d697 4340 89cc 9ed9 6777     ..$.....@C....wg
+    2250:	42e8 b0bd 8b89 0788 5b19 e738 eec8 79db     .B.......[8....y
+    2260:	0a7c a147 0f42 7ce9 1e84 f8c9 0000 0000     |.G.B..|........
+    2270:	8680 0983 ed2b 3248 7011 1eac 725a 6c4e     ....+.H2.p..ZrNl
+    2280:	ff0e fdfb 3885 0f56 d5ae 3d1e 392d 3627     .....8V....=-9'6
+    2290:	d90f 0a64 a65c 6821 545b 9bd1 2e36 243a     ..d.\.!h[T..6.:$
+    22a0:	670a 0cb1 e757 930f 96ee b4d2 919b 1b9e     .g..W...........
+    22b0:	c5c0 804f 20dc 61a2 4b77 5a69 1a12 1c16     ..O.. .awKiZ....
+    22c0:	ba93 e20a 2aa0 c0e5 e022 3c43 171b 121d     .....*..".C<....
+    22d0:	0d09 0e0b c78b f2ad a8b6 2db9 a91e 14c8     ...........-....
+    22e0:	19f1 5785 0775 af4c dd99 eebb 607f a3fd     ...Wu.L......`..
+    22f0:	2601 f79f f572 5cbc 3b66 44c5 7efb 5b34     .&..r..\f;.D.~4[
+    2300:	2943 8b76 c623 cbdc fced b668 f1e4 b863     C)v.#.....h...c.
+    2310:	dc31 d7ca 8563 4210 2297 1340 11c6 8420     1...c..B."@... .
+    2320:	244a 857d 3dbb d2f8 32f9 ae11 a129 c76d     J$}..=...2..).m.
+    2330:	2f9e 1d4b 30b2 dcf3 5286 0dec e3c1 77d0     ./K..0...R.....w
+    2340:	16b3 2b6c b970 a999 4894 11fa 64e9 4722     ..l+p....H...d"G
+    2350:	8cfc a8c4 3ff0 a01a 2c7d 56d8 9033 22ef     .....?..},.V3.."
+    2360:	4e49 87c7 d138 d9c1 a2ca 8cfe 0bd4 9836     IN..8.........6.
+    2370:	81f5 a6cf de7a a528 8eb7 da26 bfad 3fa4     ....z.(...&....?
+    2380:	9d3a 2ce4 9278 500d cc5f 6a9b 467e 5462     :..,x..P_..j~FbT
+    2390:	138d f6c2 b8d8 90e8 f739 2e5e afc3 82f5     ........9.^.....
+    23a0:	805d 9fbe 93d0 697c 2dd5 6fa9 1225 cfb3     ].....|i.-.o%...
+    23b0:	99ac c83b 7d18 10a7 639c e86e bb3b db7b     ..;..}...cn.;.{.
+    23c0:	7826 cd09 1859 6ef4 b79a ec01 9a4f 83a8     &x..Y..n....O...
+    23d0:	6e95 e665 e6ff aa7e cfbc 2108 e815 efe6     .ne...~....!....
+    23e0:	9be7 bad9 366f 4ace 099f ead4 7cb0 29d6     ....o6.J.....|.)
+    23f0:	b2a4 31af 233f 2a31 94a5 c630 66a2 35c0     ...1?#1*..0..f.5
+    2400:	bc4e 7437 ca82 fca6 d090 e0b0 d8a7 3315     N.7t...........3
+    2410:	9804 f14a daec 41f7 50cd 7f0e f691 172f     ..J....A.P..../.
+    2420:	d64d 768d b0ef 434d 4daa cc54 0496 e4df     M..v..MC.MT.....
+    2430:	b5d1 9ee3 886a 4c1b 1f2c c1b8 5165 467f     ....j..L,...eQ.F
+    2440:	ea5e 9d04 358c 015d 7487 fa73 410b fb2e     ^....5]..ts..A..
+    2450:	1d67 b35a d2db 9252 5610 e933 47d6 6d13     g.Z...R..V3..G.m
+    2460:	61d7 9a8c 0ca1 377a 14f8 598e 3c13 eb89     .a....z7...Y.<..
+    2470:	27a9 ceee c961 b735 e51c e1ed b147 7a3c     .'..a.5.....G.<z
+    2480:	dfd2 9c59 73f2 553f ce14 1879 37c7 73bf     ..Y..s?U..y..7.s
+    2490:	cdf7 53ea aafd 5f5b 6f3d df14 db44 7886     ...S..[_=o..D..x
+    24a0:	f3af ca81 c468 b93e 3424 382c 40a3 c25f     ....h.>.$4,8.@_.
+    24b0:	c31d 1672 25e2 bc0c 493c 288b 950d ff41     ..r..%..<I.(..A.
+    24c0:	01a8 3971 b30c 08de e4b4 d89c c156 6490     ..q9........V..d
+    24d0:	84cb 7b61 b632 d570 5c6c 4874 57b8 d042     ..a{2.p.l\tH.WB.
+
+000024e0 <RT1>:
+    24e0:	5150 a7f4 7e53 6541 1ac3 a417 3a96 5e27     PQ..S~Ae.....:'^
+    24f0:	3bcb 6bab 1ff1 459d acab 58fa 4b93 03e3     .;.k...E...X.K..
+    2500:	2055 fa30 adf6 6d76 8891 76cc f525 4c02     U 0...vm...v%..L
+    2510:	4ffc d7e5 c5d7 cb2a 2680 4435 b58f a362     .O....*..&5D..b.
+    2520:	de49 5ab1 2567 1bba 4598 0eea 5de1 c0fe     I..Zg%...E...]..
+    2530:	c302 752f 8112 f04c 8da3 9746 6bc6 f9d3     ../u..L...F..k..
+    2540:	03e7 5f8f 1595 9c92 bfeb 7a6d 95da 5952     ..._......mz..RY
+    2550:	d42d 83be 58d3 2174 4929 69e0 8e44 c8c9     -....Xt!)I.iD...
+    2560:	756a 89c2 f478 798e 996b 3e58 27dd 71b9     ju..x..yk.X>.'.q
+    2570:	beb6 4fe1 f017 ad88 c966 ac20 7db4 3ace     ...O....f. ..}.:
+    2580:	6318 4adf e582 311a 9760 3351 6245 7f53     .c.J...1`.Q3EbS.
+    2590:	b1e0 7764 bb84 ae6b fe1c a081 f994 2b08     ..dw..k........+
+    25a0:	7058 6848 8f19 fd45 9487 6cde 52b7 f87b     XpHh..E....l.R{.
+    25b0:	ab23 d373 72e2 024b e357 8f1f 662a ab55     #.s..rK.W...*fU.
+    25c0:	b207 28eb 2f03 c2b5 869a 7bc5 d3a5 0837     ...(./.....{..7.
+    25d0:	30f2 8728 23b2 a5bf 02ba 6a03 ed5c 8216     .0(..#.....j\...
+    25e0:	8a2b 1ccf a792 b479 f3f0 f207 4ea1 e269     +.....y......Ni.
+    25f0:	65cd f4da 06d5 be05 d11f 6234 c48a fea6     .e........4b....
+    2600:	349d 532e a2a0 55f3 0532 e18a a475 ebf6     .4.S...U2...u...
+    2610:	0b39 ec83 40aa ef60 5e06 9f71 bd51 106e     9....@`..^q.Q.n.
+    2620:	3ef9 8a21 963d 06dd ddae 053e 4d46 bde6     .>!.=.....>.FM..
+    2630:	91b5 8d54 7105 5dc4 046f d406 60ff 1550     ..T..q.]o....`P.
+    2640:	1924 fb98 d697 e9bd 89cc 4340 6777 9ed9     $.........@Cwg..
+    2650:	b0bd 42e8 0788 8b89 e738 5b19 79db eec8     ...B....8..[.y..
+    2660:	a147 0a7c 7ce9 0f42 f8c9 1e84 0000 0000     G.|..|B.........
+    2670:	0983 8680 3248 ed2b 1eac 7011 6c4e 725a     ....H2+....pNlZr
+    2680:	fdfb ff0e 0f56 3885 3d1e d5ae 3627 392d     ....V..8.=..'6-9
+    2690:	0a64 d90f 6821 a65c 9bd1 545b 243a 2e36     d...!h\...[T:$6.
+    26a0:	0cb1 670a 930f e757 b4d2 96ee 1b9e 919b     ...g..W.........
+    26b0:	804f c5c0 61a2 20dc 5a69 4b77 1c16 1a12     O....a. iZwK....
+    26c0:	e20a ba93 c0e5 2aa0 3c43 e022 121d 171b     .......*C<".....
+    26d0:	0e0b 0d09 f2ad c78b 2db9 a8b6 14c8 a91e     .........-......
+    26e0:	5785 19f1 af4c 0775 eebb dd99 a3fd 607f     .W..L.u........`
+    26f0:	f79f 2601 5cbc f572 44c5 3b66 5b34 7efb     ...&.\r..Df;4[.~
+    2700:	8b76 2943 cbdc c623 b668 fced b863 f1e4     v.C)..#.h...c...
+    2710:	d7ca dc31 4210 8563 1340 2297 8420 11c6     ..1..Bc.@.." ...
+    2720:	857d 244a d2f8 3dbb ae11 32f9 c76d a129     }.J$...=...2m.).
+    2730:	1d4b 2f9e dcf3 30b2 0dec 5286 77d0 e3c1     K../...0...R.w..
+    2740:	2b6c 16b3 a999 b970 11fa 4894 4722 64e9     l+....p....H"G.d
+    2750:	a8c4 8cfc a01a 3ff0 56d8 2c7d 22ef 9033     .......?.V},."3.
+    2760:	87c7 4e49 d9c1 d138 8cfe a2ca 9836 0bd4     ..IN..8.....6...
+    2770:	a6cf 81f5 a528 de7a da26 8eb7 3fa4 bfad     ....(.z.&....?..
+    2780:	2ce4 9d3a 500d 9278 6a9b cc5f 5462 467e     .,:..Px..j_.bT~F
+    2790:	f6c2 138d 90e8 b8d8 2e5e f739 82f5 afc3     ........^.9.....
+    27a0:	9fbe 805d 697c 93d0 6fa9 2dd5 cfb3 1225     ..].|i...o.-..%.
+    27b0:	c83b 99ac 10a7 7d18 e86e 639c db7b bb3b     ;......}n..c{.;.
+    27c0:	cd09 7826 6ef4 1859 ec01 b79a 83a8 9a4f     ..&x.nY.......O.
+    27d0:	e665 6e95 aa7e e6ff 2108 cfbc efe6 e815     e..n~....!......
+    27e0:	bad9 9be7 4ace 366f ead4 099f 29d6 7cb0     .....Jo6.....).|
+    27f0:	31af b2a4 2a31 233f c630 94a5 35c0 66a2     .1..1*?#0....5.f
+    2800:	7437 bc4e fca6 ca82 e0b0 d090 3315 d8a7     7tN..........3..
+    2810:	f14a 9804 41f7 daec 7f0e 50cd 172f f691     J....A.....P/...
+    2820:	768d d64d 434d b0ef cc54 4daa e4df 0496     .vM.MC..T..M....
+    2830:	9ee3 b5d1 4c1b 886a c1b8 1f2c 467f 5165     .....Lj...,..FeQ
+    2840:	9d04 ea5e 015d 358c fa73 7487 fb2e 410b     ..^.]..5s..t...A
+    2850:	b35a 1d67 9252 d2db e933 5610 6d13 47d6     Z.g.R...3..V.m.G
+    2860:	9a8c 61d7 377a 0ca1 598e 14f8 eb89 3c13     ...az7...Y.....<
+    2870:	ceee 27a9 b735 c961 e1ed e51c 7a3c b147     ...'5.a.....<zG.
+    2880:	9c59 dfd2 553f 73f2 1879 ce14 73bf 37c7     Y...?U.sy....s.7
+    2890:	53ea cdf7 5f5b aafd df14 6f3d 7886 db44     .S..[_....=o.xD.
+    28a0:	ca81 f3af b93e c468 382c 3424 c25f 40a3     ....>.h.,8$4_..@
+    28b0:	1672 c31d bc0c 25e2 288b 493c ff41 950d     r......%.(<IA...
+    28c0:	3971 01a8 08de b30c d89c e4b4 6490 c156     q9...........dV.
+    28d0:	7b61 84cb d570 b632 4874 5c6c d042 57b8     a{..p.2.tHl\B..W
+
+000028e0 <RT2>:
+    28e0:	50a7 f451 5365 417e c3a4 171a 965e 273a     .PQ.eS~A....^.:'
+    28f0:	cb6b ab3b f145 9d1f ab58 faac 9303 e34b     k.;.E...X.....K.
+    2900:	55fa 3020 f66d 76ad 9176 cc88 254c 02f5     .U 0m..vv...L%..
+    2910:	fcd7 e54f d7cb 2ac5 8044 3526 8fa3 62b5     ..O....*D.&5...b
+    2920:	495a b1de 671b ba25 980e ea45 e1c0 fe5d     ZI...g%...E...].
+    2930:	0275 2fc3 12f0 4c81 a397 468d c6f9 d36b     u../...L...F..k.
+    2940:	e75f 8f03 959c 9215 eb7a 6dbf da59 5295     _.......z..mY..R
+    2950:	2d83 bed4 d321 7458 2969 e049 44c8 c98e     .-..!.Xti)I..D..
+    2960:	6a89 c275 7879 8ef4 6b3e 5899 dd71 b927     .ju.yx..>k.Xq.'.
+    2970:	b64f e1be 17ad 88f0 66ac 20c9 b43a ce7d     O........f. :.}.
+    2980:	184a df63 8231 1ae5 6033 5197 457f 5362     J.c.1...3`.Q.EbS
+    2990:	e077 64b1 84ae 6bbb 1ca0 81fe 942b 08f9     w..d...k....+...
+    29a0:	5868 4870 19fd 458f 876c de94 b7f8 7b52     hXpH...El.....R{
+    29b0:	23d3 73ab e202 4b72 578f 1fe3 2aab 5566     .#.s..rK.W...*fU
+    29c0:	0728 ebb2 03c2 b52f 9a7b c586 a508 37d3     (...../.{......7
+    29d0:	f287 2830 b2a5 bf23 ba6a 0302 5c82 16ed     ..0(..#.j....\..
+    29e0:	2b1c cf8a 92b4 79a7 f0f2 07f3 a1e2 694e     .+.....y......Ni
+    29f0:	cdf4 da65 d5be 0506 1f62 34d1 8afe a6c4     ..e.....b..4....
+    2a00:	9d53 2e34 a055 f3a2 32e1 8a05 75eb f6a4     S.4.U....2...u..
+    2a10:	39ec 830b aaef 6040 069f 715e 5110 6ebd     .9....@`..^q.Q.n
+    2a20:	f98a 213e 3d06 dd96 ae05 3edd 46bd e64d     ..>!.=.....>.FM.
+    2a30:	b58d 5491 055d c471 6fd4 0604 ff15 5060     ...T].q..o....`P
+    2a40:	24fb 9819 97e9 bdd6 cc43 4089 779e d967     .$......C..@.wg.
+    2a50:	bd42 e8b0 888b 8907 385b 19e7 dbee c879     B.......[8....y.
+    2a60:	470a 7ca1 e90f 427c c91e 84f8 0000 0000     .G.|..|B........
+    2a70:	8386 8009 48ed 2b32 ac70 111e 4e72 5a6c     .....H2+p...rNlZ
+    2a80:	fbff 0efd 5638 850f 1ed5 ae3d 2739 2d36     ....8V....=.9'6-
+    2a90:	64d9 0f0a 21a6 5c68 d154 5b9b 3a2e 3624     .d...!h\T..[.:$6
+    2aa0:	b167 0a0c 0fe7 5793 d296 eeb4 9e91 9b1b     g......W........
+    2ab0:	4fc5 c080 a220 dc61 694b 775a 161a 121c     .O.. .a.KiZw....
+    2ac0:	0aba 93e2 e52a a0c0 43e0 223c 1d17 1b12     ....*....C<"....
+    2ad0:	0b0d 090e adc7 8bf2 b9a8 b62d c8a9 1e14     ..........-.....
+    2ae0:	8519 f157 4c07 75af bbdd 99ee fd60 7fa3     ..W..L.u....`...
+    2af0:	9f26 01f7 bcf5 725c c53b 6644 347e fb5b     &.....\r;.Df~4[.
+    2b00:	7629 438b dcc6 23cb 68fc edb6 63f1 e4b8     )v.C...#.h...c..
+    2b10:	cadc 31d7 1085 6342 4022 9713 2011 c684     ...1..Bc"@... ..
+    2b20:	7d24 4a85 f83d bbd2 1132 f9ae 6da1 29c7     $}.J=...2....m.)
+    2b30:	4b2f 9e1d f330 b2dc ec52 860d d0e3 c177     /K..0...R.....w.
+    2b40:	6c16 b32b 99b9 70a9 fa48 9411 2264 e947     .l+....pH...d"G.
+    2b50:	c48c fca8 1a3f f0a0 d82c 7d56 ef90 3322     ....?...,.V}.."3
+    2b60:	c74e 4987 c1d1 38d9 fea2 ca8c 360b d498     N..I...8.....6..
+    2b70:	cf81 f5a6 28de 7aa5 268e b7da a4bf ad3f     .....(.z.&....?.
+    2b80:	e49d 3a2c 0d92 7850 9bcc 5f6a 6246 7e54     ..,:..Px..j_FbT~
+    2b90:	c213 8df6 e8b8 d890 5ef7 392e f5af c382     .........^.9....
+    2ba0:	be80 5d9f 7c93 d069 a92d d56f b312 25cf     ...].|i.-.o....%
+    2bb0:	3b99 acc8 a77d 1810 6e63 9ce8 7bbb 3bdb     .;..}...cn...{.;
+    2bc0:	0978 26cd f418 596e 01b7 9aec a89a 4f83     x..&..nY.......O
+    2bd0:	656e 95e6 7ee6 ffaa 08cf bc21 e6e8 15ef     ne...~....!.....
+    2be0:	d99b e7ba ce36 6f4a d409 9fea d67c b029     ....6.Jo....|.).
+    2bf0:	afb2 a431 3123 3f2a 3094 a5c6 c066 a235     ..1.#1*?.0..f.5.
+    2c00:	37bc 4e74 a6ca 82fc b0d0 90e0 15d8 a733     .7tN..........3.
+    2c10:	4a98 04f1 f7da ec41 0e50 cd7f 2ff6 9117     .J....A.P..../..
+    2c20:	8dd6 4d76 4db0 ef43 544d aacc df04 96e4     ..vM.MC.MT......
+    2c30:	e3b5 d19e 1b88 6a4c b81f 2cc1 7f51 6546     ......Lj...,Q.Fe
+    2c40:	04ea 5e9d 5d35 8c01 7374 87fa 2e41 0bfb     ...^5]..ts..A...
+    2c50:	5a1d 67b3 52d2 db92 3356 10e9 1347 d66d     .Z.g.R..V3..G.m.
+    2c60:	8c61 d79a 7a0c a137 8e14 f859 893c 13eb     a....z7...Y.<...
+    2c70:	ee27 a9ce 35c9 61b7 ede5 1ce1 3cb1 477a     '....5.a.....<zG
+    2c80:	59df d29c 3f73 f255 79ce 1418 bf37 c773     .Y..s?U..y..7.s.
+    2c90:	eacd f753 5baa fd5f 146f 3ddf 86db 4478     ..S..[_.o..=..xD
+    2ca0:	81f3 afca 3ec4 68b9 2c34 2438 5f40 a3c2     .....>.h4,8$@_..
+    2cb0:	72c3 1d16 0c25 e2bc 8b49 3c28 4195 0dff     .r..%...I.(<.A..
+    2cc0:	7101 a839 deb3 0c08 9ce4 b4d8 90c1 5664     .q9...........dV
+    2cd0:	6184 cb7b 70b6 32d5 745c 6c48 4257 b8d0     .a{..p.2\tHlWB..
+
+00002ce0 <FT0>:
+    2ce0:	63c6 a563 7cf8 847c 77ee 9977 7bf6 8d7b     .cc..||..ww..{{.
+    2cf0:	f2ff 0df2 6bd6 bd6b 6fde b16f c591 54c5     .....kk..oo....T
+    2d00:	3060 5030 0102 0301 67ce a967 2b56 7d2b     `00P.....gg.V++}
+    2d10:	fee7 19fe d7b5 62d7 ab4d e6ab 76ec 9a76     .......bM....vv.
+    2d20:	ca8f 45ca 821f 9d82 c989 40c9 7dfa 877d     ...E.......@.}}.
+    2d30:	faef 15fa 59b2 eb59 478e c947 f0fb 0bf0     .....YY..GG.....
+    2d40:	ad41 ecad d4b3 67d4 a25f fda2 af45 eaaf     A......g_...E...
+    2d50:	9c23 bf9c a453 f7a4 72e4 9672 c09b 5bc0     #...S....rr....[
+    2d60:	b775 c2b7 fde1 1cfd 933d ae93 264c 6a26     u.......=...L&&j
+    2d70:	366c 5a36 3f7e 413f f7f5 02f7 cc83 4fcc     l66Z~??A.......O
+    2d80:	3468 5c34 a551 f4a5 e5d1 34e5 f1f9 08f1     h44\Q......4....
+    2d90:	71e2 9371 d8ab 73d8 3162 5331 152a 3f15     .qq....sb11S*..?
+    2da0:	0408 0c04 c795 52c7 2346 6523 c39d 5ec3     .......RF##e...^
+    2db0:	1830 2818 9637 a196 050a 0f05 9a2f b59a     0..(7......./...
+    2dc0:	070e 0907 1224 3612 801b 9b80 e2df 3de2     ....$..6.......=
+    2dd0:	ebcd 26eb 274e 6927 b27f cdb2 75ea 9f75     ...&N''i.....uu.
+    2de0:	0912 1b09 831d 9e83 2c58 742c 1a34 2e1a     ........X,,t4...
+    2df0:	1b36 2d1b 6edc b26e 5ab4 ee5a a05b fba0     6..-.nn..ZZ.[...
+    2e00:	52a4 f652 3b76 4d3b d6b7 61d6 b37d ceb3     .RR.v;;M...a}...
+    2e10:	2952 7b29 e3dd 3ee3 2f5e 712f 8413 9784     R)){...>^//q....
+    2e20:	53a6 f553 d1b9 68d1 0000 0000 edc1 2ced     .SS....h.......,
+    2e30:	2040 6020 fce3 1ffc b179 c8b1 5bb6 ed5b     @  `....y....[[.
+    2e40:	6ad4 be6a cb8d 46cb be67 d9be 3972 4b39     .jj....Fg...r99K
+    2e50:	4a94 de4a 4c98 d44c 58b0 e858 cf85 4acf     .JJ..LL..XX....J
+    2e60:	d0bb 6bd0 efc5 2aef aa4f e5aa fbed 16fb     ...k...*O.......
+    2e70:	4386 c543 4d9a d74d 3366 5533 8511 9485     .CC..MM.f33U....
+    2e80:	458a cf45 f9e9 10f9 0204 0602 7ffe 817f     .EE.............
+    2e90:	50a0 f050 3c78 443c 9f25 ba9f a84b e3a8     .PP.x<<D%...K...
+    2ea0:	51a2 f351 a35d fea3 4080 c040 8f05 8a8f     .QQ.]....@@.....
+    2eb0:	923f ad92 9d21 bc9d 3870 4838 f5f1 04f5     ?...!...p88H....
+    2ec0:	bc63 dfbc b677 c1b6 daaf 75da 2142 6321     c...w......uB!!c
+    2ed0:	1020 3010 ffe5 1aff f3fd 0ef3 d2bf 6dd2      ..0...........m
+    2ee0:	cd81 4ccd 0c18 140c 1326 3513 ecc3 2fec     ...L....&..5.../
+    2ef0:	5fbe e15f 9735 a297 4488 cc44 172e 3917     .__.5....DD....9
+    2f00:	c493 57c4 a755 f2a7 7efc 827e 3d7a 473d     ...WU....~~.z==G
+    2f10:	64c8 ac64 5dba e75d 1932 2b19 73e6 9573     .dd..]].2..+.ss.
+    2f20:	60c0 a060 8119 9881 4f9e d14f dca3 7fdc     .``......OO.....
+    2f30:	2244 6622 2a54 7e2a 903b ab90 880b 8388     D""fT**~;.......
+    2f40:	468c ca46 eec7 29ee b86b d3b8 1428 3c14     .FF....)k...(..<
+    2f50:	dea7 79de 5ebc e25e 0b16 1d0b dbad 76db     ...y.^^........v
+    2f60:	e0db 3be0 3264 5632 3a74 4e3a 0a14 1e0a     ...;d22Vt::N....
+    2f70:	4992 db49 060c 0a06 2448 6c24 5cb8 e45c     .II.....H$$l.\\.
+    2f80:	c29f 5dc2 d3bd 6ed3 ac43 efac 62c4 a662     ...]...nC....bb.
+    2f90:	9139 a891 9531 a495 e4d3 37e4 79f2 8b79     9...1......7.yy.
+    2fa0:	e7d5 32e7 c88b 43c8 376e 5937 6dda b76d     ...2...Cn77Y.mm.
+    2fb0:	8d01 8c8d d5b1 64d5 4e9c d24e a949 e0a9     .......d.NN.I...
+    2fc0:	6cd8 b46c 56ac fa56 f4f3 07f4 eacf 25ea     .ll..VV........%
+    2fd0:	65ca af65 7af4 8e7a ae47 e9ae 0810 1808     .ee..zz.G.......
+    2fe0:	ba6f d5ba 78f0 8878 254a 6f25 2e5c 722e     o....xx.J%%o\..r
+    2ff0:	1c38 241c a657 f1a6 b473 c7b4 c697 51c6     8..$W...s......Q
+    3000:	e8cb 23e8 dda1 7cdd 74e8 9c74 1f3e 211f     ...#...|.tt.>..!
+    3010:	4b96 dd4b bd61 dcbd 8b0d 868b 8a0f 858a     .KK.a...........
+    3020:	70e0 9070 3e7c 423e b571 c4b5 66cc aa66     .pp.|>>Bq....ff.
+    3030:	4890 d848 0306 0503 f6f7 01f6 0e1c 120e     .HH.............
+    3040:	61c2 a361 356a 5f35 57ae f957 b969 d0b9     .aa.j55_.WW.i...
+    3050:	8617 9186 c199 58c1 1d3a 271d 9e27 b99e     .......X:..''...
+    3060:	e1d9 38e1 f8eb 13f8 982b b398 1122 3311     ...8....+..."..3
+    3070:	69d2 bb69 d9a9 70d9 8e07 898e 9433 a794     .ii....p....3...
+    3080:	9b2d b69b 1e3c 221e 8715 9287 e9c9 20e9     -...<.."....... 
+    3090:	ce87 49ce 55aa ff55 2850 7828 dfa5 7adf     ...I.UU.P((x...z
+    30a0:	8c03 8f8c a159 f8a1 8909 8089 0d1a 170d     ....Y...........
+    30b0:	bf65 dabf e6d7 31e6 4284 c642 68d0 b868     e......1.BB..hh.
+    30c0:	4182 c341 9929 b099 2d5a 772d 0f1e 110f     .AA.)...Z--w....
+    30d0:	b07b cbb0 54a8 fc54 bb6d d6bb 162c 3a16     {....TT.m...,..:
+
+000030e0 <FT3>:
+    30e0:	6363 c6a5 7c7c f884 7777 ee99 7b7b f68d     cc..||..ww..{{..
+    30f0:	f2f2 ff0d 6b6b d6bd 6f6f deb1 c5c5 9154     ....kk..oo....T.
+    3100:	3030 6050 0101 0203 6767 cea9 2b2b 567d     00P`....gg..++}V
+    3110:	fefe e719 d7d7 b562 abab 4de6 7676 ec9a     ......b....Mvv..
+    3120:	caca 8f45 8282 1f9d c9c9 8940 7d7d fa87     ..E.......@.}}..
+    3130:	fafa ef15 5959 b2eb 4747 8ec9 f0f0 fb0b     ....YY..GG......
+    3140:	adad 41ec d4d4 b367 a2a2 5ffd afaf 45ea     ...A..g...._...E
+    3150:	9c9c 23bf a4a4 53f7 7272 e496 c0c0 9b5b     ...#...Srr....[.
+    3160:	b7b7 75c2 fdfd e11c 9393 3dae 2626 4c6a     ...u.......=&&jL
+    3170:	3636 6c5a 3f3f 7e41 f7f7 f502 cccc 834f     66Zl??A~......O.
+    3180:	3434 685c a5a5 51f4 e5e5 d134 f1f1 f908     44\h...Q..4.....
+    3190:	7171 e293 d8d8 ab73 3131 6253 1515 2a3f     qq....s.11Sb..?*
+    31a0:	0404 080c c7c7 9552 2323 4665 c3c3 9d5e     ......R.##eF..^.
+    31b0:	1818 3028 9696 37a1 0505 0a0f 9a9a 2fb5     ..(0...7......./
+    31c0:	0707 0e09 1212 2436 8080 1b9b e2e2 df3d     ......6$......=.
+    31d0:	ebeb cd26 2727 4e69 b2b2 7fcd 7575 ea9f     ..&.''iN....uu..
+    31e0:	0909 121b 8383 1d9e 2c2c 5874 1a1a 342e     ........,,tX...4
+    31f0:	1b1b 362d 6e6e dcb2 5a5a b4ee a0a0 5bfb     ..-6nn..ZZ.....[
+    3200:	5252 a4f6 3b3b 764d d6d6 b761 b3b3 7dce     RR..;;Mv..a....}
+    3210:	2929 527b e3e3 dd3e 2f2f 5e71 8484 1397     )){R..>.//q^....
+    3220:	5353 a6f5 d1d1 b968 0000 0000 eded c12c     SS....h.......,.
+    3230:	2020 4060 fcfc e31f b1b1 79c8 5b5b b6ed       `@.......y[[..
+    3240:	6a6a d4be cbcb 8d46 bebe 67d9 3939 724b     jj....F....g99Kr
+    3250:	4a4a 94de 4c4c 98d4 5858 b0e8 cfcf 854a     JJ..LL..XX....J.
+    3260:	d0d0 bb6b efef c52a aaaa 4fe5 fbfb ed16     ..k...*....O....
+    3270:	4343 86c5 4d4d 9ad7 3333 6655 8585 1194     CC..MM..33Uf....
+    3280:	4545 8acf f9f9 e910 0202 0406 7f7f fe81     EE..............
+    3290:	5050 a0f0 3c3c 7844 9f9f 25ba a8a8 4be3     PP..<<Dx...%...K
+    32a0:	5151 a2f3 a3a3 5dfe 4040 80c0 8f8f 058a     QQ.....]@@......
+    32b0:	9292 3fad 9d9d 21bc 3838 7048 f5f5 f104     ...?...!88Hp....
+    32c0:	bcbc 63df b6b6 77c1 dada af75 2121 4263     ...c...w..u.!!cB
+    32d0:	1010 2030 ffff e51a f3f3 fd0e d2d2 bf6d     ..0 ..........m.
+    32e0:	cdcd 814c 0c0c 1814 1313 2635 ecec c32f     ..L.......5&../.
+    32f0:	5f5f bee1 9797 35a2 4444 88cc 1717 2e39     __.....5DD....9.
+    3300:	c4c4 9357 a7a7 55f2 7e7e fc82 3d3d 7a47     ..W....U~~..==Gz
+    3310:	6464 c8ac 5d5d bae7 1919 322b 7373 e695     dd..]]....+2ss..
+    3320:	6060 c0a0 8181 1998 4f4f 9ed1 dcdc a37f     ``......OO......
+    3330:	2222 4466 2a2a 547e 9090 3bab 8888 0b83     ""fD**~T...;....
+    3340:	4646 8cca eeee c729 b8b8 6bd3 1414 283c     FF....)....k..<(
+    3350:	dede a779 5e5e bce2 0b0b 161d dbdb ad76     ..y.^^........v.
+    3360:	e0e0 db3b 3232 6456 3a3a 744e 0a0a 141e     ..;.22Vd::Nt....
+    3370:	4949 92db 0606 0c0a 2424 486c 5c5c b8e4     II......$$lH\\..
+    3380:	c2c2 9f5d d3d3 bd6e acac 43ef 6262 c4a6     ..]...n....Cbb..
+    3390:	9191 39a8 9595 31a4 e4e4 d337 7979 f28b     ...9...1..7.yy..
+    33a0:	e7e7 d532 c8c8 8b43 3737 6e59 6d6d dab7     ..2...C.77Ynmm..
+    33b0:	8d8d 018c d5d5 b164 4e4e 9cd2 a9a9 49e0     ......d.NN.....I
+    33c0:	6c6c d8b4 5656 acfa f4f4 f307 eaea cf25     ll..VV........%.
+    33d0:	6565 caaf 7a7a f48e aeae 47e9 0808 1018     ee..zz.....G....
+    33e0:	baba 6fd5 7878 f088 2525 4a6f 2e2e 5c72     ...oxx..%%oJ..r\
+    33f0:	1c1c 3824 a6a6 57f1 b4b4 73c7 c6c6 9751     ..$8...W...s..Q.
+    3400:	e8e8 cb23 dddd a17c 7474 e89c 1f1f 3e21     ..#...|.tt....!>
+    3410:	4b4b 96dd bdbd 61dc 8b8b 0d86 8a8a 0f85     KK.....a........
+    3420:	7070 e090 3e3e 7c42 b5b5 71c4 6666 ccaa     pp..>>B|...qff..
+    3430:	4848 90d8 0303 0605 f6f6 f701 0e0e 1c12     HH..............
+    3440:	6161 c2a3 3535 6a5f 5757 aef9 b9b9 69d0     aa..55_jWW.....i
+    3450:	8686 1791 c1c1 9958 1d1d 3a27 9e9e 27b9     ......X...':...'
+    3460:	e1e1 d938 f8f8 eb13 9898 2bb3 1111 2233     ..8........+..3"
+    3470:	6969 d2bb d9d9 a970 8e8e 0789 9494 33a7     ii....p........3
+    3480:	9b9b 2db6 1e1e 3c22 8787 1592 e9e9 c920     ...-.."<...... .
+    3490:	cece 8749 5555 aaff 2828 5078 dfdf a57a     ..I.UU..((xP..z.
+    34a0:	8c8c 038f a1a1 59f8 8989 0980 0d0d 1a17     .......Y........
+    34b0:	bfbf 65da e6e6 d731 4242 84c6 6868 d0b8     ...e..1.BB..hh..
+    34c0:	4141 82c3 9999 29b0 2d2d 5a77 0f0f 1e11     AA.....)--wZ....
+    34d0:	b0b0 7bcb 5454 a8fc bbbb 6dd6 1616 2c3a     ...{TT.....m..:,
+
+000034e0 <FT1>:
+    34e0:	c6a5 6363 f884 7c7c ee99 7777 f68d 7b7b     ..cc..||..ww..{{
+    34f0:	ff0d f2f2 d6bd 6b6b deb1 6f6f 9154 c5c5     ......kk..ooT...
+    3500:	6050 3030 0203 0101 cea9 6767 567d 2b2b     P`00......gg}V++
+    3510:	e719 fefe b562 d7d7 4de6 abab ec9a 7676     ....b....M....vv
+    3520:	8f45 caca 1f9d 8282 8940 c9c9 fa87 7d7d     E.......@.....}}
+    3530:	ef15 fafa b2eb 5959 8ec9 4747 fb0b f0f0     ......YY..GG....
+    3540:	41ec adad b367 d4d4 5ffd a2a2 45ea afaf     .A..g...._...E..
+    3550:	23bf 9c9c 53f7 a4a4 e496 7272 9b5b c0c0     .#...S....rr[...
+    3560:	75c2 b7b7 e11c fdfd 3dae 9393 4c6a 2626     .u.......=..jL&&
+    3570:	6c5a 3636 7e41 3f3f f502 f7f7 834f cccc     Zl66A~??....O...
+    3580:	685c 3434 51f4 a5a5 d134 e5e5 f908 f1f1     \h44.Q..4.......
+    3590:	e293 7171 ab73 d8d8 6253 3131 2a3f 1515     ..qqs...Sb11?*..
+    35a0:	080c 0404 9552 c7c7 4665 2323 9d5e c3c3     ....R...eF##^...
+    35b0:	3028 1818 37a1 9696 0a0f 0505 2fb5 9a9a     (0...7......./..
+    35c0:	0e09 0707 2436 1212 1b9b 8080 df3d e2e2     ....6$......=...
+    35d0:	cd26 ebeb 4e69 2727 7fcd b2b2 ea9f 7575     &...iN''......uu
+    35e0:	121b 0909 1d9e 8383 5874 2c2c 342e 1a1a     ........tX,,.4..
+    35f0:	362d 1b1b dcb2 6e6e b4ee 5a5a 5bfb a0a0     -6....nn..ZZ.[..
+    3600:	a4f6 5252 764d 3b3b b761 d6d6 7dce b3b3     ..RRMv;;a....}..
+    3610:	527b 2929 dd3e e3e3 5e71 2f2f 1397 8484     {R))>...q^//....
+    3620:	a6f5 5353 b968 d1d1 0000 0000 c12c eded     ..SSh.......,...
+    3630:	4060 2020 e31f fcfc 79c8 b1b1 b6ed 5b5b     `@  .....y....[[
+    3640:	d4be 6a6a 8d46 cbcb 67d9 bebe 724b 3939     ..jjF....g..Kr99
+    3650:	94de 4a4a 98d4 4c4c b0e8 5858 854a cfcf     ..JJ..LL..XXJ...
+    3660:	bb6b d0d0 c52a efef 4fe5 aaaa ed16 fbfb     k...*....O......
+    3670:	86c5 4343 9ad7 4d4d 6655 3333 1194 8585     ..CC..MMUf33....
+    3680:	8acf 4545 e910 f9f9 0406 0202 fe81 7f7f     ..EE............
+    3690:	a0f0 5050 7844 3c3c 25ba 9f9f 4be3 a8a8     ..PPDx<<.%...K..
+    36a0:	a2f3 5151 5dfe a3a3 80c0 4040 058a 8f8f     ..QQ.]....@@....
+    36b0:	3fad 9292 21bc 9d9d 7048 3838 f104 f5f5     .?...!..Hp88....
+    36c0:	63df bcbc 77c1 b6b6 af75 dada 4263 2121     .c...w..u...cB!!
+    36d0:	2030 1010 e51a ffff fd0e f3f3 bf6d d2d2     0 ..........m...
+    36e0:	814c cdcd 1814 0c0c 2635 1313 c32f ecec     L.......5&../...
+    36f0:	bee1 5f5f 35a2 9797 88cc 4444 2e39 1717     ..__.5....DD9...
+    3700:	9357 c4c4 55f2 a7a7 fc82 7e7e 7a47 3d3d     W....U....~~Gz==
+    3710:	c8ac 6464 bae7 5d5d 322b 1919 e695 7373     ..dd..]]+2....ss
+    3720:	c0a0 6060 1998 8181 9ed1 4f4f a37f dcdc     ..``......OO....
+    3730:	4466 2222 547e 2a2a 3bab 9090 0b83 8888     fD""~T**.;......
+    3740:	8cca 4646 c729 eeee 6bd3 b8b8 283c 1414     ..FF)....k..<(..
+    3750:	a779 dede bce2 5e5e 161d 0b0b ad76 dbdb     y.....^^....v...
+    3760:	db3b e0e0 6456 3232 744e 3a3a 141e 0a0a     ;...Vd22Nt::....
+    3770:	92db 4949 0c0a 0606 486c 2424 b8e4 5c5c     ..II....lH$$..\\
+    3780:	9f5d c2c2 bd6e d3d3 43ef acac c4a6 6262     ]...n....C....bb
+    3790:	39a8 9191 31a4 9595 d337 e4e4 f28b 7979     .9...1..7.....yy
+    37a0:	d532 e7e7 8b43 c8c8 6e59 3737 dab7 6d6d     2...C...Yn77..mm
+    37b0:	018c 8d8d b164 d5d5 9cd2 4e4e 49e0 a9a9     ....d.....NN.I..
+    37c0:	d8b4 6c6c acfa 5656 f307 f4f4 cf25 eaea     ..ll..VV....%...
+    37d0:	caaf 6565 f48e 7a7a 47e9 aeae 1018 0808     ..ee..zz.G......
+    37e0:	6fd5 baba f088 7878 4a6f 2525 5c72 2e2e     .o....xxoJ%%r\..
+    37f0:	3824 1c1c 57f1 a6a6 73c7 b4b4 9751 c6c6     $8...W...s..Q...
+    3800:	cb23 e8e8 a17c dddd e89c 7474 3e21 1f1f     #...|.....tt!>..
+    3810:	96dd 4b4b 61dc bdbd 0d86 8b8b 0f85 8a8a     ..KK.a..........
+    3820:	e090 7070 7c42 3e3e 71c4 b5b5 ccaa 6666     ..ppB|>>.q....ff
+    3830:	90d8 4848 0605 0303 f701 f6f6 1c12 0e0e     ..HH............
+    3840:	c2a3 6161 6a5f 3535 aef9 5757 69d0 b9b9     ..aa_j55..WW.i..
+    3850:	1791 8686 9958 c1c1 3a27 1d1d 27b9 9e9e     ....X...':...'..
+    3860:	d938 e1e1 eb13 f8f8 2bb3 9898 2233 1111     8........+..3"..
+    3870:	d2bb 6969 a970 d9d9 0789 8e8e 33a7 9494     ..iip........3..
+    3880:	2db6 9b9b 3c22 1e1e 1592 8787 c920 e9e9     .-.."<...... ...
+    3890:	8749 cece aaff 5555 5078 2828 a57a dfdf     I.....UUxP((z...
+    38a0:	038f 8c8c 59f8 a1a1 0980 8989 1a17 0d0d     .....Y..........
+    38b0:	65da bfbf d731 e6e6 84c6 4242 d0b8 6868     .e..1.....BB..hh
+    38c0:	82c3 4141 29b0 9999 5a77 2d2d 1e11 0f0f     ..AA.)..wZ--....
+    38d0:	7bcb b0b0 a8fc 5454 6dd6 bbbb 2c3a 1616     .{....TT.m..:,..
+
+000038e0 <FT2>:
+    38e0:	a563 63c6 847c 7cf8 9977 77ee 8d7b 7bf6     c..c|..|w..w{..{
+    38f0:	0df2 f2ff bd6b 6bd6 b16f 6fde 54c5 c591     ....k..ko..o.T..
+    3900:	5030 3060 0301 0102 a967 67ce 7d2b 2b56     0P`0....g..g+}V+
+    3910:	19fe fee7 62d7 d7b5 e6ab ab4d 9a76 76ec     .....b....M.v..v
+    3920:	45ca ca8f 9d82 821f 40c9 c989 877d 7dfa     .E.......@..}..}
+    3930:	15fa faef eb59 59b2 c947 478e 0bf0 f0fb     ....Y..YG..G....
+    3940:	ecad ad41 67d4 d4b3 fda2 a25f eaaf af45     ..A..g...._...E.
+    3950:	bf9c 9c23 f7a4 a453 9672 72e4 5bc0 c09b     ..#...S.r..r.[..
+    3960:	c2b7 b775 1cfd fde1 ae93 933d 6a26 264c     ..u.......=.&jL&
+    3970:	5a36 366c 413f 3f7e 02f7 f7f5 4fcc cc83     6Zl6?A~?.....O..
+    3980:	5c34 3468 f4a5 a551 34e5 e5d1 08f1 f1f9     4\h4..Q..4......
+    3990:	9371 71e2 73d8 d8ab 5331 3162 3f15 152a     q..q.s..1Sb1.?*.
+    39a0:	0c04 0408 52c7 c795 6523 2346 5ec3 c39d     .....R..#eF#.^..
+    39b0:	2818 1830 a196 9637 0f05 050a b59a 9a2f     .(0...7......./.
+    39c0:	0907 070e 3612 1224 9b80 801b 3de2 e2df     .....6$......=..
+    39d0:	26eb ebcd 6927 274e cdb2 b27f 9f75 75ea     .&..'iN'....u..u
+    39e0:	1b09 0912 9e83 831d 742c 2c58 2e1a 1a34     ........,tX,..4.
+    39f0:	2d1b 1b36 b26e 6edc ee5a 5ab4 fba0 a05b     .-6.n..nZ..Z..[.
+    3a00:	f652 52a4 4d3b 3b76 61d6 d6b7 ceb3 b37d     R..R;Mv;.a....}.
+    3a10:	7b29 2952 3ee3 e3dd 712f 2f5e 9784 8413     ){R).>../q^/....
+    3a20:	f553 53a6 68d1 d1b9 0000 0000 2ced edc1     S..S.h.......,..
+    3a30:	6020 2040 1ffc fce3 c8b1 b179 ed5b 5bb6      `@ ......y.[..[
+    3a40:	be6a 6ad4 46cb cb8d d9be be67 4b39 3972     j..j.F....g.9Kr9
+    3a50:	de4a 4a94 d44c 4c98 e858 58b0 4acf cf85     J..JL..LX..X.J..
+    3a60:	6bd0 d0bb 2aef efc5 e5aa aa4f 16fb fbed     .k...*....O.....
+    3a70:	c543 4386 d74d 4d9a 5533 3366 9485 8511     C..CM..M3Uf3....
+    3a80:	cf45 458a 10f9 f9e9 0602 0204 817f 7ffe     E..E............
+    3a90:	f050 50a0 443c 3c78 ba9f 9f25 e3a8 a84b     P..P<Dx<..%...K.
+    3aa0:	f351 51a2 fea3 a35d c040 4080 8a8f 8f05     Q..Q..].@..@....
+    3ab0:	ad92 923f bc9d 9d21 4838 3870 04f5 f5f1     ..?...!.8Hp8....
+    3ac0:	dfbc bc63 c1b6 b677 75da daaf 6321 2142     ..c...w..u..!cB!
+    3ad0:	3010 1020 1aff ffe5 0ef3 f3fd 6dd2 d2bf     .0 ..........m..
+    3ae0:	4ccd cd81 140c 0c18 3513 1326 2fec ecc3     .L.......5&../..
+    3af0:	e15f 5fbe a297 9735 cc44 4488 3917 172e     _.._..5.D..D.9..
+    3b00:	57c4 c493 f2a7 a755 827e 7efc 473d 3d7a     .W....U.~..~=Gz=
+    3b10:	ac64 64c8 e75d 5dba 2b19 1932 9573 73e6     d..d]..].+2.s..s
+    3b20:	a060 60c0 9881 8119 d14f 4f9e 7fdc dca3     `..`....O..O....
+    3b30:	6622 2244 7e2a 2a54 ab90 903b 8388 880b     "fD"*~T*..;.....
+    3b40:	ca46 468c 29ee eec7 d3b8 b86b 3c14 1428     F..F.)....k..<(.
+    3b50:	79de dea7 e25e 5ebc 1d0b 0b16 76db dbad     .y..^..^.....v..
+    3b60:	3be0 e0db 5632 3264 4e3a 3a74 1e0a 0a14     .;..2Vd2:Nt:....
+    3b70:	db49 4992 0a06 060c 6c24 2448 e45c 5cb8     I..I....$lH$\..\
+    3b80:	5dc2 c29f 6ed3 d3bd efac ac43 a662 62c4     .]...n....C.b..b
+    3b90:	a891 9139 a495 9531 37e4 e4d3 8b79 79f2     ..9...1..7..y..y
+    3ba0:	32e7 e7d5 43c8 c88b 5937 376e b76d 6dda     .2...C..7Yn7m..m
+    3bb0:	8c8d 8d01 64d5 d5b1 d24e 4e9c e0a9 a949     .....d..N..N..I.
+    3bc0:	b46c 6cd8 fa56 56ac 07f4 f4f3 25ea eacf     l..lV..V.....%..
+    3bd0:	af65 65ca 8e7a 7af4 e9ae ae47 1808 0810     e..ez..z..G.....
+    3be0:	d5ba ba6f 8878 78f0 6f25 254a 722e 2e5c     ..o.x..x%oJ%.r\.
+    3bf0:	241c 1c38 f1a6 a657 c7b4 b473 51c6 c697     .$8...W...s..Q..
+    3c00:	23e8 e8cb 7cdd dda1 9c74 74e8 211f 1f3e     .#...|..t..t.!>.
+    3c10:	dd4b 4b96 dcbd bd61 868b 8b0d 858a 8a0f     K..K..a.........
+    3c20:	9070 70e0 423e 3e7c c4b5 b571 aa66 66cc     p..p>B|>..q.f..f
+    3c30:	d848 4890 0503 0306 01f6 f6f7 120e 0e1c     H..H............
+    3c40:	a361 61c2 5f35 356a f957 57ae d0b9 b969     a..a5_j5W..W..i.
+    3c50:	9186 8617 58c1 c199 271d 1d3a b99e 9e27     .....X...':...'.
+    3c60:	38e1 e1d9 13f8 f8eb b398 982b 3311 1122     .8........+..3".
+    3c70:	bb69 69d2 70d9 d9a9 898e 8e07 a794 9433     i..i.p........3.
+    3c80:	b69b 9b2d 221e 1e3c 9287 8715 20e9 e9c9     ..-.."<...... ..
+    3c90:	49ce ce87 ff55 55aa 7828 2850 7adf dfa5     .I..U..U(xP(.z..
+    3ca0:	8f8c 8c03 f8a1 a159 8089 8909 170d 0d1a     ......Y.........
+    3cb0:	dabf bf65 31e6 e6d7 c642 4284 b868 68d0     ..e..1..B..Bh..h
+    3cc0:	c341 4182 b099 9929 772d 2d5a 110f 0f1e     A..A..).-wZ-....
+    3cd0:	cbb0 b07b fc54 54a8 d6bb bb6d 3a16 162c     ..{.T..T..m..:,.
+
+00003ce0 <RSb>:
+    3ce0:	0952 d56a 3630 38a5 40bf 9ea3 f381 fbd7     R.j.06.8.@......
+    3cf0:	e37c 8239 2f9b 87ff 8e34 4443 dec4 cbe9     |.9../..4.CD....
+    3d00:	7b54 3294 c2a6 3d23 4cee 0b95 fa42 4ec3     T{.2..#=.L..B..N
+    3d10:	2e08 66a1 d928 b224 5b76 49a2 8b6d 25d1     ...f(.$.v[.Im..%
+    3d20:	f872 64f6 6886 1698 a4d4 cc5c 655d 92b6     r..d.h....\.]e..
+    3d30:	706c 5048 edfd dab9 155e 5746 8da7 849d     lpHP....^.FW....
+    3d40:	d890 00ab bc8c 0ad3 e4f7 0558 b3b8 0645     ..........X...E.
+    3d50:	2cd0 8f1e 3fca 020f afc1 03bd 1301 6b8a     .,...?.........k
+    3d60:	913a 4111 674f eadc f297 cecf b4f0 73e6     :..AOg.........s
+    3d70:	ac96 2274 ade7 8535 f9e2 e837 751c 6edf     ..t"..5...7..u.n
+    3d80:	f147 711a 291d 89c5 b76f 0e62 18aa 1bbe     G..q.)..o.b.....
+    3d90:	56fc 4b3e d2c6 2079 db9a fec0 cd78 f45a     .V>K..y ....x.Z.
+    3da0:	dd1f 33a8 0788 31c7 12b1 5910 8027 5fec     ...3...1...Y'.._
+    3db0:	5160 a97f b519 0d4a e52d 9f7a c993 ef9c     `Q....J.-.z.....
+    3dc0:	e0a0 4d3b 2aae b0f5 ebc8 3cbb 5383 6199     ..;M.*.....<.S.a
+    3dd0:	2b17 7e04 77ba 26d6 69e1 6314 2155 7d0c     .+.~.w.&.i.cU!.}
+
+00003de0 <aes_test_cfb128_pt>:
+    3de0:	c16b e2be 402e 969f 3de9 117e 9373 2a17     k....@...=~.s..*
+    3df0:	2dae 578a 031e 9cac b79e ac6f af45 518e     .-.W......o.E..Q
+    3e00:	c830 461c 5ca3 11e4 fbe5 19c1 0a1a ef52     0..F.\........R.
+    3e10:	9ff6 4524 4fdf 179b 2bad 7b41 6ce6 1037     ..$E.O...+A{.l7.
+
+00003e20 <aes_test_ofb_pt>:
+    3e20:	c16b e2be 402e 969f 3de9 117e 9373 2a17     k....@...=~.s..*
+    3e30:	2dae 578a 031e 9cac b79e ac6f af45 518e     .-.W......o.E..Q
+    3e40:	c830 461c 5ca3 11e4 fbe5 19c1 0a1a ef52     0..F.\........R.
+    3e50:	9ff6 4524 4fdf 179b 2bad 7b41 6ce6 1037     ..$E.O...+A{.l7.
+
+00003e60 <aes_test_ecb_dec>:
+    3e60:	4144 c26a f5d1 583c 0333 7e91 e96b e0eb     DAj...<X3..~k...
+    3e70:	e348 9e1e 6725 f218 2992 9c31 f119 a45b     H...%g...)1...[.
+    3e80:	8c05 fdcf cbbb 2d38 6f1f 5856 8a5d de4a     ......8-.oVX].J.
+
+00003e90 <aes_test_ecb_enc>:
+    3e90:	4cc3 2c05 dac0 738d 1a45 5ffe be03 7f29     .L.,...sE.._..).
+    3ea0:	f6f3 2a75 d7e8 1183 f038 5641 3106 14b1     ..u*....8.AV.1..
+    3eb0:	798b ccee a093 5dee 30ff eab4 6321 a46d     .y.....].0..!cm.
+
+00003ec0 <aes_test_cbc_dec>:
+    3ec0:	cafa e037 c8b0 7353 70df 736e c9f7 86af     ..7...Ss.pns....
+    3ed0:	f65d dd78 ba17 754e 17b6 c668 efad 7b7c     ].x...Nu..h...|{
+    3ee0:	0448 81e1 e68f 7529 a319 8ce8 3157 1304     H.....)u....W1..
+
+00003ef0 <aes_test_cbc_enc>:
+    3ef0:	058a 5efc 5a09 84f4 088a 28d3 68d3 3d8e     ...^.Z.....(.h.=
+    3f00:	d97b d566 d83a bbc1 d285 faad 7be8 04b1     {.f.:........{..
+    3f10:	3cfe 6553 2f3e b545 cd6f b288 89cc f08f     .<Se>/E.o.......
+
+00003f20 <aes_test_cfb128_iv>:
+    3f20:	0100 0302 0504 0706 0908 0b0a 0d0c 0f0e     ................
+
+00003f30 <aes_test_cfb128_key>:
+    3f30:	7e2b 1615 ae28 a6d2 f7ab 8815 cf09 3c4f     +~..(.........O<
+	...
+    3f50:	738e f7b0 0eda 5264 10c8 2bf3 9080 e579     .s....dR...+..y.
+    3f60:	f862 d2ea 2c52 7b6b 0000 0000 0000 0000     b...R,k{........
+    3f70:	3d60 10eb ca15 be71 732b f0ae 7d85 8177     `=....q.+s...}w.
+    3f80:	351f 072c 613b d708 982d a310 1409 f4df     .5,.;a..-.......
+
+00003f90 <aes_test_cfb128_ct>:
+    3f90:	3f3b 2ed9 2db7 20ad 3433 f849 3ce8 4afb     ;?...-. 34I..<.J
+    3fa0:	a6c8 3745 b3a0 3fa9 e3cd adcd 1c9f 8be5     ..E7...?........
+    3fb0:	7526 671f cba3 40b1 80b1 f18c a487 dff4     &u.g...@........
+    3fc0:	4bc0 3505 5d7c 0e1c c4ea 6fc6 f79f e6f2     .K.5|].....o....
+    3fd0:	c8cd 6f0d f1dd ab8c c234 0959 9ac9 7441     ...o....4.Y...At
+    3fe0:	ce67 7f7f 1781 2136 1a96 702b 1d17 7a3d     g.....6!..+p..=z
+    3ff0:	1e2e 1d8a 9bd5 b188 e6c8 ed0f fa1e c9c4     ................
+    4000:	5fc0 9c9f 83a9 a04f ae42 ba8f 4b58 ff09     ._....O.B...XK..
+    4010:	7edc bf84 79da 4b16 cd7e 8684 5d98 6038     .~...y.K~....]8`
+    4020:	ff39 14ed 283b c8b1 1132 633c e531 7b40     9...;(..2.<c1.@{
+    4030:	10df 2413 e515 924b 3ea1 a8d0 7a26 f9e2     ...$..K..>..&z..
+    4040:	a375 7485 b91a f8ce 3120 3d62 b155 71e4     u..t.... 1b=U..q
+
+00004050 <aes_test_ofb_iv>:
+    4050:	0100 0302 0504 0706 0908 0b0a 0d0c 0f0e     ................
+
+00004060 <aes_test_ofb_key>:
+    4060:	7e2b 1615 ae28 a6d2 f7ab 8815 cf09 3c4f     +~..(.........O<
+	...
+    4080:	738e f7b0 0eda 5264 10c8 2bf3 9080 e579     .s....dR...+..y.
+    4090:	f862 d2ea 2c52 7b6b 0000 0000 0000 0000     b...R,k{........
+    40a0:	3d60 10eb ca15 be71 732b f0ae 7d85 8177     `=....q.+s...}w.
+    40b0:	351f 072c 613b d708 982d a310 1409 f4df     .5,.;a..-.......
+
+000040c0 <aes_test_ofb_ct>:
+    40c0:	3f3b 2ed9 2db7 20ad 3433 f849 3ce8 4afb     ;?...-. 34I..<.J
+    40d0:	8977 8d50 9116 038f 3cf5 da52 4ec5 25d8     w.P......<R..N.%
+    40e0:	4097 1e05 5f9c f6ec 4443 a8f7 6022 cced     .@..._..CD.."`..
+    40f0:	4c30 2865 59f6 78c7 a566 d910 d6c1 5eae     0Le(.Y.xf......^
+    4100:	c8cd 6f0d f1dd ab8c c234 0959 9ac9 7441     ...o....4.Y...At
+    4110:	c2fc 8d8b 634c 7c83 e809 0017 10c1 0104     ....Lc.|........
+    4120:	9a8d ea9a f6c0 6f59 9c55 4d6d 59af f2a5     ......YoU.mM.Y..
+    4130:	9f6d 0820 ca57 3e6c ac9c 4b52 acd9 2ac9     m. .W.l>..RK...*
+    4140:	7edc bf84 79da 4b16 cd7e 8684 5d98 6038     .~...y.K~....]8`
+    4150:	eb4f 67dc d240 3a0b 8fc8 d86a 4f2a 8db0     O..g@..:..j.*O..
+    4160:	ab71 a047 e886 ed6e 9df3 5b1c 97ba 08c4     q.G...n....[....
+    4170:	2601 1d14 f367 e87b 8f53 8b5a 40e7 84e4     .&..g.{.S.Z..@..
+
+00004180 <aes_test_ctr_nonce_counter>:
+    4180:	0000 3000 0000 0000 0000 0000 0000 0100     ...0............
+    4190:	6c00 dbb6 54c0 593b 48da 0bd9 0000 0100     .l...T;Y.H......
+    41a0:	e000 7b01 7727 3f7f 174a f086 0000 0100     ...{'w.?J.......
+
+000041b0 <aes_test_ctr_key>:
+    41b0:	68ae f852 1012 cc67 f74b 76a5 7755 9ef3     .hR...g.K..vUw..
+    41c0:	247e 7806 fa17 d7e0 d643 1fce 5332 6391     ~$.x....C...2S.c
+    41d0:	9176 03be 505e a820 6eac 8561 f929 dca0     v...^P ..na.)...
+
+000041e0 <aes_test_ctr_len>:
+    41e0:	0010 0000 0020 0000 0024 0000               .... ...$...
+
+000041ec <aes_test_ctr_ct>:
+    41ec:	09e4 4f5d a7b7 79b3 612d a375 1326 b811     ..]O...y-au.&...
+	...
+    421c:	0451 06a1 8a16 d972 0d79 ee41 da8e 88d3     Q.....r.y.A.....
+    422c:	2eeb fc1e da46 c857 e6fc df30 4191 28be     ....F.W...0..A.(
+	...
+    424c:	cfc1 a848 2f9f d9fd 46cf e952 dbef d772     ..H../...FR...r.
+    425c:	4045 2ba4 6dde 3678 9ad5 ea5c f3ae 5310     E@.+.mx6..\....S
+    426c:	b225 2f07 0000 0000 0000 0000 0000 0000     %../............
+
+0000427c <aes_test_ctr_pt>:
+    427c:	6953 676e 656c 6220 6f6c 6b63 6d20 6773     Single block msg
+	...
+    42ac:	0100 0302 0504 0706 0908 0b0a 0d0c 0f0e     ................
+    42bc:	1110 1312 1514 1716 1918 1b1a 1d1c 1f1e     ................
+	...
+    42dc:	0100 0302 0504 0706 0908 0b0a 0d0c 0f0e     ................
+    42ec:	1110 1312 1514 1716 1918 1b1a 1d1c 1f1e     ................
+    42fc:	2120 2322 0000 0000 0000 0000 0000 0000      !"#............
+
+0000430c <aes_test_xts_key>:
+	...
+    432c:	1111 1111 1111 1111 1111 1111 1111 1111     ................
+    433c:	2222 2222 2222 2222 2222 2222 2222 2222     """"""""""""""""
+    434c:	feff fcfd fafb f8f9 f6f7 f4f5 f2f3 f0f1     ................
+    435c:	2222 2222 2222 2222 2222 2222 2222 2222     """"""""""""""""
+
+0000436c <aes_test_xts_data_unit>:
+	...
+    437c:	3333 3333 0033 0000 0000 0000 0000 0000     33333...........
+    438c:	3333 3333 0033 0000 0000 0000 0000 0000     33333...........
+
+0000439c <aes_test_xts_ct32>:
+    439c:	7c91 9ef6 68bd ecb2 9f9b a3e9 ddea 92a6     .|...h..........
+    43ac:	43cd f5d2 9895 85ed 028c 65c2 bf2f 2e92     .C.........e/...
+    43bc:	54c4 5e18 166a 6e93 3339 3840 efac 8b83     .T.^j..n93@8....
+    43cc:	18fb ff6f 8074 c4ad 9328 ec82 d3d6 f094     ..o.t...(.......
+    43dc:	85af 6b33 7a59 1afc 0b90 b22e c91e d249     ..3kYz........I.
+    43ec:	df92 044c 0b7e 5321 8621 97a5 221a 897a     ..L.~.!S!...."z.
+
+000043fc <aes_test_xts_pt32>:
+	...
+    441c:	4444 4444 4444 4444 4444 4444 4444 4444     DDDDDDDDDDDDDDDD
+    442c:	4444 4444 4444 4444 4444 4444 4444 4444     DDDDDDDDDDDDDDDD
+    443c:	4444 4444 4444 4444 4444 4444 4444 4444     DDDDDDDDDDDDDDDD
+    444c:	4444 4444 4444 4444 4444 4444 4444 4444     DDDDDDDDDDDDDDDD
+
+0000445c <key>:
+    445c:	3d60 10eb ca15 be71 732b f0ae 7d85 8177     `=....q.+s...}w.
+
+0000446c <__sf_fake_stderr>:
+	...
+
+0000448c <__sf_fake_stdin>:
+	...
+
+000044ac <__sf_fake_stdout>:
+	...
+
+000044cc <_init>:
+    44cc:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+    44ce:	46c0      	nop			; (mov r8, r8)
+    44d0:	bcf8      	pop	{r3, r4, r5, r6, r7}
+    44d2:	bc08      	pop	{r3}
+    44d4:	469e      	mov	lr, r3
+    44d6:	4770      	bx	lr
+
+000044d8 <__init_array_start>:
+    44d8:	00000241 	.word	0x00000241
+
+000044dc <_fini>:
+    44dc:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+    44de:	46c0      	nop			; (mov r8, r8)
+    44e0:	bcf8      	pop	{r3, r4, r5, r6, r7}
+    44e2:	bc08      	pop	{r3}
+    44e4:	469e      	mov	lr, r3
+    44e6:	4770      	bx	lr
+
+000044e8 <__fini_array_start>:
+    44e8:	00000215 	.word	0x00000215
+
+Disassembly of section .gnu.sgstubs:
+
+0000fb00 <nsc_ext_irq_init>:
+    fb00:	e97f e97f 	sg
+    fb04:	f7f0 bb0f 	b.w	126 <__acle_se_nsc_ext_irq_init>
+
+0000fb08 <nsc_periph_clock_init>:
+    fb08:	e97f e97f 	sg
+    fb0c:	f7f0 baf2 	b.w	f4 <__acle_se_nsc_periph_clock_init>
+	...

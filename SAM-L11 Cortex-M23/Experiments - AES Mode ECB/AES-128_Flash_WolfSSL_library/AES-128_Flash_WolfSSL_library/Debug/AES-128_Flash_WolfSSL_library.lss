@@ -1,0 +1,4822 @@
+
+AES-128_Flash_WolfSSL_library.elf:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00003cd8  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .gnu.sgstubs  00000020  0000fb00  0000fb00  0002fb00  2**5
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .relocate     00000074  20000000  00003cd8  00020000  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  3 .bss          00000030  20000074  00003d4c  00020074  2**2
+                  ALLOC
+  4 .heap         00000204  200000a4  00003d7c  00020074  2**0
+                  ALLOC
+  5 .stack        00000400  200002a8  00003f80  00020074  2**0
+                  ALLOC
+  6 .userRowBlock 00000020  00804000  00804000  00034000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  7 .ARM.attributes 0000002c  00000000  00000000  00034020  2**0
+                  CONTENTS, READONLY
+  8 .comment      00000059  00000000  00000000  0003404c  2**0
+                  CONTENTS, READONLY
+  9 .debug_info   0000df52  00000000  00000000  000340a5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_abbrev 000025f7  00000000  00000000  00041ff7  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    0000354a  00000000  00000000  000445ee  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_aranges 000003b8  00000000  00000000  00047b38  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .debug_ranges 00000498  00000000  00000000  00047ef0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 14 .debug_macro  0001a541  00000000  00000000  00048388  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 15 .debug_line   0000aedc  00000000  00000000  000628c9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 16 .debug_str    0008cea6  00000000  00000000  0006d7a5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 17 .debug_frame  0000098c  00000000  00000000  000fa64c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <exception_table>:
+       0:	a8 06 00 20 4d 03 00 00 4b 03 00 00 4b 03 00 00     ... M...K...K...
+	...
+      2c:	4b 03 00 00 00 00 00 00 00 00 00 00 4b 03 00 00     K...........K...
+      3c:	4b 03 00 00 4b 03 00 00 4b 03 00 00 4b 03 00 00     K...K...K...K...
+      4c:	4b 03 00 00 4b 03 00 00 4b 03 00 00 4b 03 00 00     K...K...K...K...
+      5c:	4b 03 00 00 4b 03 00 00 4b 03 00 00 4b 03 00 00     K...K...K...K...
+      6c:	4b 03 00 00 4b 03 00 00 4b 03 00 00 4b 03 00 00     K...K...K...K...
+      7c:	4b 03 00 00 4b 03 00 00 4b 03 00 00 4b 03 00 00     K...K...K...K...
+      8c:	4b 03 00 00 4b 03 00 00 4b 03 00 00 4b 03 00 00     K...K...K...K...
+      9c:	4b 03 00 00 4b 03 00 00 4b 03 00 00 4b 03 00 00     K...K...K...K...
+      ac:	4b 03 00 00 4b 03 00 00 4b 03 00 00 4b 03 00 00     K...K...K...K...
+      bc:	4b 03 00 00 4b 03 00 00 4b 03 00 00 4b 03 00 00     K...K...K...K...
+      cc:	4b 03 00 00 4b 03 00 00 4b 03 00 00 4b 03 00 00     K...K...K...K...
+      dc:	4b 03 00 00 4b 03 00 00 4b 03 00 00 4b 03 00 00     K...K...K...K...
+      ec:	4b 03 00 00 4b 03 00 00                             K...K...
+
+000000f4 <__acle_se_nsc_periph_clock_init>:
+#if defined(__ICCARM__) /* IAR EWARM */
+__cmse_nonsecure_entry int32_t nsc_periph_clock_init(uint32_t gclk_id, uint32_t gclk_src)
+#else /* GCC, Keil MDK with ARM Compiler 6 */
+int32_t __attribute__((cmse_nonsecure_entry)) nsc_periph_clock_init(uint32_t gclk_id, uint32_t gclk_src)
+#endif
+{
+      f4:	23ff      	movs	r3, #255	; 0xff
+      f6:	4003      	ands	r3, r0
+      f8:	009b      	lsls	r3, r3, #2
+      fa:	f641 4c00 	movw	ip, #7168	; 0x1c00
+      fe:	f2c4 0c00 	movt	ip, #16384	; 0x4000
+     102:	4463      	add	r3, ip
+}
+
+static inline bool hri_gclk_get_PCHCTRL_CHEN_bit(const void *const hw, uint8_t index)
+{
+	uint32_t tmp;
+	tmp = ((Gclk *)hw)->PCHCTRL[index].reg;
+     104:	2280      	movs	r2, #128	; 0x80
+     106:	589a      	ldr	r2, [r3, r2]
+	if (hri_gclk_get_PCHCTRL_CHEN_bit(GCLK, gclk_id)) {
+		return 1; /* Already enabled */
+     108:	2001      	movs	r0, #1
+	if (hri_gclk_get_PCHCTRL_CHEN_bit(GCLK, gclk_id)) {
+     10a:	0652      	lsls	r2, r2, #25
+     10c:	d404      	bmi.n	118 <__acle_se_nsc_periph_clock_init+0x24>
+	} else {
+		hri_gclk_write_PCHCTRL_reg(GCLK, gclk_id, gclk_src | (1 << GCLK_PCHCTRL_CHEN_Pos));
+     10e:	2240      	movs	r2, #64	; 0x40
+     110:	4311      	orrs	r1, r2
+}
+
+static inline void hri_gclk_write_PCHCTRL_reg(const void *const hw, uint8_t index, hri_gclk_pchctrl_reg_t data)
+{
+	GCLK_CRITICAL_SECTION_ENTER();
+	((Gclk *)hw)->PCHCTRL[index].reg = data;
+     112:	3240      	adds	r2, #64	; 0x40
+     114:	5099      	str	r1, [r3, r2]
+	}
+	return 0;
+     116:	2000      	movs	r0, #0
+}
+     118:	0001      	movs	r1, r0
+     11a:	0002      	movs	r2, r0
+     11c:	0003      	movs	r3, r0
+     11e:	4684      	mov	ip, r0
+     120:	f38e 8800 	msr	CPSR_f, lr
+     124:	4774      	bxns	lr
+
+00000126 <__acle_se_nsc_ext_irq_init>:
+#if defined(__ICCARM__) /* IAR EWARM */
+__cmse_nonsecure_entry int32_t nsc_ext_irq_init(struct ext_irq_setting irq_setting)
+#else /* GCC, Keil MDK with ARM Compiler 6 */
+int32_t __attribute__((cmse_nonsecure_entry)) nsc_ext_irq_init(struct ext_irq_setting irq_setting)
+#endif
+{
+     126:	b5f0      	push	{r4, r5, r6, r7, lr}
+     128:	46ce      	mov	lr, r9
+     12a:	4647      	mov	r7, r8
+     12c:	b580      	push	{r7, lr}
+     12e:	b087      	sub	sp, #28
+     130:	9002      	str	r0, [sp, #8]
+     132:	9103      	str	r1, [sp, #12]
+     134:	9204      	str	r2, [sp, #16]
+     136:	9305      	str	r3, [sp, #20]
+	EIC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline hri_eic_evctrl_reg_t hri_eic_read_EVCTRL_reg(const void *const hw)
+{
+	return ((Eic *)hw)->EVCTRL.reg;
+     138:	f642 2300 	movw	r3, #10752	; 0x2a00
+     13c:	f2c4 0300 	movt	r3, #16384	; 0x4000
+     140:	6898      	ldr	r0, [r3, #8]
+	EIC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline hri_eic_asynch_reg_t hri_eic_read_ASYNCH_reg(const void *const hw)
+{
+	return ((Eic *)hw)->ASYNCH.reg;
+     142:	6999      	ldr	r1, [r3, #24]
+	EIC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline hri_eic_debouncen_reg_t hri_eic_read_DEBOUNCEN_reg(const void *const hw)
+{
+	return ((Eic *)hw)->DEBOUNCEN.reg;
+     144:	6b1a      	ldr	r2, [r3, #48]	; 0x30
+	return ((Eic *)hw)->CONFIG[index].reg;
+     146:	69dc      	ldr	r4, [r3, #28]
+     148:	46a4      	mov	ip, r4
+	EIC_CRITICAL_SECTION_LEAVE();
+}
+
+static inline hri_eic_nonsec_reg_t hri_eic_read_NONSEC_reg(const void *const hw)
+{
+	return ((Eic *)hw)->NONSEC.reg;
+     14a:	6c1f      	ldr	r7, [r3, #64]	; 0x40
+	uint32_t config_val         = hri_eic_read_CONFIG_reg(EIC_SEC, 0);
+	uint32_t nonsec_mask        = hri_eic_read_NONSEC_reg(EIC_SEC);
+	uint32_t config_nonsec_mask = 0;
+
+	/* Calculate external interrupt settings with non-secure part  */
+	evctrl_val    = (evctrl_val & (~nonsec_mask)) | (irq_setting.evctrl & nonsec_mask);
+     14c:	9e02      	ldr	r6, [sp, #8]
+     14e:	4046      	eors	r6, r0
+     150:	403e      	ands	r6, r7
+     152:	4046      	eors	r6, r0
+	asynch_val    = (asynch_val & (~nonsec_mask)) | (irq_setting.asynch & nonsec_mask);
+     154:	9b04      	ldr	r3, [sp, #16]
+     156:	9301      	str	r3, [sp, #4]
+     158:	001d      	movs	r5, r3
+     15a:	404d      	eors	r5, r1
+     15c:	403d      	ands	r5, r7
+     15e:	404d      	eors	r5, r1
+	debouncen_val = (debouncen_val & (~nonsec_mask)) | (irq_setting.debouncen & nonsec_mask);
+     160:	9c05      	ldr	r4, [sp, #20]
+     162:	4054      	eors	r4, r2
+     164:	403c      	ands	r4, r7
+     166:	4054      	eors	r4, r2
+     168:	46a1      	mov	r9, r4
+	uint32_t config_nonsec_mask = 0;
+     16a:	2100      	movs	r1, #0
+	for (i = 0; i < 8; i++) {
+     16c:	2300      	movs	r3, #0
+		if (nonsec_mask & (1u << i)) {
+     16e:	2001      	movs	r0, #1
+			config_nonsec_mask |= (0xFu << (i * 4));
+     170:	f240 080f 	movw	r8, #15
+     174:	e002      	b.n	17c <__acle_se_nsc_ext_irq_init+0x56>
+	for (i = 0; i < 8; i++) {
+     176:	3301      	adds	r3, #1
+     178:	2b08      	cmp	r3, #8
+     17a:	d008      	beq.n	18e <__acle_se_nsc_ext_irq_init+0x68>
+		if (nonsec_mask & (1u << i)) {
+     17c:	0002      	movs	r2, r0
+     17e:	409a      	lsls	r2, r3
+     180:	4217      	tst	r7, r2
+     182:	d0f8      	beq.n	176 <__acle_se_nsc_ext_irq_init+0x50>
+			config_nonsec_mask |= (0xFu << (i * 4));
+     184:	009a      	lsls	r2, r3, #2
+     186:	4644      	mov	r4, r8
+     188:	4094      	lsls	r4, r2
+     18a:	4321      	orrs	r1, r4
+     18c:	e7f3      	b.n	176 <__acle_se_nsc_ext_irq_init+0x50>
+		}
+	}
+	config_val = (config_val & (~config_nonsec_mask)) | (irq_setting.config[0] & config_nonsec_mask);
+     18e:	4660      	mov	r0, ip
+     190:	9b03      	ldr	r3, [sp, #12]
+     192:	4058      	eors	r0, r3
+     194:	4008      	ands	r0, r1
+     196:	4663      	mov	r3, ip
+     198:	4058      	eors	r0, r3
+	((Eic *)hw)->CTRLA.reg &= ~EIC_CTRLA_ENABLE_Msk;
+     19a:	f642 2300 	movw	r3, #10752	; 0x2a00
+     19e:	f2c4 0300 	movt	r3, #16384	; 0x4000
+     1a2:	781a      	ldrb	r2, [r3, #0]
+     1a4:	2102      	movs	r1, #2
+     1a6:	438a      	bics	r2, r1
+     1a8:	701a      	strb	r2, [r3, #0]
+	while (((Eic *)hw)->SYNCBUSY.reg & reg) {
+     1aa:	f642 2200 	movw	r2, #10752	; 0x2a00
+     1ae:	f2c4 0200 	movt	r2, #16384	; 0x4000
+     1b2:	3101      	adds	r1, #1
+     1b4:	6853      	ldr	r3, [r2, #4]
+     1b6:	4219      	tst	r1, r3
+     1b8:	d1fc      	bne.n	1b4 <__acle_se_nsc_ext_irq_init+0x8e>
+     1ba:	f642 2200 	movw	r2, #10752	; 0x2a00
+     1be:	f2c4 0200 	movt	r2, #16384	; 0x4000
+     1c2:	2102      	movs	r1, #2
+     1c4:	6853      	ldr	r3, [r2, #4]
+     1c6:	4219      	tst	r1, r3
+     1c8:	d1fc      	bne.n	1c4 <__acle_se_nsc_ext_irq_init+0x9e>
+	((Eic *)hw)->EVCTRL.reg = data;
+     1ca:	f642 2300 	movw	r3, #10752	; 0x2a00
+     1ce:	f2c4 0300 	movt	r3, #16384	; 0x4000
+     1d2:	609e      	str	r6, [r3, #8]
+	((Eic *)hw)->ASYNCH.reg = data;
+     1d4:	619d      	str	r5, [r3, #24]
+	((Eic *)hw)->DEBOUNCEN.reg = data;
+     1d6:	464a      	mov	r2, r9
+     1d8:	631a      	str	r2, [r3, #48]	; 0x30
+	((Eic *)hw)->CONFIG[index].reg = data;
+     1da:	61d8      	str	r0, [r3, #28]
+	((Eic *)hw)->CTRLA.reg |= EIC_CTRLA_ENABLE_Msk;
+     1dc:	781a      	ldrb	r2, [r3, #0]
+     1de:	2102      	movs	r1, #2
+     1e0:	430a      	orrs	r2, r1
+     1e2:	701a      	strb	r2, [r3, #0]
+	while (((Eic *)hw)->SYNCBUSY.reg & reg) {
+     1e4:	f642 2200 	movw	r2, #10752	; 0x2a00
+     1e8:	f2c4 0200 	movt	r2, #16384	; 0x4000
+     1ec:	3101      	adds	r1, #1
+     1ee:	6853      	ldr	r3, [r2, #4]
+     1f0:	4219      	tst	r1, r3
+     1f2:	d1fc      	bne.n	1ee <__acle_se_nsc_ext_irq_init+0xc8>
+
+	/* Enable EIC */
+	hri_eic_set_CTRLA_ENABLE_bit(EIC_SEC);
+
+	return 0;
+}
+     1f4:	2000      	movs	r0, #0
+     1f6:	b007      	add	sp, #28
+     1f8:	0001      	movs	r1, r0
+     1fa:	0002      	movs	r2, r0
+     1fc:	0003      	movs	r3, r0
+     1fe:	4684      	mov	ip, r0
+     200:	bc0c      	pop	{r2, r3}
+     202:	4690      	mov	r8, r2
+     204:	4699      	mov	r9, r3
+     206:	bcf0      	pop	{r4, r5, r6, r7}
+     208:	bc02      	pop	{r1}
+     20a:	4686      	mov	lr, r0
+     20c:	f381 8800 	msr	CPSR_f, r1
+     210:	470c      	bxns	r1
+	...
+
+00000214 <__do_global_dtors_aux>:
+     214:	b510      	push	{r4, lr}
+     216:	f240 0474 	movw	r4, #116	; 0x74
+     21a:	f2c2 0400 	movt	r4, #8192	; 0x2000
+     21e:	7823      	ldrb	r3, [r4, #0]
+     220:	b963      	cbnz	r3, 23c <__do_global_dtors_aux+0x28>
+     222:	f240 0300 	movw	r3, #0
+     226:	f2c0 0300 	movt	r3, #0
+     22a:	b12b      	cbz	r3, 238 <__do_global_dtors_aux+0x24>
+     22c:	f244 0020 	movw	r0, #16416	; 0x4020
+     230:	f2c0 0080 	movt	r0, #128	; 0x80
+     234:	e000      	b.n	238 <__do_global_dtors_aux+0x24>
+     236:	bf00      	nop
+     238:	2301      	movs	r3, #1
+     23a:	7023      	strb	r3, [r4, #0]
+     23c:	bd10      	pop	{r4, pc}
+     23e:	46c0      	nop			; (mov r8, r8)
+
+00000240 <frame_dummy>:
+     240:	f240 0300 	movw	r3, #0
+     244:	f2c0 0300 	movt	r3, #0
+     248:	b510      	push	{r4, lr}
+     24a:	b14b      	cbz	r3, 260 <frame_dummy+0x20>
+     24c:	f240 0178 	movw	r1, #120	; 0x78
+     250:	f244 0020 	movw	r0, #16416	; 0x4020
+     254:	f2c2 0100 	movt	r1, #8192	; 0x2000
+     258:	f2c0 0080 	movt	r0, #128	; 0x80
+     25c:	e000      	b.n	260 <frame_dummy+0x20>
+     25e:	bf00      	nop
+     260:	f244 0020 	movw	r0, #16416	; 0x4020
+     264:	f2c0 0080 	movt	r0, #128	; 0x80
+     268:	6803      	ldr	r3, [r0, #0]
+     26a:	b903      	cbnz	r3, 26e <frame_dummy+0x2e>
+     26c:	bd10      	pop	{r4, pc}
+     26e:	f240 0300 	movw	r3, #0
+     272:	f2c0 0300 	movt	r3, #0
+     276:	2b00      	cmp	r3, #0
+     278:	d0f8      	beq.n	26c <frame_dummy+0x2c>
+     27a:	4798      	blx	r3
+     27c:	e7f6      	b.n	26c <frame_dummy+0x2c>
+     27e:	46c0      	nop			; (mov r8, r8)
+
+00000280 <gpio_init>:
+
+#include "driver_init.h"
+#include "gpio_init.h"
+
+void gpio_init(void)
+{
+     280:	b570      	push	{r4, r5, r6, lr}
+	((Port *)hw)->Group[submodule_index].OUTCLR.reg = ~data;
+}
+
+static inline void hri_port_clear_OUT_reg(const void *const hw, uint8_t submodule_index, hri_port_out_reg_t mask)
+{
+	((Port *)hw)->Group[submodule_index].OUTCLR.reg = mask;
+     282:	f240 2200 	movw	r2, #512	; 0x200
+     286:	f2c6 0200 	movt	r2, #24576	; 0x6000
+     28a:	f240 4300 	movw	r3, #1024	; 0x400
+     28e:	6153      	str	r3, [r2, #20]
+     290:	f640 0500 	movw	r5, #2048	; 0x800
+     294:	6155      	str	r5, [r2, #20]
+     296:	2180      	movs	r1, #128	; 0x80
+     298:	0409      	lsls	r1, r1, #16
+     29a:	6151      	str	r1, [r2, #20]
+     29c:	2080      	movs	r0, #128	; 0x80
+     29e:	0500      	lsls	r0, r0, #20
+     2a0:	6150      	str	r0, [r2, #20]
+	((Port *)hw)->Group[submodule_index].DIRSET.reg = mask;
+     2a2:	6093      	str	r3, [r2, #8]
+
+static inline void hri_port_write_WRCONFIG_reg(const void *const hw, uint8_t submodule_index,
+                                               hri_port_wrconfig_reg_t data)
+{
+	PORT_CRITICAL_SECTION_ENTER();
+	((Port *)hw)->Group[submodule_index].WRCONFIG.reg = data;
+     2a4:	f243 2300 	movw	r3, #12800	; 0x3200
+     2a8:	f2c4 0300 	movt	r3, #16384	; 0x4000
+     2ac:	f240 4400 	movw	r4, #1024	; 0x400
+     2b0:	f2c4 0400 	movt	r4, #16384	; 0x4000
+     2b4:	629c      	str	r4, [r3, #40]	; 0x28
+     2b6:	24c0      	movs	r4, #192	; 0xc0
+     2b8:	0624      	lsls	r4, r4, #24
+     2ba:	629c      	str	r4, [r3, #40]	; 0x28
+	((Port *)hw)->Group[submodule_index].DIRSET.reg = mask;
+     2bc:	6095      	str	r5, [r2, #8]
+	((Port *)hw)->Group[submodule_index].WRCONFIG.reg = data;
+     2be:	f2c4 0500 	movt	r5, #16384	; 0x4000
+     2c2:	629d      	str	r5, [r3, #40]	; 0x28
+     2c4:	629c      	str	r4, [r3, #40]	; 0x28
+	((Port *)hw)->Group[submodule_index].DIRSET.reg = mask;
+     2c6:	6091      	str	r1, [r2, #8]
+	((Port *)hw)->Group[submodule_index].WRCONFIG.reg = data;
+     2c8:	2180      	movs	r1, #128	; 0x80
+     2ca:	05c9      	lsls	r1, r1, #23
+     2cc:	6299      	str	r1, [r3, #40]	; 0x28
+     2ce:	2480      	movs	r4, #128	; 0x80
+     2d0:	f2cc 0400 	movt	r4, #49152	; 0xc000
+     2d4:	629c      	str	r4, [r3, #40]	; 0x28
+	((Port *)hw)->Group[submodule_index].DIRSET.reg = mask;
+     2d6:	6090      	str	r0, [r2, #8]
+	((Port *)hw)->Group[submodule_index].WRCONFIG.reg = data;
+     2d8:	6299      	str	r1, [r3, #40]	; 0x28
+     2da:	f640 0200 	movw	r2, #2048	; 0x800
+     2de:	f2cc 0200 	movt	r2, #49152	; 0xc000
+     2e2:	629a      	str	r2, [r3, #40]	; 0x28
+	tmp = ((Port *)hw)->Group[submodule_index].PINCFG[index].reg;
+     2e4:	204a      	movs	r0, #74	; 0x4a
+     2e6:	5c19      	ldrb	r1, [r3, r0]
+	tmp &= ~PORT_PINCFG_PMUXEN_Msk;
+     2e8:	2201      	movs	r2, #1
+     2ea:	4391      	bics	r1, r2
+	((Port *)hw)->Group[submodule_index].PINCFG[index].reg = tmp;
+     2ec:	5419      	strb	r1, [r3, r0]
+	tmp = ((Port *)hw)->Group[submodule_index].PINCFG[index].reg;
+     2ee:	3001      	adds	r0, #1
+     2f0:	5c19      	ldrb	r1, [r3, r0]
+	tmp &= ~PORT_PINCFG_PMUXEN_Msk;
+     2f2:	4391      	bics	r1, r2
+	((Port *)hw)->Group[submodule_index].PINCFG[index].reg = tmp;
+     2f4:	5419      	strb	r1, [r3, r0]
+	tmp = ((Port *)hw)->Group[submodule_index].PINCFG[index].reg;
+     2f6:	300c      	adds	r0, #12
+     2f8:	5c19      	ldrb	r1, [r3, r0]
+	tmp &= ~PORT_PINCFG_PMUXEN_Msk;
+     2fa:	4391      	bics	r1, r2
+	((Port *)hw)->Group[submodule_index].PINCFG[index].reg = tmp;
+     2fc:	5419      	strb	r1, [r3, r0]
+	tmp = ((Port *)hw)->Group[submodule_index].PINCFG[index].reg;
+     2fe:	3004      	adds	r0, #4
+     300:	5c19      	ldrb	r1, [r3, r0]
+	tmp &= ~PORT_PINCFG_PMUXEN_Msk;
+     302:	4391      	bics	r1, r2
+	((Port *)hw)->Group[submodule_index].PINCFG[index].reg = tmp;
+     304:	5419      	strb	r1, [r3, r0]
+	gpio_set_pin_direction(LED0, GPIO_DIRECTION_OUT);
+
+	gpio_set_pin_function(LED0, GPIO_PIN_FUNCTION_OFF);
+#endif
+
+	delay_ms(10);
+     306:	3851      	subs	r0, #81	; 0x51
+     308:	f240 434d 	movw	r3, #1101	; 0x44d
+     30c:	f2c0 0300 	movt	r3, #0
+     310:	4798      	blx	r3
+     312:	bd70      	pop	{r4, r5, r6, pc}
+
+00000314 <atmel_start_init>:
+
+/**
+ * Initializes MCU, drivers and middleware in the project
+ **/
+void atmel_start_init(void)
+{
+     314:	b510      	push	{r4, lr}
+	system_init();
+     316:	f240 432b 	movw	r3, #1067	; 0x42b
+     31a:	f2c0 0300 	movt	r3, #0
+     31e:	4798      	blx	r3
+ * \brief TrustZone Manager Initialization.
+ */
+static inline void trustzone_manager_init(void)
+{
+	/* Setup Port Security Attribution of I/O Pins */
+	PORT_SEC->Group[0].NONSEC.reg = CONF_PORT_INIT_NONSEC0_VAL;
+     320:	f243 2300 	movw	r3, #12800	; 0x3200
+     324:	f2c4 0300 	movt	r3, #16384	; 0x4000
+     328:	2200      	movs	r2, #0
+     32a:	66da      	str	r2, [r3, #108]	; 0x6c
+
+	/* Setup NVIC Interrupt Target Non-Secure state */
+	NVIC->ITNS[0] = CONF_NVIC_INIT_ITNS0_VAL;
+     32c:	f24e 1300 	movw	r3, #57600	; 0xe100
+     330:	f2ce 0300 	movt	r3, #57344	; 0xe000
+     334:	f240 2180 	movw	r1, #640	; 0x280
+     338:	505a      	str	r2, [r3, r1]
+	NVIC->ITNS[1] = CONF_NVIC_INIT_ITNS1_VAL;
+     33a:	3104      	adds	r1, #4
+     33c:	505a      	str	r2, [r3, r1]
+	trustzone_manager_init();
+	
+	gpio_init();
+     33e:	f240 2381 	movw	r3, #641	; 0x281
+     342:	f2c0 0300 	movt	r3, #0
+     346:	4798      	blx	r3
+}
+     348:	bd10      	pop	{r4, pc}
+
+0000034a <Dummy_Handler>:
+
+/**
+ * \brief Default interrupt handler for unused IRQs.
+ */
+void Dummy_Handler(void)
+{
+     34a:	e7fe      	b.n	34a <Dummy_Handler>
+
+0000034c <Reset_Handler>:
+{
+     34c:	b510      	push	{r4, lr}
+        if (pSrc != pDest) {
+     34e:	f643 42d8 	movw	r2, #15576	; 0x3cd8
+     352:	f2c0 0200 	movt	r2, #0
+     356:	f240 0300 	movw	r3, #0
+     35a:	f2c2 0300 	movt	r3, #8192	; 0x2000
+     35e:	429a      	cmp	r2, r3
+     360:	d020      	beq.n	3a4 <Reset_Handler+0x58>
+                for (; pDest < &_erelocate;) {
+     362:	001a      	movs	r2, r3
+     364:	f240 0374 	movw	r3, #116	; 0x74
+     368:	f2c2 0300 	movt	r3, #8192	; 0x2000
+     36c:	429a      	cmp	r2, r3
+     36e:	d219      	bcs.n	3a4 <Reset_Handler+0x58>
+     370:	f240 0374 	movw	r3, #116	; 0x74
+     374:	f2c2 0300 	movt	r3, #8192	; 0x2000
+     378:	3303      	adds	r3, #3
+     37a:	4a24      	ldr	r2, [pc, #144]	; (40c <STACK_SIZE+0xc>)
+     37c:	1a9b      	subs	r3, r3, r2
+     37e:	089b      	lsrs	r3, r3, #2
+     380:	3301      	adds	r3, #1
+     382:	009b      	lsls	r3, r3, #2
+     384:	2200      	movs	r2, #0
+                        *pDest++ = *pSrc++;
+     386:	f240 0100 	movw	r1, #0
+     38a:	f2c2 0100 	movt	r1, #8192	; 0x2000
+     38e:	1851      	adds	r1, r2, r1
+     390:	f643 40d8 	movw	r0, #15576	; 0x3cd8
+     394:	f2c0 0000 	movt	r0, #0
+     398:	1810      	adds	r0, r2, r0
+     39a:	6800      	ldr	r0, [r0, #0]
+     39c:	6008      	str	r0, [r1, #0]
+     39e:	3204      	adds	r2, #4
+                for (; pDest < &_erelocate;) {
+     3a0:	429a      	cmp	r2, r3
+     3a2:	d1f0      	bne.n	386 <Reset_Handler+0x3a>
+        for (pDest = &_szero; pDest < &_ezero;) {
+     3a4:	f240 0274 	movw	r2, #116	; 0x74
+     3a8:	f2c2 0200 	movt	r2, #8192	; 0x2000
+     3ac:	f240 03a4 	movw	r3, #164	; 0xa4
+     3b0:	f2c2 0300 	movt	r3, #8192	; 0x2000
+     3b4:	429a      	cmp	r2, r3
+     3b6:	d213      	bcs.n	3e0 <Reset_Handler+0x94>
+     3b8:	f240 0274 	movw	r2, #116	; 0x74
+     3bc:	f2c2 0200 	movt	r2, #8192	; 0x2000
+     3c0:	43d3      	mvns	r3, r2
+     3c2:	f240 01a4 	movw	r1, #164	; 0xa4
+     3c6:	f2c2 0100 	movt	r1, #8192	; 0x2000
+     3ca:	468c      	mov	ip, r1
+     3cc:	4463      	add	r3, ip
+     3ce:	2103      	movs	r1, #3
+     3d0:	438b      	bics	r3, r1
+     3d2:	3304      	adds	r3, #4
+     3d4:	4694      	mov	ip, r2
+     3d6:	4463      	add	r3, ip
+                *pDest++ = 0;
+     3d8:	2100      	movs	r1, #0
+     3da:	c202      	stmia	r2!, {r1}
+        for (pDest = &_szero; pDest < &_ezero;) {
+     3dc:	4293      	cmp	r3, r2
+     3de:	d1fc      	bne.n	3da <Reset_Handler+0x8e>
+        SCB->VTOR = ((uint32_t) pSrc & SCB_VTOR_TBLOFF_Msk);
+     3e0:	f240 0300 	movw	r3, #0
+     3e4:	f2c0 0300 	movt	r3, #0
+     3e8:	227f      	movs	r2, #127	; 0x7f
+     3ea:	4393      	bics	r3, r2
+     3ec:	f64e 5200 	movw	r2, #60672	; 0xed00
+     3f0:	f2ce 0200 	movt	r2, #57344	; 0xe000
+     3f4:	6093      	str	r3, [r2, #8]
+        __libc_init_array();
+     3f6:	f641 1311 	movw	r3, #6417	; 0x1911
+     3fa:	f2c0 0300 	movt	r3, #0
+     3fe:	4798      	blx	r3
+        main();
+     400:	f640 2319 	movw	r3, #2585	; 0xa19
+     404:	f2c0 0300 	movt	r3, #0
+     408:	4798      	blx	r3
+     40a:	e7fe      	b.n	40a <STACK_SIZE+0xa>
+     40c:	20000004 	.word	0x20000004
+
+00000410 <FLASH_0_clock_init>:
+}
+
+static inline void hri_mclk_set_AHBMASK_NVMCTRL_bit(const void *const hw)
+{
+	MCLK_CRITICAL_SECTION_ENTER();
+	((Mclk *)hw)->AHBMASK.reg |= MCLK_AHBMASK_NVMCTRL;
+     410:	f640 0300 	movw	r3, #2048	; 0x800
+     414:	f2c4 0300 	movt	r3, #16384	; 0x4000
+     418:	691a      	ldr	r2, [r3, #16]
+     41a:	2180      	movs	r1, #128	; 0x80
+     41c:	430a      	orrs	r2, r1
+     41e:	611a      	str	r2, [r3, #16]
+}
+
+static inline void hri_mclk_set_APBBMASK_NVMCTRL_bit(const void *const hw)
+{
+	MCLK_CRITICAL_SECTION_ENTER();
+	((Mclk *)hw)->APBBMASK.reg |= MCLK_APBBMASK_NVMCTRL;
+     420:	699a      	ldr	r2, [r3, #24]
+     422:	397c      	subs	r1, #124	; 0x7c
+     424:	430a      	orrs	r2, r1
+     426:	619a      	str	r2, [r3, #24]
+{
+#if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U))
+	hri_mclk_set_AHBMASK_NVMCTRL_bit(MCLK);
+	hri_mclk_set_APBBMASK_NVMCTRL_bit(MCLK);
+#endif
+}
+     428:	4770      	bx	lr
+
+0000042a <system_init>:
+
+void system_init(void)
+{
+     42a:	b510      	push	{r4, lr}
+ * Currently the following initialization functions are supported:
+ *  - System clock initialization
+ */
+static inline void init_mcu(void)
+{
+	_init_chip();
+     42c:	f240 43c3 	movw	r3, #1219	; 0x4c3
+     430:	f2c0 0300 	movt	r3, #0
+     434:	4798      	blx	r3
+#if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U))
+	/* Only initialize MCU clock when the project is TrustZone secure project  */
+	init_mcu();
+#endif
+
+	FLASH_0_clock_init();
+     436:	f240 4311 	movw	r3, #1041	; 0x411
+     43a:	f2c0 0300 	movt	r3, #0
+     43e:	4798      	blx	r3
+	FLASH_0_init();
+     440:	f240 5349 	movw	r3, #1353	; 0x549
+     444:	f2c0 0300 	movt	r3, #0
+     448:	4798      	blx	r3
+}
+     44a:	bd10      	pop	{r4, pc}
+
+0000044c <delay_ms>:
+
+/**
+ * \brief Perform delay in ms
+ */
+void delay_ms(const uint16_t ms)
+{
+     44c:	b510      	push	{r4, lr}
+	_delay_cycles(hardware, _get_cycles_for_ms(ms));
+     44e:	f240 0390 	movw	r3, #144	; 0x90
+     452:	f2c2 0300 	movt	r3, #8192	; 0x2000
+     456:	681c      	ldr	r4, [r3, #0]
+     458:	f240 43a5 	movw	r3, #1189	; 0x4a5
+     45c:	f2c0 0300 	movt	r3, #0
+     460:	4798      	blx	r3
+     462:	0001      	movs	r1, r0
+     464:	0020      	movs	r0, r4
+     466:	f240 43bd 	movw	r3, #1213	; 0x4bd
+     46a:	f2c0 0300 	movt	r3, #0
+     46e:	4798      	blx	r3
+}
+     470:	bd10      	pop	{r4, pc}
+
+00000472 <_sbrk>:
+
+/**
+ * \brief Replacement of C library of _sbrk
+ */
+extern caddr_t _sbrk(int incr)
+{
+     472:	0002      	movs	r2, r0
+	static unsigned char *heap = NULL;
+	unsigned char *       prev_heap;
+
+	if (heap == NULL) {
+     474:	f240 0394 	movw	r3, #148	; 0x94
+     478:	f2c2 0300 	movt	r3, #8192	; 0x2000
+     47c:	681b      	ldr	r3, [r3, #0]
+     47e:	b13b      	cbz	r3, 490 <_sbrk+0x1e>
+		heap = (unsigned char *)&_end;
+	}
+	prev_heap = heap;
+     480:	f240 0394 	movw	r3, #148	; 0x94
+     484:	f2c2 0300 	movt	r3, #8192	; 0x2000
+     488:	6818      	ldr	r0, [r3, #0]
+
+	heap += incr;
+     48a:	1882      	adds	r2, r0, r2
+     48c:	601a      	str	r2, [r3, #0]
+
+	return (caddr_t)prev_heap;
+}
+     48e:	4770      	bx	lr
+		heap = (unsigned char *)&_end;
+     490:	f240 0394 	movw	r3, #148	; 0x94
+     494:	f2c2 0300 	movt	r3, #8192	; 0x2000
+     498:	f240 61a8 	movw	r1, #1704	; 0x6a8
+     49c:	f2c2 0100 	movt	r1, #8192	; 0x2000
+     4a0:	6019      	str	r1, [r3, #0]
+     4a2:	e7ed      	b.n	480 <_sbrk+0xe>
+
+000004a4 <_get_cycles_for_ms>:
+
+/**
+ * \brief Retrieve the amount of cycles to delay for the given amount of ms
+ */
+uint32_t _get_cycles_for_ms(const uint16_t ms)
+{
+     4a4:	0003      	movs	r3, r0
+		return (ms * (freq / 10000) + 2) / 3 * 10;
+     4a6:	f240 1090 	movw	r0, #400	; 0x190
+     4aa:	4358      	muls	r0, r3
+     4ac:	3002      	adds	r0, #2
+     4ae:	2303      	movs	r3, #3
+     4b0:	fbb0 f0f3 	udiv	r0, r0, r3
+     4b4:	0083      	lsls	r3, r0, #2
+     4b6:	1818      	adds	r0, r3, r0
+     4b8:	0040      	lsls	r0, r0, #1
+	return _get_cycles_for_ms_internal(ms, CONF_CPU_FREQUENCY, CPU_FREQ_POWER);
+}
+     4ba:	4770      	bx	lr
+
+000004bc <_delay_cycles>:
+#if defined(__GNUC__) && (__ARMCOMPILER_VERSION > 6000000) /*  Keil MDK with ARM Compiler 6 */
+	__asm("__delay:\n"
+	      "subs r1, r1, #1\n"
+	      "bhi __delay\n");
+#elif defined __GNUC__
+	__asm(".syntax unified\n"
+     4bc:	3901      	subs	r1, #1
+     4be:	d8fd      	bhi.n	4bc <_delay_cycles>
+	__asm("__delay:\n"
+	      "subs r1, r1, #1\n"
+	      "bhi __delay\n");
+#endif
+#endif
+}
+     4c0:	4770      	bx	lr
+
+000004c2 <_init_chip>:
+
+/**
+ * \brief Initialize the hardware abstraction layer
+ */
+void _init_chip(void)
+{
+     4c2:	b510      	push	{r4, lr}
+}
+
+static inline void hri_nvmctrl_set_CTRLB_RWS_bf(const void *const hw, hri_nvmctrl_ctrlb_reg_t mask)
+{
+	NVMCTRL_CRITICAL_SECTION_ENTER();
+	((Nvmctrl *)hw)->CTRLB.reg |= NVMCTRL_CTRLB_RWS(mask);
+     4c4:	f245 0300 	movw	r3, #20480	; 0x5000
+     4c8:	f2c4 1300 	movt	r3, #16640	; 0x4100
+     4cc:	685a      	ldr	r2, [r3, #4]
+     4ce:	605a      	str	r2, [r3, #4]
+	hri_nvmctrl_set_CTRLB_RWS_bf(NVMCTRL_SEC, CONF_NVM_WAIT_STATE);
+#else
+	hri_nvmctrl_set_CTRLB_RWS_bf(NVMCTRL, CONF_NVM_WAIT_STATE);
+#endif
+
+	_set_performance_level(CONF_PERFORMANCE_LEVEL);
+     4d0:	2000      	movs	r0, #0
+     4d2:	f240 63f3 	movw	r3, #1779	; 0x6f3
+     4d6:	f2c0 0300 	movt	r3, #0
+     4da:	4798      	blx	r3
+
+	_osc32kctrl_init_sources();
+     4dc:	f240 63ab 	movw	r3, #1707	; 0x6ab
+     4e0:	f2c0 0300 	movt	r3, #0
+     4e4:	4798      	blx	r3
+	_oscctrl_init_sources();
+     4e6:	f240 63c3 	movw	r3, #1731	; 0x6c3
+     4ea:	f2c0 0300 	movt	r3, #0
+     4ee:	4798      	blx	r3
+	_mclk_init();
+     4f0:	f240 533b 	movw	r3, #1339	; 0x53b
+     4f4:	f2c0 0300 	movt	r3, #0
+     4f8:	4798      	blx	r3
+#if _GCLK_INIT_1ST
+	_gclk_init_generators_by_fref(_GCLK_INIT_1ST);
+#endif
+	_oscctrl_init_referenced_generators();
+     4fa:	f240 63f1 	movw	r3, #1777	; 0x6f1
+     4fe:	f2c0 0300 	movt	r3, #0
+     502:	4798      	blx	r3
+	_gclk_init_generators_by_fref(_GCLK_INIT_LAST);
+     504:	201f      	movs	r0, #31
+     506:	f240 5313 	movw	r3, #1299	; 0x513
+     50a:	f2c0 0300 	movt	r3, #0
+     50e:	4798      	blx	r3
+#endif
+
+#if (CONF_PORT_EVCTRL_PORT_0 | CONF_PORT_EVCTRL_PORT_1 | CONF_PORT_EVCTRL_PORT_2 | CONF_PORT_EVCTRL_PORT_3)
+	_port_event_init();
+#endif
+}
+     510:	bd10      	pop	{r4, pc}
+
+00000512 <_gclk_init_generators_by_fref>:
+
+void _gclk_init_generators_by_fref(uint32_t bm)
+{
+
+#if CONF_GCLK_GENERATOR_0_CONFIG == 1
+	if (bm & (1ul << 0)) {
+     512:	07c3      	lsls	r3, r0, #31
+     514:	d510      	bpl.n	538 <_gclk_init_generators_by_fref+0x26>
+	((Gclk *)hw)->GENCTRL[index].reg = data;
+     516:	f641 4300 	movw	r3, #7168	; 0x1c00
+     51a:	f2c4 0300 	movt	r3, #16384	; 0x4000
+     51e:	f240 1205 	movw	r2, #261	; 0x105
+     522:	f2c0 0201 	movt	r2, #1
+     526:	621a      	str	r2, [r3, #32]
+	while (((Gclk *)hw)->SYNCBUSY.reg & reg) {
+     528:	f641 4200 	movw	r2, #7168	; 0x1c00
+     52c:	f2c4 0200 	movt	r2, #16384	; 0x4000
+     530:	217d      	movs	r1, #125	; 0x7d
+     532:	6853      	ldr	r3, [r2, #4]
+     534:	4219      	tst	r1, r3
+     536:	d1fc      	bne.n	532 <_gclk_init_generators_by_fref+0x20>
+		        | (CONF_GCLK_GEN_4_DIVSEL << GCLK_GENCTRL_DIVSEL_Pos) | (CONF_GCLK_GEN_4_OE << GCLK_GENCTRL_OE_Pos)
+		        | (CONF_GCLK_GEN_4_OOV << GCLK_GENCTRL_OOV_Pos) | (CONF_GCLK_GEN_4_IDC << GCLK_GENCTRL_IDC_Pos)
+		        | (CONF_GCLK_GENERATOR_4_CONFIG << GCLK_GENCTRL_GENEN_Pos) | CONF_GCLK_GEN_4_SOURCE);
+	}
+#endif
+}
+     538:	4770      	bx	lr
+
+0000053a <_mclk_init>:
+	((Mclk *)hw)->CPUDIV.reg = data;
+     53a:	f640 0300 	movw	r3, #2048	; 0x800
+     53e:	f2c4 0300 	movt	r3, #16384	; 0x4000
+     542:	2201      	movs	r2, #1
+     544:	711a      	strb	r2, [r3, #4]
+ */
+void _mclk_init(void)
+{
+	void *hw = (void *)MCLK;
+	hri_mclk_write_CPUDIV_reg(hw, MCLK_CPUDIV_CPUDIV(CONF_MCLK_CPUDIV));
+}
+     546:	4770      	bx	lr
+
+00000548 <FLASH_0_init>:
+	//		 | 0 << NVMCTRL_SECCTRL_DSCEN_Pos /* Setting: disabled */
+	//		 | 0 << NVMCTRL_SECCTRL_SILACC_Pos /* Setting: disabled */
+	//		 | 0 << NVMCTRL_SECCTRL_TAMPEEN_Pos); /* Setting: disabled */
+
+	return ERR_NONE;
+}
+     548:	2000      	movs	r0, #0
+     54a:	4770      	bx	lr
+
+0000054c <FLASH_0_exec_cmd>:
+
+/**
+ * \brief Execute a command on the NVM controller
+ */
+int32_t FLASH_0_exec_cmd(const enum nvm_cmd cmd, uint32_t dst_addr)
+{
+     54c:	b510      	push	{r4, lr}
+	return (((Nvmctrl *)hw)->STATUS.reg & NVMCTRL_STATUS_READY_Msk) >> NVMCTRL_STATUS_READY_Pos;
+     54e:	f245 0200 	movw	r2, #20480	; 0x5000
+     552:	f2c4 1200 	movt	r2, #16640	; 0x4100
+	/* Wait until this module isn't busy */
+	while (!hri_nvmctrl_get_STATUS_READY_bit(_NVMCTRL)) {
+     556:	2404      	movs	r4, #4
+     558:	8b13      	ldrh	r3, [r2, #24]
+     55a:	4223      	tst	r3, r4
+     55c:	d0fc      	beq.n	558 <FLASH_0_exec_cmd+0xc>
+	((Nvmctrl *)hw)->INTFLAG.reg = mask;
+     55e:	f245 0300 	movw	r3, #20480	; 0x5000
+     562:	f2c4 1300 	movt	r3, #16640	; 0x4100
+     566:	223f      	movs	r2, #63	; 0x3f
+     568:	751a      	strb	r2, [r3, #20]
+
+	/* Clear flags */
+	hri_nvmctrl_clear_INTFLAG_reg(_NVMCTRL, NVMCTRL_INTFLAG_MASK);
+
+	/* Commands requiring address */
+	if ((cmd == NVM_CMD_ERASE_ROW) || (cmd == NVM_CMD_WRITE_PAGE)) {
+     56a:	1e83      	subs	r3, r0, #2
+     56c:	32be      	adds	r2, #190	; 0xbe
+     56e:	4213      	tst	r3, r2
+     570:	d016      	beq.n	5a0 <FLASH_0_exec_cmd+0x54>
+		hri_nvmctrl_write_ADDR_reg(_NVMCTRL, dst_addr);
+	}
+
+	/* Set command */
+	hri_nvmctrl_write_CTRLA_reg(_NVMCTRL, cmd | NVMCTRL_CTRLA_CMDEX_KEY);
+     572:	f24a 5300 	movw	r3, #42240	; 0xa500
+     576:	4318      	orrs	r0, r3
+}
+
+static inline void hri_nvmctrl_write_CTRLA_reg(const void *const hw, hri_nvmctrl_ctrla_reg_t data)
+{
+	NVMCTRL_CRITICAL_SECTION_ENTER();
+	((Nvmctrl *)hw)->CTRLA.reg = data;
+     578:	f245 0300 	movw	r3, #20480	; 0x5000
+     57c:	f2c4 1300 	movt	r3, #16640	; 0x4100
+     580:	8018      	strh	r0, [r3, #0]
+	return (((Nvmctrl *)hw)->INTFLAG.reg & NVMCTRL_INTFLAG_DONE_Msk) >> NVMCTRL_INTFLAG_DONE_Pos;
+     582:	f245 0300 	movw	r3, #20480	; 0x5000
+     586:	f2c4 1300 	movt	r3, #16640	; 0x4100
+
+	/* Wait until the command done */
+	while (!hri_nvmctrl_get_interrupt_DONE_bit(_NVMCTRL)) {
+     58a:	2101      	movs	r1, #1
+	tmp &= mask;
+     58c:	201e      	movs	r0, #30
+	return (((Nvmctrl *)hw)->INTFLAG.reg & NVMCTRL_INTFLAG_DONE_Msk) >> NVMCTRL_INTFLAG_DONE_Pos;
+     58e:	7d1a      	ldrb	r2, [r3, #20]
+     590:	420a      	tst	r2, r1
+     592:	d10b      	bne.n	5ac <FLASH_0_exec_cmd+0x60>
+	tmp = ((Nvmctrl *)hw)->INTFLAG.reg;
+     594:	7d1a      	ldrb	r2, [r3, #20]
+		/* Check if there is error in NVM erase operation */
+		if (hri_nvmctrl_get_INTFLAG_reg(
+     596:	4202      	tst	r2, r0
+     598:	d0f9      	beq.n	58e <FLASH_0_exec_cmd+0x42>
+		        _NVMCTRL, NVMCTRL_INTFLAG_LOCKE | NVMCTRL_INTFLAG_NVME | NVMCTRL_INTFLAG_PROGE | NVMCTRL_INTFLAG_KEYE)
+		    != 0) {
+			return ERR_FAILURE;
+     59a:	201e      	movs	r0, #30
+     59c:	4240      	negs	r0, r0
+     59e:	e006      	b.n	5ae <FLASH_0_exec_cmd+0x62>
+	((Nvmctrl *)hw)->ADDR.reg = data;
+     5a0:	f245 0300 	movw	r3, #20480	; 0x5000
+     5a4:	f2c4 1300 	movt	r3, #16640	; 0x4100
+     5a8:	61d9      	str	r1, [r3, #28]
+     5aa:	e7e2      	b.n	572 <FLASH_0_exec_cmd+0x26>
+		}
+	}
+
+	return ERR_NONE;
+     5ac:	2000      	movs	r0, #0
+}
+     5ae:	bd10      	pop	{r4, pc}
+
+000005b0 <FLASH_0_erase_row>:
+
+/**
+ * \brief Erase a row in NVM memory
+ */
+int32_t FLASH_0_erase_row(const uint32_t dst_addr)
+{
+     5b0:	b510      	push	{r4, lr}
+     5b2:	0001      	movs	r1, r0
+	return FLASH_0_exec_cmd(NVM_CMD_ERASE_ROW, dst_addr);
+     5b4:	2002      	movs	r0, #2
+     5b6:	f240 534d 	movw	r3, #1357	; 0x54d
+     5ba:	f2c0 0300 	movt	r3, #0
+     5be:	4798      	blx	r3
+}
+     5c0:	bd10      	pop	{r4, pc}
+
+000005c2 <FLASH_0_write_page_buffer>:
+
+/**
+ * \brief Write a page buffer in NVM memory
+ */
+int32_t FLASH_0_write_page_buffer(const uint32_t dst_addr, const uint8_t *buffer, const uint16_t length)
+{
+     5c2:	b570      	push	{r4, r5, r6, lr}
+     5c4:	0006      	movs	r6, r0
+     5c6:	000c      	movs	r4, r1
+     5c8:	0015      	movs	r5, r2
+	/* Check if the write address not aligned to the start of a page */
+	if (dst_addr & (NVMCTRL_PAGE_SIZE - 1)) {
+     5ca:	0683      	lsls	r3, r0, #26
+     5cc:	d121      	bne.n	612 <FLASH_0_write_page_buffer+0x50>
+		return ERR_INVALID_ARG;
+	}
+
+	/* Check if the write length is longer than an NVM page */
+	if (length > NVMCTRL_PAGE_SIZE) {
+     5ce:	2a40      	cmp	r2, #64	; 0x40
+     5d0:	d822      	bhi.n	618 <FLASH_0_write_page_buffer+0x56>
+		return ERR_INVALID_ARG;
+	}
+
+	/* Erase the page buffer before buffering new data */
+	FLASH_0_exec_cmd(NVM_CMD_PAGE_BUFFER_CLEAR, dst_addr);
+     5d2:	0001      	movs	r1, r0
+     5d4:	2044      	movs	r0, #68	; 0x44
+     5d6:	f240 534d 	movw	r3, #1357	; 0x54d
+     5da:	f2c0 0300 	movt	r3, #0
+     5de:	4798      	blx	r3
+
+	uint32_t nvm_addr = dst_addr / 2;
+	/* NVM _must_ be accessed as a series of 16-bit words, perform manual copy
+	 * to ensure alignment */
+	for (uint16_t i = 0; i < length; i += 2) {
+     5e0:	b1ed      	cbz	r5, 61e <FLASH_0_write_page_buffer+0x5c>
+     5e2:	0021      	movs	r1, r4
+     5e4:	2301      	movs	r3, #1
+     5e6:	0030      	movs	r0, r6
+     5e8:	4398      	bics	r0, r3
+     5ea:	2300      	movs	r3, #0
+		uint16_t data;
+
+		data = buffer[i];
+		if (i < (length - 1)) {
+     5ec:	1e6e      	subs	r6, r5, #1
+     5ee:	e009      	b.n	604 <FLASH_0_write_page_buffer+0x42>
+			data |= (buffer[i + 1] << 8);
+     5f0:	784c      	ldrb	r4, [r1, #1]
+     5f2:	0224      	lsls	r4, r4, #8
+     5f4:	4322      	orrs	r2, r4
+     5f6:	181c      	adds	r4, r3, r0
+		}
+		NVM_MEMORY[nvm_addr++] = data;
+     5f8:	8022      	strh	r2, [r4, #0]
+     5fa:	3102      	adds	r1, #2
+     5fc:	3302      	adds	r3, #2
+	for (uint16_t i = 0; i < length; i += 2) {
+     5fe:	b29a      	uxth	r2, r3
+     600:	4295      	cmp	r5, r2
+     602:	d904      	bls.n	60e <FLASH_0_write_page_buffer+0x4c>
+		data = buffer[i];
+     604:	780a      	ldrb	r2, [r1, #0]
+		if (i < (length - 1)) {
+     606:	429e      	cmp	r6, r3
+     608:	dcf2      	bgt.n	5f0 <FLASH_0_write_page_buffer+0x2e>
+		data = buffer[i];
+     60a:	b292      	uxth	r2, r2
+     60c:	e7f3      	b.n	5f6 <FLASH_0_write_page_buffer+0x34>
+	}
+
+	return ERR_NONE;
+     60e:	2000      	movs	r0, #0
+}
+     610:	bd70      	pop	{r4, r5, r6, pc}
+		return ERR_INVALID_ARG;
+     612:	200d      	movs	r0, #13
+     614:	4240      	negs	r0, r0
+     616:	e7fb      	b.n	610 <FLASH_0_write_page_buffer+0x4e>
+		return ERR_INVALID_ARG;
+     618:	200d      	movs	r0, #13
+     61a:	4240      	negs	r0, r0
+     61c:	e7f8      	b.n	610 <FLASH_0_write_page_buffer+0x4e>
+	return ERR_NONE;
+     61e:	2000      	movs	r0, #0
+     620:	e7f6      	b.n	610 <FLASH_0_write_page_buffer+0x4e>
+
+00000622 <FLASH_0_write_page>:
+
+/**
+ * \brief Write (program) a page in NVM memory
+ */
+int32_t FLASH_0_write_page(const uint32_t dst_addr, const uint8_t *buffer, const uint16_t length)
+{
+     622:	b570      	push	{r4, r5, r6, lr}
+     624:	0004      	movs	r4, r0
+     626:	0015      	movs	r5, r2
+	int32_t rc = ERR_NONE;
+
+	rc = FLASH_0_write_page_buffer(dst_addr, buffer, length);
+     628:	f240 53c3 	movw	r3, #1475	; 0x5c3
+     62c:	f2c0 0300 	movt	r3, #0
+     630:	4798      	blx	r3
+	if (rc != ERR_NONE) {
+     632:	b978      	cbnz	r0, 654 <FLASH_0_write_page+0x32>
+	tmp = ((Nvmctrl *)hw)->CTRLC.reg;
+     634:	f245 0300 	movw	r3, #20480	; 0x5000
+     638:	f2c4 1300 	movt	r3, #16640	; 0x4100
+     63c:	7a1b      	ldrb	r3, [r3, #8]
+		return rc;
+	} else {
+		/* Execute NVM write page command */
+		if ((hri_nvmctrl_get_CTRLC_MANW_bit(_NVMCTRL) == 1) || (length < NVMCTRL_PAGE_SIZE)) {
+     63e:	07db      	lsls	r3, r3, #31
+     640:	d401      	bmi.n	646 <FLASH_0_write_page+0x24>
+     642:	2d3f      	cmp	r5, #63	; 0x3f
+     644:	d806      	bhi.n	654 <FLASH_0_write_page+0x32>
+			rc = FLASH_0_exec_cmd(NVM_CMD_WRITE_PAGE, dst_addr);
+     646:	0021      	movs	r1, r4
+     648:	2004      	movs	r0, #4
+     64a:	f240 534d 	movw	r3, #1357	; 0x54d
+     64e:	f2c0 0300 	movt	r3, #0
+     652:	4798      	blx	r3
+		}
+	}
+
+	return rc;
+}
+     654:	bd70      	pop	{r4, r5, r6, pc}
+
+00000656 <FLASH_0_read>:
+
+/**
+ * \brief Read a number of bytes from a page in the NVM memory
+ */
+int32_t FLASH_0_read(uint32_t src_addr, uint8_t *buffer, uint32_t length)
+{
+     656:	b570      	push	{r4, r5, r6, lr}
+	uint32_t nvm_addr = src_addr / 2;
+     658:	0845      	lsrs	r5, r0, #1
+	return (((Nvmctrl *)hw)->STATUS.reg & NVMCTRL_STATUS_READY_Msk) >> NVMCTRL_STATUS_READY_Pos;
+     65a:	f245 0400 	movw	r4, #20480	; 0x5000
+     65e:	f2c4 1400 	movt	r4, #16640	; 0x4100
+	uint32_t i;
+	uint16_t data;
+
+	/* Wait until this module isn't busy */
+	while (!hri_nvmctrl_get_STATUS_READY_bit(_NVMCTRL)) {
+     662:	2604      	movs	r6, #4
+     664:	8b23      	ldrh	r3, [r4, #24]
+     666:	4233      	tst	r3, r6
+     668:	d0fc      	beq.n	664 <FLASH_0_read+0xe>
+	if (src_addr % 2) {
+		data      = NVM_MEMORY[nvm_addr++];
+		buffer[0] = data >> 8;
+		i         = 1;
+	} else {
+		i = 0;
+     66a:	2400      	movs	r4, #0
+	if (src_addr % 2) {
+     66c:	07c3      	lsls	r3, r0, #31
+     66e:	d506      	bpl.n	67e <FLASH_0_read+0x28>
+		data      = NVM_MEMORY[nvm_addr++];
+     670:	3501      	adds	r5, #1
+     672:	2301      	movs	r3, #1
+     674:	4398      	bics	r0, r3
+     676:	8803      	ldrh	r3, [r0, #0]
+		buffer[0] = data >> 8;
+     678:	0a1b      	lsrs	r3, r3, #8
+     67a:	700b      	strb	r3, [r1, #0]
+		i         = 1;
+     67c:	3401      	adds	r4, #1
+	}
+
+	/* NVM _must_ be accessed as a series of 16-bit words, perform manual copy
+	 * to ensure alignment */
+	while (i < length) {
+     67e:	4294      	cmp	r4, r2
+     680:	d211      	bcs.n	6a6 <FLASH_0_read+0x50>
+     682:	1909      	adds	r1, r1, r4
+     684:	006d      	lsls	r5, r5, #1
+     686:	1b28      	subs	r0, r5, r4
+		data      = NVM_MEMORY[nvm_addr++];
+		buffer[i] = (data & 0xFF);
+		if (i < (length - 1)) {
+     688:	1e55      	subs	r5, r2, #1
+     68a:	e003      	b.n	694 <FLASH_0_read+0x3e>
+			buffer[i + 1] = (data >> 8);
+		}
+		i += 2;
+     68c:	3402      	adds	r4, #2
+     68e:	3102      	adds	r1, #2
+	while (i < length) {
+     690:	42a2      	cmp	r2, r4
+     692:	d908      	bls.n	6a6 <FLASH_0_read+0x50>
+     694:	1903      	adds	r3, r0, r4
+		data      = NVM_MEMORY[nvm_addr++];
+     696:	881b      	ldrh	r3, [r3, #0]
+     698:	b29b      	uxth	r3, r3
+		buffer[i] = (data & 0xFF);
+     69a:	700b      	strb	r3, [r1, #0]
+		if (i < (length - 1)) {
+     69c:	42a5      	cmp	r5, r4
+     69e:	d9f5      	bls.n	68c <FLASH_0_read+0x36>
+			buffer[i + 1] = (data >> 8);
+     6a0:	0a1b      	lsrs	r3, r3, #8
+     6a2:	704b      	strb	r3, [r1, #1]
+     6a4:	e7f2      	b.n	68c <FLASH_0_read+0x36>
+	}
+
+	return ERR_NONE;
+}
+     6a6:	2000      	movs	r0, #0
+     6a8:	bd70      	pop	{r4, r5, r6, pc}
+
+000006aa <_osc32kctrl_init_sources>:
+}
+
+static inline hri_osc32kctrl_osculp32k_reg_t hri_osc32kctrl_read_OSCULP32K_CALIB_bf(const void *const hw)
+{
+	uint32_t tmp;
+	tmp = ((Osc32kctrl *)hw)->OSCULP32K.reg;
+     6aa:	f241 4300 	movw	r3, #5120	; 0x1400
+     6ae:	f2c4 0300 	movt	r3, #16384	; 0x4000
+     6b2:	69da      	ldr	r2, [r3, #28]
+	hri_osc32kctrl_write_EVCTRL_reg(hw, (CONF_XOSC32K_CFDEO << OSC32KCTRL_EVCTRL_CFDEO_Pos));
+#endif
+
+#if CONF_OSCULP32K_CONFIG == 1
+	calib = hri_osc32kctrl_read_OSCULP32K_CALIB_bf(hw);
+	hri_osc32kctrl_write_OSCULP32K_reg(hw,
+     6b4:	f641 7100 	movw	r1, #7936	; 0x1f00
+     6b8:	400a      	ands	r2, r1
+}
+
+static inline void hri_osc32kctrl_write_OSCULP32K_reg(const void *const hw, hri_osc32kctrl_osculp32k_reg_t data)
+{
+	OSC32KCTRL_CRITICAL_SECTION_ENTER();
+	((Osc32kctrl *)hw)->OSCULP32K.reg = data;
+     6ba:	61da      	str	r2, [r3, #28]
+	((Osc32kctrl *)hw)->RTCCTRL.reg = data;
+     6bc:	2200      	movs	r2, #0
+     6be:	741a      	strb	r2, [r3, #16]
+#endif
+#endif
+
+	hri_osc32kctrl_write_RTCCTRL_reg(hw, OSC32KCTRL_RTCCTRL_RTCSEL(CONF_RTCCTRL));
+	(void)calib;
+}
+     6c0:	4770      	bx	lr
+
+000006c2 <_oscctrl_init_sources>:
+}
+
+static inline void hri_oscctrl_write_OSC16MCTRL_reg(const void *const hw, hri_oscctrl_osc16mctrl_reg_t data)
+{
+	OSCCTRL_CRITICAL_SECTION_ENTER();
+	((Oscctrl *)hw)->OSC16MCTRL.reg = data;
+     6c2:	f241 0300 	movw	r3, #4096	; 0x1000
+     6c6:	f2c4 0300 	movt	r3, #16384	; 0x4000
+     6ca:	2202      	movs	r2, #2
+     6cc:	761a      	strb	r2, [r3, #24]
+	return (((Oscctrl *)hw)->STATUS.reg & OSCCTRL_STATUS_OSC16MRDY_Msk) >> OSCCTRL_STATUS_OSC16MRDY_Pos;
+     6ce:	f241 0200 	movw	r2, #4096	; 0x1000
+     6d2:	f2c4 0200 	movt	r2, #16384	; 0x4000
+#endif
+#endif
+
+#if CONF_OSC16M_CONFIG == 1
+#if CONF_OSC16M_ENABLE == 1
+	while (!hri_oscctrl_get_STATUS_OSC16MRDY_bit(hw))
+     6d6:	2110      	movs	r1, #16
+     6d8:	6913      	ldr	r3, [r2, #16]
+     6da:	4219      	tst	r1, r3
+     6dc:	d0fc      	beq.n	6d8 <_oscctrl_init_sources+0x16>
+	((Oscctrl *)hw)->OSC16MCTRL.reg |= OSCCTRL_OSC16MCTRL_ONDEMAND_Msk;
+     6de:	f241 0300 	movw	r3, #4096	; 0x1000
+     6e2:	f2c4 0300 	movt	r3, #16384	; 0x4000
+     6e6:	7e1a      	ldrb	r2, [r3, #24]
+     6e8:	2180      	movs	r1, #128	; 0x80
+     6ea:	430a      	orrs	r2, r1
+     6ec:	761a      	strb	r2, [r3, #24]
+#if CONF_OSC16M_ONDEMAND == 1
+	hri_oscctrl_set_OSC16MCTRL_ONDEMAND_bit(hw);
+#endif
+#endif
+	(void)hw;
+}
+     6ee:	4770      	bx	lr
+
+000006f0 <_oscctrl_init_referenced_generators>:
+#if CONF_DFLL_CONFIG == 1
+	while (hri_gclk_read_SYNCBUSY_reg(GCLK))
+		;
+#endif
+	(void)hw, (void)tmp;
+}
+     6f0:	4770      	bx	lr
+
+000006f2 <_set_performance_level>:
+}
+
+static inline hri_pm_plcfg_reg_t hri_pm_get_PLCFG_PLSEL_bf(const void *const hw, hri_pm_plcfg_reg_t mask)
+{
+	uint8_t tmp;
+	tmp = ((Pm *)hw)->PLCFG.reg;
+     6f2:	f240 4300 	movw	r3, #1024	; 0x400
+     6f6:	f2c4 0300 	movt	r3, #16384	; 0x4000
+     6fa:	789b      	ldrb	r3, [r3, #2]
+/**
+ * \brief Set performance level
+ */
+void _set_performance_level(const uint8_t level)
+{
+	if (hri_pm_get_PLCFG_PLSEL_bf(PM, PM_PLCFG_PLSEL_Msk) != level) {
+     6fc:	2203      	movs	r2, #3
+     6fe:	4013      	ands	r3, r2
+     700:	4298      	cmp	r0, r3
+     702:	d012      	beq.n	72a <_set_performance_level+0x38>
+	((Pm *)hw)->INTFLAG.reg = mask;
+     704:	f240 4200 	movw	r2, #1024	; 0x400
+     708:	f2c4 0200 	movt	r2, #16384	; 0x4000
+     70c:	23ff      	movs	r3, #255	; 0xff
+     70e:	7193      	strb	r3, [r2, #6]
+
+static inline void hri_pm_write_PLCFG_PLSEL_bf(const void *const hw, hri_pm_plcfg_reg_t data)
+{
+	uint8_t tmp;
+	PM_CRITICAL_SECTION_ENTER();
+	tmp = ((Pm *)hw)->PLCFG.reg;
+     710:	7893      	ldrb	r3, [r2, #2]
+	tmp &= ~PM_PLCFG_PLSEL_Msk;
+     712:	2103      	movs	r1, #3
+     714:	438b      	bics	r3, r1
+	tmp |= PM_PLCFG_PLSEL(data);
+     716:	4008      	ands	r0, r1
+     718:	4318      	orrs	r0, r3
+	((Pm *)hw)->PLCFG.reg = tmp;
+     71a:	7090      	strb	r0, [r2, #2]
+	return ((Pm *)hw)->INTFLAG.reg;
+     71c:	f240 4200 	movw	r2, #1024	; 0x400
+     720:	f2c4 0200 	movt	r2, #16384	; 0x4000
+     724:	7993      	ldrb	r3, [r2, #6]
+		hri_pm_clear_INTFLAG_reg(PM, 0xFF);
+		hri_pm_write_PLCFG_PLSEL_bf(PM, level);
+		while (!hri_pm_read_INTFLAG_reg(PM))
+     726:	2b00      	cmp	r3, #0
+     728:	d0fc      	beq.n	724 <_set_performance_level+0x32>
+			;
+	}
+}
+     72a:	4770      	bx	lr
+
+0000072c <benchmark_aes>:
+#endif
+
+
+
+void benchmark_aes(void)
+{
+     72c:	b5f0      	push	{r4, r5, r6, r7, lr}
+     72e:	46de      	mov	lr, fp
+     730:	4657      	mov	r7, sl
+     732:	464e      	mov	r6, r9
+     734:	4645      	mov	r5, r8
+     736:	b5e0      	push	{r5, r6, r7, lr}
+     738:	4cb6      	ldr	r4, [pc, #728]	; (a14 <benchmark_aes+0x2e8>)
+     73a:	44a5      	add	sp, r4
+	};*/
+
+	Aes enc;
+	Aes dec;
+	
+	const uint8_t key[16] = {
+     73c:	aa06      	add	r2, sp, #24
+     73e:	f641 3320 	movw	r3, #6944	; 0x1b20
+     742:	f2c0 0300 	movt	r3, #0
+     746:	cb13      	ldmia	r3!, {r0, r1, r4}
+     748:	c213      	stmia	r2!, {r0, r1, r4}
+     74a:	681b      	ldr	r3, [r3, #0]
+     74c:	6013      	str	r3, [r2, #0]
+
+	
+	static uint8_t iv[16] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f };
+	
+	// Allocate buffer memory
+	uint8_t *input = malloc(sizeof(uint8_t) * MAX_NUM_BYTES);
+     74e:	f241 7070 	movw	r0, #6000	; 0x1770
+     752:	f641 1361 	movw	r3, #6497	; 0x1961
+     756:	f2c0 0300 	movt	r3, #0
+     75a:	4798      	blx	r3
+     75c:	9002      	str	r0, [sp, #8]
+
+    delay_ms(10);
+     75e:	200a      	movs	r0, #10
+     760:	f240 434d 	movw	r3, #1101	; 0x44d
+     764:	f2c0 0300 	movt	r3, #0
+     768:	4798      	blx	r3
+
+	for (size_t num_bytes = MIN_NUM_BYTES; num_bytes <= MAX_NUM_BYTES; num_bytes += STEP_SIZE) {
+     76a:	f240 0810 	movw	r8, #16
+		for (size_t byte = 0; byte < num_bytes; byte++) {
+			input[byte] = byte; // Will wrap at 0xff.
+			//input[byte] = 0xfa;
+		}
+			
+		wc_AesSetKey(&enc, key, sizeof(key), iv, AES_ENCRYPTION);
+     76e:	f240 0300 	movw	r3, #0
+     772:	f2c2 0300 	movt	r3, #8192	; 0x2000
+     776:	9304      	str	r3, [sp, #16]
+		target_addr -= target_addr % NVMCTRL_ROW_SIZE;
+	
+		for (uint32_t page_index = 0; page_index * FLASH_PAGE_SIZE < num_bytes; page_index += 1) {
+			if (page_index % NVMCTRL_ROW_PAGES == 0) {
+				/* Erase row in flash */
+				FLASH_0_erase_row(target_addr + page_index * FLASH_PAGE_SIZE);
+     778:	f240 53b1 	movw	r3, #1457	; 0x5b1
+     77c:	f2c0 0300 	movt	r3, #0
+     780:	9303      	str	r3, [sp, #12]
+     782:	e078      	b.n	876 <benchmark_aes+0x14a>
+			}
+			FLASH_0_write_page(target_addr + page_index * FLASH_PAGE_SIZE, &input[page_index * FLASH_PAGE_SIZE], FLASH_PAGE_SIZE);
+     784:	2240      	movs	r2, #64	; 0x40
+     786:	0039      	movs	r1, r7
+     788:	0030      	movs	r0, r6
+     78a:	47d0      	blx	sl
+		for (uint32_t page_index = 0; page_index * FLASH_PAGE_SIZE < num_bytes; page_index += 1) {
+     78c:	3401      	adds	r4, #1
+     78e:	3640      	adds	r6, #64	; 0x40
+     790:	3740      	adds	r7, #64	; 0x40
+     792:	01a3      	lsls	r3, r4, #6
+     794:	42ab      	cmp	r3, r5
+     796:	d206      	bcs.n	7a6 <benchmark_aes+0x7a>
+			if (page_index % NVMCTRL_ROW_PAGES == 0) {
+     798:	465b      	mov	r3, fp
+     79a:	4223      	tst	r3, r4
+     79c:	d1f2      	bne.n	784 <benchmark_aes+0x58>
+				FLASH_0_erase_row(target_addr + page_index * FLASH_PAGE_SIZE);
+     79e:	0030      	movs	r0, r6
+     7a0:	9b03      	ldr	r3, [sp, #12]
+     7a2:	4798      	blx	r3
+     7a4:	e7ee      	b.n	784 <benchmark_aes+0x58>
+     7a6:	002b      	movs	r3, r5
+     7a8:	4645      	mov	r5, r8
+     7aa:	4698      	mov	r8, r3
+	((Port *)hw)->Group[submodule_index].OUTCLR.reg = mask;
+     7ac:	f240 2300 	movw	r3, #512	; 0x200
+     7b0:	f2c6 0300 	movt	r3, #24576	; 0x6000
+     7b4:	2280      	movs	r2, #128	; 0x80
+     7b6:	0512      	lsls	r2, r2, #20
+     7b8:	615a      	str	r2, [r3, #20]
+			// TODO: decrease FLASH_PAGE_SIZE to correct number on last write if not multiple of FLASH_PAGE_SIZE.
+		}
+		STOP_MEASURE(DGI_GPIO3);
+     7ba:	2002      	movs	r0, #2
+     7bc:	f240 444d 	movw	r4, #1101	; 0x44d
+     7c0:	f2c0 0400 	movt	r4, #0
+     7c4:	47a0      	blx	r4
+		
+		SLEEP
+     7c6:	2002      	movs	r0, #2
+     7c8:	47a0      	blx	r4
+     7ca:	9b02      	ldr	r3, [sp, #8]
+     7cc:	4443      	add	r3, r8
+     7ce:	001a      	movs	r2, r3
+		
+		// Overwrite the memory
+		for (size_t byte = 0; byte < num_bytes; byte++) {
+			input[byte] = 0xfe;
+     7d0:	23fe      	movs	r3, #254	; 0xfe
+     7d2:	702b      	strb	r3, [r5, #0]
+     7d4:	3501      	adds	r5, #1
+		for (size_t byte = 0; byte < num_bytes; byte++) {
+     7d6:	4295      	cmp	r5, r2
+     7d8:	d1fb      	bne.n	7d2 <benchmark_aes+0xa6>
+		}
+
+		// Start reading from flash
+		START_MEASURE(DGI_GPIO3);
+     7da:	2002      	movs	r0, #2
+     7dc:	f240 444d 	movw	r4, #1101	; 0x44d
+     7e0:	f2c0 0400 	movt	r4, #0
+     7e4:	47a0      	blx	r4
+	((Port *)hw)->Group[submodule_index].OUTSET.reg = mask;
+     7e6:	f240 2500 	movw	r5, #512	; 0x200
+     7ea:	f2c6 0500 	movt	r5, #24576	; 0x6000
+     7ee:	2680      	movs	r6, #128	; 0x80
+     7f0:	0536      	lsls	r6, r6, #20
+     7f2:	61ae      	str	r6, [r5, #24]
+		// Read from flash
+		FLASH_0_read(target_addr, input, num_bytes);
+     7f4:	4642      	mov	r2, r8
+     7f6:	9f02      	ldr	r7, [sp, #8]
+     7f8:	0039      	movs	r1, r7
+     7fa:	9805      	ldr	r0, [sp, #20]
+     7fc:	f240 6357 	movw	r3, #1623	; 0x657
+     800:	f2c0 0300 	movt	r3, #0
+     804:	4798      	blx	r3
+	((Port *)hw)->Group[submodule_index].OUTCLR.reg = mask;
+     806:	616e      	str	r6, [r5, #20]
+		STOP_MEASURE(DGI_GPIO3);
+     808:	2002      	movs	r0, #2
+     80a:	47a0      	blx	r4
+	
+		wc_AesSetKey(&dec, key, sizeof(key), iv, AES_DECRYPTION);
+     80c:	2301      	movs	r3, #1
+     80e:	9300      	str	r3, [sp, #0]
+     810:	9b04      	ldr	r3, [sp, #16]
+     812:	2210      	movs	r2, #16
+     814:	a906      	add	r1, sp, #24
+     816:	a80a      	add	r0, sp, #40	; 0x28
+     818:	f641 06ab 	movw	r6, #6315	; 0x18ab
+     81c:	f2c0 0600 	movt	r6, #0
+     820:	47b0      	blx	r6
+
+		// Start decryption
+		START_MEASURE(DGI_GPIO2);
+     822:	2002      	movs	r0, #2
+     824:	47a0      	blx	r4
+	((Port *)hw)->Group[submodule_index].OUTSET.reg = mask;
+     826:	2380      	movs	r3, #128	; 0x80
+     828:	041b      	lsls	r3, r3, #16
+     82a:	61ab      	str	r3, [r5, #24]
+		/*decrypt*/
+		for (size_t count = 0;  count < num_bytes/STEP_SIZE; count++) {
+     82c:	464b      	mov	r3, r9
+     82e:	b173      	cbz	r3, 84e <benchmark_aes+0x122>
+     830:	003c      	movs	r4, r7
+     832:	2500      	movs	r5, #0
+			wc_AesDecryptDirect(&dec, input + (count*STEP_SIZE),input + (count*STEP_SIZE));
+     834:	f641 06fd 	movw	r6, #6397	; 0x18fd
+     838:	f2c0 0600 	movt	r6, #0
+     83c:	464f      	mov	r7, r9
+     83e:	0022      	movs	r2, r4
+     840:	0021      	movs	r1, r4
+     842:	a80a      	add	r0, sp, #40	; 0x28
+     844:	47b0      	blx	r6
+		for (size_t count = 0;  count < num_bytes/STEP_SIZE; count++) {
+     846:	3501      	adds	r5, #1
+     848:	3410      	adds	r4, #16
+     84a:	42bd      	cmp	r5, r7
+     84c:	d1f7      	bne.n	83e <benchmark_aes+0x112>
+	((Port *)hw)->Group[submodule_index].OUTCLR.reg = mask;
+     84e:	f240 2300 	movw	r3, #512	; 0x200
+     852:	f2c6 0300 	movt	r3, #24576	; 0x6000
+     856:	2280      	movs	r2, #128	; 0x80
+     858:	0412      	lsls	r2, r2, #16
+     85a:	615a      	str	r2, [r3, #20]
+		}
+		STOP_MEASURE(DGI_GPIO2);
+     85c:	2002      	movs	r0, #2
+     85e:	f240 434d 	movw	r3, #1101	; 0x44d
+     862:	f2c0 0300 	movt	r3, #0
+     866:	4798      	blx	r3
+	for (size_t num_bytes = MIN_NUM_BYTES; num_bytes <= MAX_NUM_BYTES; num_bytes += STEP_SIZE) {
+     868:	f240 0c10 	movw	ip, #16
+     86c:	44e0      	add	r8, ip
+     86e:	f241 7380 	movw	r3, #6016	; 0x1780
+     872:	4598      	cmp	r8, r3
+     874:	d05d      	beq.n	932 <benchmark_aes+0x206>
+		for (size_t byte = 0; byte < num_bytes; byte++) {
+     876:	2300      	movs	r3, #0
+     878:	4642      	mov	r2, r8
+     87a:	2a00      	cmp	r2, #0
+     87c:	d100      	bne.n	880 <benchmark_aes+0x154>
+     87e:	e07d      	b.n	97c <benchmark_aes+0x250>
+     880:	9a02      	ldr	r2, [sp, #8]
+     882:	4641      	mov	r1, r8
+			input[byte] = byte; // Will wrap at 0xff.
+     884:	54d3      	strb	r3, [r2, r3]
+		for (size_t byte = 0; byte < num_bytes; byte++) {
+     886:	3301      	adds	r3, #1
+     888:	428b      	cmp	r3, r1
+     88a:	d1fb      	bne.n	884 <benchmark_aes+0x158>
+     88c:	4688      	mov	r8, r1
+		wc_AesSetKey(&enc, key, sizeof(key), iv, AES_ENCRYPTION);
+     88e:	2300      	movs	r3, #0
+     890:	9300      	str	r3, [sp, #0]
+     892:	9b04      	ldr	r3, [sp, #16]
+     894:	2210      	movs	r2, #16
+     896:	a906      	add	r1, sp, #24
+     898:	a851      	add	r0, sp, #324	; 0x144
+     89a:	f641 04ab 	movw	r4, #6315	; 0x18ab
+     89e:	f2c0 0400 	movt	r4, #0
+     8a2:	47a0      	blx	r4
+		START_MEASURE(DGI_GPIO2);
+     8a4:	2002      	movs	r0, #2
+     8a6:	f240 434d 	movw	r3, #1101	; 0x44d
+     8aa:	f2c0 0300 	movt	r3, #0
+     8ae:	4798      	blx	r3
+	((Port *)hw)->Group[submodule_index].OUTSET.reg = mask;
+     8b0:	f240 2300 	movw	r3, #512	; 0x200
+     8b4:	f2c6 0300 	movt	r3, #24576	; 0x6000
+     8b8:	2280      	movs	r2, #128	; 0x80
+     8ba:	0412      	lsls	r2, r2, #16
+     8bc:	619a      	str	r2, [r3, #24]
+		for (size_t count = 0;  count < num_bytes/STEP_SIZE; count++) {
+     8be:	4643      	mov	r3, r8
+     8c0:	091b      	lsrs	r3, r3, #4
+     8c2:	4699      	mov	r9, r3
+     8c4:	b17b      	cbz	r3, 8e6 <benchmark_aes+0x1ba>
+     8c6:	9c02      	ldr	r4, [sp, #8]
+     8c8:	2500      	movs	r5, #0
+			wc_AesEncryptDirect(&enc, input + (count*STEP_SIZE),input + (count*STEP_SIZE));
+     8ca:	f641 06e9 	movw	r6, #6377	; 0x18e9
+     8ce:	f2c0 0600 	movt	r6, #0
+     8d2:	001f      	movs	r7, r3
+     8d4:	0022      	movs	r2, r4
+     8d6:	0021      	movs	r1, r4
+     8d8:	a851      	add	r0, sp, #324	; 0x144
+     8da:	47b0      	blx	r6
+		for (size_t count = 0;  count < num_bytes/STEP_SIZE; count++) {
+     8dc:	3501      	adds	r5, #1
+     8de:	3410      	adds	r4, #16
+     8e0:	42bd      	cmp	r5, r7
+     8e2:	d1f7      	bne.n	8d4 <benchmark_aes+0x1a8>
+     8e4:	46b9      	mov	r9, r7
+	((Port *)hw)->Group[submodule_index].OUTCLR.reg = mask;
+     8e6:	f240 2500 	movw	r5, #512	; 0x200
+     8ea:	f2c6 0500 	movt	r5, #24576	; 0x6000
+     8ee:	2380      	movs	r3, #128	; 0x80
+     8f0:	041b      	lsls	r3, r3, #16
+     8f2:	616b      	str	r3, [r5, #20]
+		STOP_MEASURE(DGI_GPIO2);
+     8f4:	2002      	movs	r0, #2
+     8f6:	f240 444d 	movw	r4, #1101	; 0x44d
+     8fa:	f2c0 0400 	movt	r4, #0
+     8fe:	47a0      	blx	r4
+		START_MEASURE(DGI_GPIO3);
+     900:	2002      	movs	r0, #2
+     902:	47a0      	blx	r4
+	((Port *)hw)->Group[submodule_index].OUTSET.reg = mask;
+     904:	2380      	movs	r3, #128	; 0x80
+     906:	051b      	lsls	r3, r3, #20
+     908:	61ab      	str	r3, [r5, #24]
+		target_addr -= target_addr % NVMCTRL_ROW_SIZE;
+     90a:	2380      	movs	r3, #128	; 0x80
+     90c:	025b      	lsls	r3, r3, #9
+     90e:	4642      	mov	r2, r8
+     910:	1a9b      	subs	r3, r3, r2
+     912:	22ff      	movs	r2, #255	; 0xff
+     914:	4393      	bics	r3, r2
+     916:	9305      	str	r3, [sp, #20]
+     918:	9f02      	ldr	r7, [sp, #8]
+     91a:	001e      	movs	r6, r3
+     91c:	2400      	movs	r4, #0
+			if (page_index % NVMCTRL_ROW_PAGES == 0) {
+     91e:	f240 0b03 	movw	fp, #3
+			FLASH_0_write_page(target_addr + page_index * FLASH_PAGE_SIZE, &input[page_index * FLASH_PAGE_SIZE], FLASH_PAGE_SIZE);
+     922:	f240 6a23 	movw	sl, #1571	; 0x623
+     926:	f2c0 0a00 	movt	sl, #0
+     92a:	4643      	mov	r3, r8
+     92c:	46b8      	mov	r8, r7
+     92e:	001d      	movs	r5, r3
+     930:	e732      	b.n	798 <benchmark_aes+0x6c>
+		
+	}
+	
+	
+		// Free the memory
+		free(input);
+     932:	9802      	ldr	r0, [sp, #8]
+     934:	f641 1375 	movw	r3, #6517	; 0x1975
+     938:	f2c0 0300 	movt	r3, #0
+     93c:	4798      	blx	r3
+
+		END_MEASUREMENT;
+     93e:	200a      	movs	r0, #10
+     940:	f240 434d 	movw	r3, #1101	; 0x44d
+     944:	f2c0 0300 	movt	r3, #0
+     948:	4798      	blx	r3
+     94a:	f240 2300 	movw	r3, #512	; 0x200
+     94e:	f2c6 0300 	movt	r3, #24576	; 0x6000
+     952:	f240 4200 	movw	r2, #1024	; 0x400
+     956:	619a      	str	r2, [r3, #24]
+     958:	f640 0200 	movw	r2, #2048	; 0x800
+     95c:	619a      	str	r2, [r3, #24]
+     95e:	2280      	movs	r2, #128	; 0x80
+     960:	0412      	lsls	r2, r2, #16
+     962:	619a      	str	r2, [r3, #24]
+     964:	2280      	movs	r2, #128	; 0x80
+     966:	0512      	lsls	r2, r2, #20
+     968:	619a      	str	r2, [r3, #24]
+}
+     96a:	f240 2364 	movw	r3, #612	; 0x264
+     96e:	449d      	add	sp, r3
+     970:	bc3c      	pop	{r2, r3, r4, r5}
+     972:	4690      	mov	r8, r2
+     974:	4699      	mov	r9, r3
+     976:	46a2      	mov	sl, r4
+     978:	46ab      	mov	fp, r5
+     97a:	bdf0      	pop	{r4, r5, r6, r7, pc}
+		wc_AesSetKey(&enc, key, sizeof(key), iv, AES_ENCRYPTION);
+     97c:	2300      	movs	r3, #0
+     97e:	9300      	str	r3, [sp, #0]
+     980:	9b04      	ldr	r3, [sp, #16]
+     982:	2210      	movs	r2, #16
+     984:	a906      	add	r1, sp, #24
+     986:	a851      	add	r0, sp, #324	; 0x144
+     988:	f641 07ab 	movw	r7, #6315	; 0x18ab
+     98c:	f2c0 0700 	movt	r7, #0
+     990:	47b8      	blx	r7
+		START_MEASURE(DGI_GPIO2);
+     992:	2002      	movs	r0, #2
+     994:	f240 444d 	movw	r4, #1101	; 0x44d
+     998:	f2c0 0400 	movt	r4, #0
+     99c:	47a0      	blx	r4
+     99e:	f240 2500 	movw	r5, #512	; 0x200
+     9a2:	f2c6 0500 	movt	r5, #24576	; 0x6000
+     9a6:	2680      	movs	r6, #128	; 0x80
+     9a8:	0436      	lsls	r6, r6, #16
+     9aa:	61ae      	str	r6, [r5, #24]
+	((Port *)hw)->Group[submodule_index].OUTCLR.reg = mask;
+     9ac:	616e      	str	r6, [r5, #20]
+		STOP_MEASURE(DGI_GPIO2);
+     9ae:	2002      	movs	r0, #2
+     9b0:	47a0      	blx	r4
+		START_MEASURE(DGI_GPIO3);
+     9b2:	2002      	movs	r0, #2
+     9b4:	47a0      	blx	r4
+	((Port *)hw)->Group[submodule_index].OUTSET.reg = mask;
+     9b6:	2280      	movs	r2, #128	; 0x80
+     9b8:	0512      	lsls	r2, r2, #20
+     9ba:	4691      	mov	r9, r2
+     9bc:	61aa      	str	r2, [r5, #24]
+	((Port *)hw)->Group[submodule_index].OUTCLR.reg = mask;
+     9be:	616a      	str	r2, [r5, #20]
+		STOP_MEASURE(DGI_GPIO3);
+     9c0:	2002      	movs	r0, #2
+     9c2:	47a0      	blx	r4
+		SLEEP
+     9c4:	2002      	movs	r0, #2
+     9c6:	47a0      	blx	r4
+		START_MEASURE(DGI_GPIO3);
+     9c8:	2002      	movs	r0, #2
+     9ca:	47a0      	blx	r4
+	((Port *)hw)->Group[submodule_index].OUTSET.reg = mask;
+     9cc:	464a      	mov	r2, r9
+     9ce:	61aa      	str	r2, [r5, #24]
+		target_addr -= target_addr % NVMCTRL_ROW_SIZE;
+     9d0:	2080      	movs	r0, #128	; 0x80
+     9d2:	0240      	lsls	r0, r0, #9
+     9d4:	4642      	mov	r2, r8
+     9d6:	1a80      	subs	r0, r0, r2
+     9d8:	23ff      	movs	r3, #255	; 0xff
+     9da:	4398      	bics	r0, r3
+		FLASH_0_read(target_addr, input, num_bytes);
+     9dc:	9902      	ldr	r1, [sp, #8]
+     9de:	f240 6357 	movw	r3, #1623	; 0x657
+     9e2:	f2c0 0300 	movt	r3, #0
+     9e6:	4798      	blx	r3
+	((Port *)hw)->Group[submodule_index].OUTCLR.reg = mask;
+     9e8:	464a      	mov	r2, r9
+     9ea:	616a      	str	r2, [r5, #20]
+		STOP_MEASURE(DGI_GPIO3);
+     9ec:	2002      	movs	r0, #2
+     9ee:	47a0      	blx	r4
+		wc_AesSetKey(&dec, key, sizeof(key), iv, AES_DECRYPTION);
+     9f0:	2301      	movs	r3, #1
+     9f2:	9300      	str	r3, [sp, #0]
+     9f4:	9b04      	ldr	r3, [sp, #16]
+     9f6:	2210      	movs	r2, #16
+     9f8:	a906      	add	r1, sp, #24
+     9fa:	a80a      	add	r0, sp, #40	; 0x28
+     9fc:	47b8      	blx	r7
+		START_MEASURE(DGI_GPIO2);
+     9fe:	2002      	movs	r0, #2
+     a00:	47a0      	blx	r4
+	((Port *)hw)->Group[submodule_index].OUTSET.reg = mask;
+     a02:	61ae      	str	r6, [r5, #24]
+	((Port *)hw)->Group[submodule_index].OUTCLR.reg = mask;
+     a04:	616e      	str	r6, [r5, #20]
+		STOP_MEASURE(DGI_GPIO2);
+     a06:	2002      	movs	r0, #2
+     a08:	47a0      	blx	r4
+	for (size_t num_bytes = MIN_NUM_BYTES; num_bytes <= MAX_NUM_BYTES; num_bytes += STEP_SIZE) {
+     a0a:	f240 0c10 	movw	ip, #16
+     a0e:	44e0      	add	r8, ip
+     a10:	e731      	b.n	876 <benchmark_aes+0x14a>
+     a12:	46c0      	nop			; (mov r8, r8)
+     a14:	fffffd9c 	.word	0xfffffd9c
+
+00000a18 <main>:
+
+
+
+int main(void)
+{
+     a18:	b510      	push	{r4, lr}
+	atmel_start_init();
+     a1a:	f240 3315 	movw	r3, #789	; 0x315
+     a1e:	f2c0 0300 	movt	r3, #0
+     a22:	4798      	blx	r3
+
+	benchmark_aes();
+     a24:	f240 732d 	movw	r3, #1837	; 0x72d
+     a28:	f2c0 0300 	movt	r3, #0
+     a2c:	4798      	blx	r3
+}
+     a2e:	2000      	movs	r0, #0
+     a30:	bd10      	pop	{r4, pc}
+
+00000a32 <wc_AesEncrypt>:
+    return x;
+}
+
+/* Software AES - ECB Encrypt */
+static void wc_AesEncrypt(Aes* aes, const byte* inBlock, byte* outBlock)
+{
+     a32:	b5f0      	push	{r4, r5, r6, r7, lr}
+     a34:	46de      	mov	lr, fp
+     a36:	4657      	mov	r7, sl
+     a38:	464e      	mov	r6, r9
+     a3a:	4645      	mov	r5, r8
+     a3c:	b5e0      	push	{r5, r6, r7, lr}
+     a3e:	b08b      	sub	sp, #44	; 0x2c
+     a40:	0007      	movs	r7, r0
+     a42:	000e      	movs	r6, r1
+     a44:	9202      	str	r2, [sp, #8]
+    word32 s0, s1, s2, s3;
+    word32 t0, t1, t2, t3;
+    word32 r = aes->rounds >> 1;
+     a46:	23f0      	movs	r3, #240	; 0xf0
+     a48:	58c5      	ldr	r5, [r0, r3]
+     a4a:	086d      	lsrs	r5, r5, #1
+    const word32* rk = aes->key;
+
+    if (r > 7 || r == 0) {
+     a4c:	1e6b      	subs	r3, r5, #1
+     a4e:	2b06      	cmp	r3, #6
+     a50:	d906      	bls.n	a60 <wc_AesEncrypt+0x2e>
+    XMEMCPY(outBlock,                  &s0, sizeof(s0));
+    XMEMCPY(outBlock + sizeof(s0),     &s1, sizeof(s1));
+    XMEMCPY(outBlock + 2 * sizeof(s0), &s2, sizeof(s2));
+    XMEMCPY(outBlock + 3 * sizeof(s0), &s3, sizeof(s3));
+
+}
+     a52:	b00b      	add	sp, #44	; 0x2c
+     a54:	bc3c      	pop	{r2, r3, r4, r5}
+     a56:	4690      	mov	r8, r2
+     a58:	4699      	mov	r9, r3
+     a5a:	46a2      	mov	sl, r4
+     a5c:	46ab      	mov	fp, r5
+     a5e:	bdf0      	pop	{r4, r5, r6, r7, pc}
+    XMEMCPY(&s0, inBlock,                  sizeof(s0));
+     a60:	2204      	movs	r2, #4
+     a62:	a809      	add	r0, sp, #36	; 0x24
+     a64:	f641 1489 	movw	r4, #6537	; 0x1989
+     a68:	f2c0 0400 	movt	r4, #0
+     a6c:	47a0      	blx	r4
+    XMEMCPY(&s1, inBlock + sizeof(s0),     sizeof(s1));
+     a6e:	1d31      	adds	r1, r6, #4
+     a70:	2204      	movs	r2, #4
+     a72:	a808      	add	r0, sp, #32
+     a74:	47a0      	blx	r4
+    XMEMCPY(&s2, inBlock + 2 * sizeof(s0), sizeof(s2));
+     a76:	0031      	movs	r1, r6
+     a78:	3108      	adds	r1, #8
+     a7a:	2204      	movs	r2, #4
+     a7c:	a807      	add	r0, sp, #28
+     a7e:	47a0      	blx	r4
+    XMEMCPY(&s3, inBlock + 3 * sizeof(s0), sizeof(s3));
+     a80:	0031      	movs	r1, r6
+     a82:	310c      	adds	r1, #12
+     a84:	2204      	movs	r2, #4
+     a86:	a806      	add	r0, sp, #24
+     a88:	47a0      	blx	r4
+    s0 = ByteReverseWord32(s0);
+     a8a:	9b09      	ldr	r3, [sp, #36]	; 0x24
+    s1 = ByteReverseWord32(s1);
+     a8c:	9e08      	ldr	r6, [sp, #32]
+    /* 5 instructions with rotate instruction, 9 without */
+    return (rotrFixed(value, 8U) & 0xff00ff00) |
+           (rotlFixed(value, 8U) & 0x00ff00ff);
+#else
+    /* 6 instructions with rotate instruction, 8 without */
+    value = ((value & 0xFF00FF00) >> 8) | ((value & 0x00FF00FF) << 8);
+     a8e:	0a18      	lsrs	r0, r3, #8
+     a90:	f240 09ff 	movw	r9, #255	; 0xff
+     a94:	f2c0 09ff 	movt	r9, #255	; 0xff
+     a98:	464a      	mov	r2, r9
+     a9a:	4010      	ands	r0, r2
+     a9c:	021b      	lsls	r3, r3, #8
+     a9e:	f64f 7200 	movw	r2, #65280	; 0xff00
+     aa2:	f6cf 7200 	movt	r2, #65280	; 0xff00
+     aa6:	4013      	ands	r3, r2
+     aa8:	4318      	orrs	r0, r3
+        return (x << y) | (x >> (sizeof(y) * 8 - y));
+     aaa:	2410      	movs	r4, #16
+     aac:	41e0      	rors	r0, r4
+    s0 ^= rk[0];
+     aae:	683b      	ldr	r3, [r7, #0]
+     ab0:	4058      	eors	r0, r3
+    value = ((value & 0xFF00FF00) >> 8) | ((value & 0x00FF00FF) << 8);
+     ab2:	0a33      	lsrs	r3, r6, #8
+     ab4:	4649      	mov	r1, r9
+     ab6:	400b      	ands	r3, r1
+     ab8:	0236      	lsls	r6, r6, #8
+     aba:	4016      	ands	r6, r2
+     abc:	4333      	orrs	r3, r6
+        return (x << y) | (x >> (sizeof(y) * 8 - y));
+     abe:	41e3      	rors	r3, r4
+    s1 ^= rk[1];
+     ac0:	687e      	ldr	r6, [r7, #4]
+     ac2:	405e      	eors	r6, r3
+     ac4:	46b4      	mov	ip, r6
+    value = ((value & 0xFF00FF00) >> 8) | ((value & 0x00FF00FF) << 8);
+     ac6:	9b07      	ldr	r3, [sp, #28]
+     ac8:	0a1b      	lsrs	r3, r3, #8
+     aca:	400b      	ands	r3, r1
+     acc:	9907      	ldr	r1, [sp, #28]
+     ace:	0209      	lsls	r1, r1, #8
+     ad0:	4011      	ands	r1, r2
+     ad2:	430b      	orrs	r3, r1
+        return (x << y) | (x >> (sizeof(y) * 8 - y));
+     ad4:	41e3      	rors	r3, r4
+    s2 ^= rk[2];
+     ad6:	68b9      	ldr	r1, [r7, #8]
+     ad8:	4059      	eors	r1, r3
+     ada:	4688      	mov	r8, r1
+    value = ((value & 0xFF00FF00) >> 8) | ((value & 0x00FF00FF) << 8);
+     adc:	9b06      	ldr	r3, [sp, #24]
+     ade:	021b      	lsls	r3, r3, #8
+     ae0:	4013      	ands	r3, r2
+     ae2:	9a06      	ldr	r2, [sp, #24]
+     ae4:	0a12      	lsrs	r2, r2, #8
+     ae6:	4649      	mov	r1, r9
+     ae8:	400a      	ands	r2, r1
+     aea:	4313      	orrs	r3, r2
+        return (x << y) | (x >> (sizeof(y) * 8 - y));
+     aec:	41e3      	rors	r3, r4
+    s3 ^= rk[3];
+     aee:	68fa      	ldr	r2, [r7, #12]
+     af0:	405a      	eors	r2, r3
+     af2:	4691      	mov	r9, r2
+     af4:	2204      	movs	r2, #4
+{
+     af6:	2320      	movs	r3, #32
+     af8:	3b01      	subs	r3, #1
+        for (j = 0; j < 256; j += WC_CACHE_LINE_SZ/4) {
+     afa:	2b00      	cmp	r3, #0
+     afc:	d1fc      	bne.n	af8 <wc_AesEncrypt+0xc6>
+     afe:	3a01      	subs	r2, #1
+    for (i = 0; i < 4; i++) {
+     b00:	2a00      	cmp	r2, #0
+     b02:	d1f8      	bne.n	af6 <wc_AesEncrypt+0xc4>
+    const word32* rk = aes->key;
+     b04:	003e      	movs	r6, r7
+     b06:	016d      	lsls	r5, r5, #5
+     b08:	46bb      	mov	fp, r7
+     b0a:	44ab      	add	fp, r5
+            Te[0][GETBYTE(s0, 3)]  ^
+     b0c:	f641 3730 	movw	r7, #6960	; 0x1b30
+     b10:	f2c0 0700 	movt	r7, #0
+            Te[3][GETBYTE(s3, 0)]  ^
+     b14:	24ff      	movs	r4, #255	; 0xff
+     b16:	4645      	mov	r5, r8
+     b18:	46b0      	mov	r8, r6
+     b1a:	464b      	mov	r3, r9
+            Te[0][GETBYTE(s0, 3)]  ^
+     b1c:	0e02      	lsrs	r2, r0, #24
+     b1e:	0092      	lsls	r2, r2, #2
+            Te[3][GETBYTE(s3, 0)]  ^
+     b20:	0021      	movs	r1, r4
+     b22:	4019      	ands	r1, r3
+     b24:	f240 3900 	movw	r9, #768	; 0x300
+     b28:	4449      	add	r1, r9
+     b2a:	0089      	lsls	r1, r1, #2
+        t0 =
+     b2c:	59d2      	ldr	r2, [r2, r7]
+     b2e:	59c9      	ldr	r1, [r1, r7]
+     b30:	404a      	eors	r2, r1
+     b32:	4641      	mov	r1, r8
+     b34:	6909      	ldr	r1, [r1, #16]
+     b36:	404a      	eors	r2, r1
+            Te[1][GETBYTE(s1, 2)]  ^
+     b38:	4661      	mov	r1, ip
+     b3a:	0c09      	lsrs	r1, r1, #16
+     b3c:	4021      	ands	r1, r4
+     b3e:	3101      	adds	r1, #1
+     b40:	31ff      	adds	r1, #255	; 0xff
+     b42:	0089      	lsls	r1, r1, #2
+        t0 =
+     b44:	59c9      	ldr	r1, [r1, r7]
+     b46:	404a      	eors	r2, r1
+            Te[2][GETBYTE(s2, 1)]  ^
+     b48:	0a29      	lsrs	r1, r5, #8
+     b4a:	4021      	ands	r1, r4
+     b4c:	f240 2900 	movw	r9, #512	; 0x200
+     b50:	4449      	add	r1, r9
+     b52:	0089      	lsls	r1, r1, #2
+        t0 =
+     b54:	59c9      	ldr	r1, [r1, r7]
+     b56:	404a      	eors	r2, r1
+     b58:	9201      	str	r2, [sp, #4]
+            Te[0][GETBYTE(s1, 3)]  ^
+     b5a:	4662      	mov	r2, ip
+     b5c:	0e11      	lsrs	r1, r2, #24
+     b5e:	0089      	lsls	r1, r1, #2
+            Te[3][GETBYTE(s0, 0)]  ^
+     b60:	0026      	movs	r6, r4
+     b62:	4006      	ands	r6, r0
+     b64:	f240 3900 	movw	r9, #768	; 0x300
+     b68:	444e      	add	r6, r9
+     b6a:	00b6      	lsls	r6, r6, #2
+        t1 =
+     b6c:	59c9      	ldr	r1, [r1, r7]
+     b6e:	59f6      	ldr	r6, [r6, r7]
+     b70:	4071      	eors	r1, r6
+     b72:	4642      	mov	r2, r8
+     b74:	6952      	ldr	r2, [r2, #20]
+     b76:	4051      	eors	r1, r2
+            Te[1][GETBYTE(s2, 2)]  ^
+     b78:	0c2e      	lsrs	r6, r5, #16
+     b7a:	4026      	ands	r6, r4
+     b7c:	3601      	adds	r6, #1
+     b7e:	36ff      	adds	r6, #255	; 0xff
+     b80:	00b6      	lsls	r6, r6, #2
+        t1 =
+     b82:	59f6      	ldr	r6, [r6, r7]
+     b84:	4071      	eors	r1, r6
+            Te[2][GETBYTE(s3, 1)]  ^
+     b86:	0a1e      	lsrs	r6, r3, #8
+     b88:	4026      	ands	r6, r4
+     b8a:	f240 2900 	movw	r9, #512	; 0x200
+     b8e:	444e      	add	r6, r9
+     b90:	00b6      	lsls	r6, r6, #2
+        t1 =
+     b92:	59f6      	ldr	r6, [r6, r7]
+     b94:	4071      	eors	r1, r6
+            Te[0][GETBYTE(s2, 3)] ^
+     b96:	0e2e      	lsrs	r6, r5, #24
+     b98:	00b2      	lsls	r2, r6, #2
+            Te[3][GETBYTE(s1, 0)]  ^
+     b9a:	4666      	mov	r6, ip
+     b9c:	4026      	ands	r6, r4
+     b9e:	f240 3a00 	movw	sl, #768	; 0x300
+     ba2:	4456      	add	r6, sl
+     ba4:	00b6      	lsls	r6, r6, #2
+        t2 =
+     ba6:	59d2      	ldr	r2, [r2, r7]
+     ba8:	59f6      	ldr	r6, [r6, r7]
+     baa:	4056      	eors	r6, r2
+     bac:	4642      	mov	r2, r8
+     bae:	6992      	ldr	r2, [r2, #24]
+     bb0:	4056      	eors	r6, r2
+            Te[1][GETBYTE(s3, 2)]  ^
+     bb2:	0c1a      	lsrs	r2, r3, #16
+     bb4:	4022      	ands	r2, r4
+     bb6:	4691      	mov	r9, r2
+     bb8:	f240 1a00 	movw	sl, #256	; 0x100
+     bbc:	44d1      	add	r9, sl
+     bbe:	464a      	mov	r2, r9
+     bc0:	0092      	lsls	r2, r2, #2
+        t2 =
+     bc2:	59d2      	ldr	r2, [r2, r7]
+     bc4:	4056      	eors	r6, r2
+            Te[2][GETBYTE(s0, 1)]  ^
+     bc6:	0a02      	lsrs	r2, r0, #8
+     bc8:	4022      	ands	r2, r4
+     bca:	4691      	mov	r9, r2
+     bcc:	f240 2a00 	movw	sl, #512	; 0x200
+     bd0:	44d1      	add	r9, sl
+     bd2:	464a      	mov	r2, r9
+     bd4:	0092      	lsls	r2, r2, #2
+        t2 =
+     bd6:	59d2      	ldr	r2, [r2, r7]
+     bd8:	4056      	eors	r6, r2
+            Te[0][GETBYTE(s3, 3)] ^
+     bda:	0e1b      	lsrs	r3, r3, #24
+     bdc:	009b      	lsls	r3, r3, #2
+            Te[3][GETBYTE(s2, 0)]  ^
+     bde:	4025      	ands	r5, r4
+     be0:	f240 3900 	movw	r9, #768	; 0x300
+     be4:	444d      	add	r5, r9
+     be6:	00ad      	lsls	r5, r5, #2
+        t3 =
+     be8:	59db      	ldr	r3, [r3, r7]
+     bea:	59ed      	ldr	r5, [r5, r7]
+     bec:	406b      	eors	r3, r5
+     bee:	4642      	mov	r2, r8
+     bf0:	69d2      	ldr	r2, [r2, #28]
+     bf2:	4053      	eors	r3, r2
+            Te[1][GETBYTE(s0, 2)]  ^
+     bf4:	0c00      	lsrs	r0, r0, #16
+     bf6:	4020      	ands	r0, r4
+     bf8:	1c45      	adds	r5, r0, #1
+     bfa:	35ff      	adds	r5, #255	; 0xff
+     bfc:	00ad      	lsls	r5, r5, #2
+        t3 =
+     bfe:	59e8      	ldr	r0, [r5, r7]
+     c00:	4043      	eors	r3, r0
+            Te[2][GETBYTE(s1, 1)]  ^
+     c02:	4662      	mov	r2, ip
+     c04:	0a10      	lsrs	r0, r2, #8
+     c06:	4020      	ands	r0, r4
+     c08:	f240 2c00 	movw	ip, #512	; 0x200
+     c0c:	4460      	add	r0, ip
+     c0e:	0080      	lsls	r0, r0, #2
+        t3 =
+     c10:	59c0      	ldr	r0, [r0, r7]
+     c12:	4043      	eors	r3, r0
+        rk += 8;
+     c14:	f240 0c20 	movw	ip, #32
+     c18:	44e0      	add	r8, ip
+        if (--r == 0) {
+     c1a:	45c3      	cmp	fp, r8
+     c1c:	d07f      	beq.n	d1e <wc_AesEncrypt+0x2ec>
+            Te[0][GETBYTE(t0, 3)] ^
+     c1e:	9a01      	ldr	r2, [sp, #4]
+     c20:	0e10      	lsrs	r0, r2, #24
+     c22:	0080      	lsls	r0, r0, #2
+            Te[3][GETBYTE(t3, 0)] ^
+     c24:	0025      	movs	r5, r4
+     c26:	401d      	ands	r5, r3
+     c28:	f240 3c00 	movw	ip, #768	; 0x300
+     c2c:	4465      	add	r5, ip
+     c2e:	00ad      	lsls	r5, r5, #2
+     c30:	59c0      	ldr	r0, [r0, r7]
+     c32:	59ed      	ldr	r5, [r5, r7]
+     c34:	4068      	eors	r0, r5
+     c36:	4642      	mov	r2, r8
+     c38:	6812      	ldr	r2, [r2, #0]
+     c3a:	4050      	eors	r0, r2
+            Te[1][GETBYTE(t1, 2)] ^
+     c3c:	0c0d      	lsrs	r5, r1, #16
+     c3e:	4025      	ands	r5, r4
+     c40:	3501      	adds	r5, #1
+     c42:	35ff      	adds	r5, #255	; 0xff
+     c44:	00ad      	lsls	r5, r5, #2
+            Te[3][GETBYTE(t3, 0)] ^
+     c46:	59ed      	ldr	r5, [r5, r7]
+     c48:	4068      	eors	r0, r5
+            Te[2][GETBYTE(t2, 1)] ^
+     c4a:	0a35      	lsrs	r5, r6, #8
+     c4c:	4025      	ands	r5, r4
+     c4e:	f240 2c00 	movw	ip, #512	; 0x200
+     c52:	4465      	add	r5, ip
+     c54:	00ad      	lsls	r5, r5, #2
+            Te[3][GETBYTE(t3, 0)] ^
+     c56:	59ed      	ldr	r5, [r5, r7]
+     c58:	4068      	eors	r0, r5
+            Te[0][GETBYTE(t1, 3)] ^
+     c5a:	0e0d      	lsrs	r5, r1, #24
+     c5c:	00aa      	lsls	r2, r5, #2
+     c5e:	4694      	mov	ip, r2
+            Te[3][GETBYTE(t0, 0)] ^
+     c60:	0025      	movs	r5, r4
+     c62:	9a01      	ldr	r2, [sp, #4]
+     c64:	4015      	ands	r5, r2
+     c66:	444d      	add	r5, r9
+     c68:	00ad      	lsls	r5, r5, #2
+     c6a:	4662      	mov	r2, ip
+     c6c:	59d2      	ldr	r2, [r2, r7]
+     c6e:	59ed      	ldr	r5, [r5, r7]
+     c70:	4055      	eors	r5, r2
+     c72:	4642      	mov	r2, r8
+     c74:	6852      	ldr	r2, [r2, #4]
+     c76:	406a      	eors	r2, r5
+            Te[1][GETBYTE(t2, 2)] ^
+     c78:	0c35      	lsrs	r5, r6, #16
+     c7a:	4025      	ands	r5, r4
+     c7c:	3501      	adds	r5, #1
+     c7e:	35ff      	adds	r5, #255	; 0xff
+     c80:	00ad      	lsls	r5, r5, #2
+            Te[3][GETBYTE(t0, 0)] ^
+     c82:	59ed      	ldr	r5, [r5, r7]
+     c84:	4055      	eors	r5, r2
+            Te[2][GETBYTE(t3, 1)] ^
+     c86:	0a1a      	lsrs	r2, r3, #8
+     c88:	4022      	ands	r2, r4
+     c8a:	4694      	mov	ip, r2
+     c8c:	f240 2900 	movw	r9, #512	; 0x200
+     c90:	44cc      	add	ip, r9
+     c92:	4662      	mov	r2, ip
+     c94:	0092      	lsls	r2, r2, #2
+            Te[3][GETBYTE(t0, 0)] ^
+     c96:	59d2      	ldr	r2, [r2, r7]
+     c98:	406a      	eors	r2, r5
+     c9a:	4694      	mov	ip, r2
+            Te[0][GETBYTE(t2, 3)] ^
+     c9c:	0e35      	lsrs	r5, r6, #24
+     c9e:	00aa      	lsls	r2, r5, #2
+            Te[3][GETBYTE(t1, 0)] ^
+     ca0:	0025      	movs	r5, r4
+     ca2:	400d      	ands	r5, r1
+     ca4:	f240 3a00 	movw	sl, #768	; 0x300
+     ca8:	4455      	add	r5, sl
+     caa:	00ad      	lsls	r5, r5, #2
+     cac:	59d2      	ldr	r2, [r2, r7]
+     cae:	59ed      	ldr	r5, [r5, r7]
+     cb0:	4055      	eors	r5, r2
+     cb2:	4642      	mov	r2, r8
+     cb4:	6892      	ldr	r2, [r2, #8]
+     cb6:	4055      	eors	r5, r2
+            Te[1][GETBYTE(t3, 2)] ^
+     cb8:	0c1a      	lsrs	r2, r3, #16
+     cba:	4022      	ands	r2, r4
+     cbc:	4691      	mov	r9, r2
+     cbe:	f240 1a00 	movw	sl, #256	; 0x100
+     cc2:	44d1      	add	r9, sl
+     cc4:	464a      	mov	r2, r9
+     cc6:	0092      	lsls	r2, r2, #2
+            Te[3][GETBYTE(t1, 0)] ^
+     cc8:	59d2      	ldr	r2, [r2, r7]
+     cca:	4055      	eors	r5, r2
+            Te[2][GETBYTE(t0, 1)] ^
+     ccc:	9a01      	ldr	r2, [sp, #4]
+     cce:	0a12      	lsrs	r2, r2, #8
+     cd0:	4022      	ands	r2, r4
+     cd2:	4691      	mov	r9, r2
+     cd4:	f240 2a00 	movw	sl, #512	; 0x200
+     cd8:	44d1      	add	r9, sl
+     cda:	464a      	mov	r2, r9
+     cdc:	0092      	lsls	r2, r2, #2
+            Te[3][GETBYTE(t1, 0)] ^
+     cde:	59d2      	ldr	r2, [r2, r7]
+     ce0:	4055      	eors	r5, r2
+            Te[0][GETBYTE(t3, 3)] ^
+     ce2:	0e1b      	lsrs	r3, r3, #24
+     ce4:	009b      	lsls	r3, r3, #2
+            Te[3][GETBYTE(t2, 0)] ^
+     ce6:	4026      	ands	r6, r4
+     ce8:	f240 3900 	movw	r9, #768	; 0x300
+     cec:	444e      	add	r6, r9
+     cee:	00b6      	lsls	r6, r6, #2
+     cf0:	59db      	ldr	r3, [r3, r7]
+     cf2:	59f6      	ldr	r6, [r6, r7]
+     cf4:	4073      	eors	r3, r6
+     cf6:	4642      	mov	r2, r8
+     cf8:	68d2      	ldr	r2, [r2, #12]
+     cfa:	4053      	eors	r3, r2
+            Te[1][GETBYTE(t0, 2)] ^
+     cfc:	9a01      	ldr	r2, [sp, #4]
+     cfe:	0c12      	lsrs	r2, r2, #16
+     d00:	4022      	ands	r2, r4
+     d02:	3201      	adds	r2, #1
+     d04:	32ff      	adds	r2, #255	; 0xff
+     d06:	0092      	lsls	r2, r2, #2
+            Te[3][GETBYTE(t2, 0)] ^
+     d08:	59d2      	ldr	r2, [r2, r7]
+     d0a:	4053      	eors	r3, r2
+            Te[2][GETBYTE(t1, 1)] ^
+     d0c:	0a09      	lsrs	r1, r1, #8
+     d0e:	4021      	ands	r1, r4
+     d10:	f240 2900 	movw	r9, #512	; 0x200
+     d14:	4449      	add	r1, r9
+     d16:	0089      	lsls	r1, r1, #2
+            Te[3][GETBYTE(t2, 0)] ^
+     d18:	59ca      	ldr	r2, [r1, r7]
+     d1a:	4053      	eors	r3, r2
+        t0 =
+     d1c:	e6fe      	b.n	b1c <wc_AesEncrypt+0xea>
+     d1e:	001d      	movs	r5, r3
+     d20:	000c      	movs	r4, r1
+     d22:	0031      	movs	r1, r6
+     d24:	4646      	mov	r6, r8
+        (Te[1][GETBYTE(t3, 0)] & 0x000000ff) ^
+     d26:	f641 3730 	movw	r7, #6960	; 0x1b30
+     d2a:	f2c0 0700 	movt	r7, #0
+     d2e:	20ff      	movs	r0, #255	; 0xff
+     d30:	0003      	movs	r3, r0
+     d32:	402b      	ands	r3, r5
+     d34:	469c      	mov	ip, r3
+     d36:	f240 1800 	movw	r8, #256	; 0x100
+     d3a:	44c4      	add	ip, r8
+     d3c:	4663      	mov	r3, ip
+     d3e:	009b      	lsls	r3, r3, #2
+     d40:	59db      	ldr	r3, [r3, r7]
+     d42:	4003      	ands	r3, r0
+     d44:	6832      	ldr	r2, [r6, #0]
+     d46:	4053      	eors	r3, r2
+     d48:	469c      	mov	ip, r3
+        (Te[0][GETBYTE(t2, 1)] & 0x0000ff00) ^
+     d4a:	0a0b      	lsrs	r3, r1, #8
+     d4c:	4003      	ands	r3, r0
+     d4e:	009b      	lsls	r3, r3, #2
+     d50:	f64f 7b00 	movw	fp, #65280	; 0xff00
+     d54:	59db      	ldr	r3, [r3, r7]
+     d56:	465a      	mov	r2, fp
+     d58:	4013      	ands	r3, r2
+     d5a:	4698      	mov	r8, r3
+        (Te[1][GETBYTE(t3, 0)] & 0x000000ff) ^
+     d5c:	4663      	mov	r3, ip
+     d5e:	4642      	mov	r2, r8
+     d60:	4053      	eors	r3, r2
+     d62:	469c      	mov	ip, r3
+        (Te[3][GETBYTE(t1, 2)] & 0x00ff0000) ^
+     d64:	9403      	str	r4, [sp, #12]
+     d66:	0c23      	lsrs	r3, r4, #16
+     d68:	4003      	ands	r3, r0
+     d6a:	4698      	mov	r8, r3
+     d6c:	f240 3900 	movw	r9, #768	; 0x300
+     d70:	44c8      	add	r8, r9
+     d72:	4643      	mov	r3, r8
+     d74:	009b      	lsls	r3, r3, #2
+     d76:	59db      	ldr	r3, [r3, r7]
+     d78:	4698      	mov	r8, r3
+     d7a:	23ff      	movs	r3, #255	; 0xff
+     d7c:	041b      	lsls	r3, r3, #16
+     d7e:	001c      	movs	r4, r3
+     d80:	4643      	mov	r3, r8
+     d82:	9404      	str	r4, [sp, #16]
+     d84:	4023      	ands	r3, r4
+     d86:	4698      	mov	r8, r3
+        (Te[2][GETBYTE(t0, 3)] & 0xff000000) ^
+     d88:	9b01      	ldr	r3, [sp, #4]
+     d8a:	0e1b      	lsrs	r3, r3, #24
+     d8c:	4699      	mov	r9, r3
+     d8e:	f240 2a00 	movw	sl, #512	; 0x200
+     d92:	44d1      	add	r9, sl
+     d94:	464b      	mov	r3, r9
+     d96:	009b      	lsls	r3, r3, #2
+     d98:	59db      	ldr	r3, [r3, r7]
+     d9a:	0e1b      	lsrs	r3, r3, #24
+     d9c:	061b      	lsls	r3, r3, #24
+     d9e:	4699      	mov	r9, r3
+     da0:	4643      	mov	r3, r8
+     da2:	464a      	mov	r2, r9
+     da4:	4313      	orrs	r3, r2
+        (Te[1][GETBYTE(t3, 0)] & 0x000000ff) ^
+     da6:	4664      	mov	r4, ip
+     da8:	405c      	eors	r4, r3
+        (Te[1][GETBYTE(t0, 0)] & 0x000000ff) ^
+     daa:	0003      	movs	r3, r0
+     dac:	9a01      	ldr	r2, [sp, #4]
+     dae:	4013      	ands	r3, r2
+     db0:	469c      	mov	ip, r3
+     db2:	f240 1800 	movw	r8, #256	; 0x100
+     db6:	44c4      	add	ip, r8
+     db8:	4663      	mov	r3, ip
+     dba:	009b      	lsls	r3, r3, #2
+     dbc:	59db      	ldr	r3, [r3, r7]
+     dbe:	4003      	ands	r3, r0
+     dc0:	6872      	ldr	r2, [r6, #4]
+     dc2:	4053      	eors	r3, r2
+     dc4:	469c      	mov	ip, r3
+        (Te[0][GETBYTE(t3, 1)] & 0x0000ff00) ^
+     dc6:	0a2b      	lsrs	r3, r5, #8
+     dc8:	4003      	ands	r3, r0
+     dca:	009b      	lsls	r3, r3, #2
+     dcc:	59db      	ldr	r3, [r3, r7]
+     dce:	465a      	mov	r2, fp
+     dd0:	4013      	ands	r3, r2
+     dd2:	4698      	mov	r8, r3
+        (Te[1][GETBYTE(t0, 0)] & 0x000000ff) ^
+     dd4:	4663      	mov	r3, ip
+     dd6:	4642      	mov	r2, r8
+     dd8:	4053      	eors	r3, r2
+     dda:	469c      	mov	ip, r3
+        (Te[3][GETBYTE(t2, 2)] & 0x00ff0000) ^
+     ddc:	9105      	str	r1, [sp, #20]
+     dde:	0c0b      	lsrs	r3, r1, #16
+     de0:	4003      	ands	r3, r0
+     de2:	4698      	mov	r8, r3
+     de4:	f240 3900 	movw	r9, #768	; 0x300
+     de8:	44c8      	add	r8, r9
+     dea:	4643      	mov	r3, r8
+     dec:	009b      	lsls	r3, r3, #2
+     dee:	59db      	ldr	r3, [r3, r7]
+     df0:	9a04      	ldr	r2, [sp, #16]
+     df2:	4013      	ands	r3, r2
+     df4:	4698      	mov	r8, r3
+        (Te[2][GETBYTE(t1, 3)] & 0xff000000) ^
+     df6:	9903      	ldr	r1, [sp, #12]
+     df8:	0e0b      	lsrs	r3, r1, #24
+     dfa:	4699      	mov	r9, r3
+     dfc:	44d1      	add	r9, sl
+     dfe:	464b      	mov	r3, r9
+     e00:	009b      	lsls	r3, r3, #2
+     e02:	59db      	ldr	r3, [r3, r7]
+     e04:	0e1b      	lsrs	r3, r3, #24
+     e06:	061b      	lsls	r3, r3, #24
+     e08:	4699      	mov	r9, r3
+     e0a:	4643      	mov	r3, r8
+     e0c:	464a      	mov	r2, r9
+     e0e:	4313      	orrs	r3, r2
+     e10:	4698      	mov	r8, r3
+        (Te[1][GETBYTE(t0, 0)] & 0x000000ff) ^
+     e12:	4663      	mov	r3, ip
+     e14:	4642      	mov	r2, r8
+     e16:	4053      	eors	r3, r2
+     e18:	469c      	mov	ip, r3
+        (Te[1][GETBYTE(t1, 0)] & 0x000000ff) ^
+     e1a:	0003      	movs	r3, r0
+     e1c:	400b      	ands	r3, r1
+     e1e:	4698      	mov	r8, r3
+     e20:	f240 1900 	movw	r9, #256	; 0x100
+     e24:	44c8      	add	r8, r9
+     e26:	4643      	mov	r3, r8
+     e28:	009b      	lsls	r3, r3, #2
+     e2a:	59db      	ldr	r3, [r3, r7]
+     e2c:	4003      	ands	r3, r0
+     e2e:	68b2      	ldr	r2, [r6, #8]
+     e30:	4053      	eors	r3, r2
+     e32:	4698      	mov	r8, r3
+        (Te[0][GETBYTE(t0, 1)] & 0x0000ff00) ^
+     e34:	9b01      	ldr	r3, [sp, #4]
+     e36:	0a1b      	lsrs	r3, r3, #8
+     e38:	4003      	ands	r3, r0
+     e3a:	009b      	lsls	r3, r3, #2
+     e3c:	59db      	ldr	r3, [r3, r7]
+     e3e:	465a      	mov	r2, fp
+     e40:	4013      	ands	r3, r2
+     e42:	4699      	mov	r9, r3
+        (Te[1][GETBYTE(t1, 0)] & 0x000000ff) ^
+     e44:	4643      	mov	r3, r8
+     e46:	464a      	mov	r2, r9
+     e48:	4053      	eors	r3, r2
+        (Te[3][GETBYTE(t3, 2)] & 0x00ff0000) ^
+     e4a:	0c2a      	lsrs	r2, r5, #16
+     e4c:	4002      	ands	r2, r0
+     e4e:	4690      	mov	r8, r2
+     e50:	f240 3900 	movw	r9, #768	; 0x300
+     e54:	44c8      	add	r8, r9
+     e56:	4642      	mov	r2, r8
+     e58:	0092      	lsls	r2, r2, #2
+     e5a:	59d2      	ldr	r2, [r2, r7]
+     e5c:	9904      	ldr	r1, [sp, #16]
+     e5e:	400a      	ands	r2, r1
+     e60:	4690      	mov	r8, r2
+        (Te[2][GETBYTE(t2, 3)] & 0xff000000) ^
+     e62:	9905      	ldr	r1, [sp, #20]
+     e64:	0e0a      	lsrs	r2, r1, #24
+     e66:	4691      	mov	r9, r2
+     e68:	44d1      	add	r9, sl
+     e6a:	464a      	mov	r2, r9
+     e6c:	0092      	lsls	r2, r2, #2
+     e6e:	59d2      	ldr	r2, [r2, r7]
+     e70:	0e12      	lsrs	r2, r2, #24
+     e72:	0612      	lsls	r2, r2, #24
+     e74:	4691      	mov	r9, r2
+     e76:	4642      	mov	r2, r8
+     e78:	4649      	mov	r1, r9
+     e7a:	430a      	orrs	r2, r1
+        (Te[1][GETBYTE(t1, 0)] & 0x000000ff) ^
+     e7c:	4053      	eors	r3, r2
+     e7e:	4698      	mov	r8, r3
+        (Te[1][GETBYTE(t2, 0)] & 0x000000ff) ^
+     e80:	9905      	ldr	r1, [sp, #20]
+     e82:	4001      	ands	r1, r0
+     e84:	3101      	adds	r1, #1
+     e86:	31ff      	adds	r1, #255	; 0xff
+     e88:	0089      	lsls	r1, r1, #2
+     e8a:	59c9      	ldr	r1, [r1, r7]
+     e8c:	4001      	ands	r1, r0
+     e8e:	68f6      	ldr	r6, [r6, #12]
+     e90:	4071      	eors	r1, r6
+        (Te[0][GETBYTE(t1, 1)] & 0x0000ff00) ^
+     e92:	9e03      	ldr	r6, [sp, #12]
+     e94:	0a33      	lsrs	r3, r6, #8
+     e96:	4003      	ands	r3, r0
+     e98:	009b      	lsls	r3, r3, #2
+     e9a:	59db      	ldr	r3, [r3, r7]
+     e9c:	465a      	mov	r2, fp
+     e9e:	4013      	ands	r3, r2
+        (Te[1][GETBYTE(t2, 0)] & 0x000000ff) ^
+     ea0:	4059      	eors	r1, r3
+        (Te[3][GETBYTE(t0, 2)] & 0x00ff0000) ^
+     ea2:	9b01      	ldr	r3, [sp, #4]
+     ea4:	0c1a      	lsrs	r2, r3, #16
+     ea6:	4002      	ands	r2, r0
+     ea8:	f240 3900 	movw	r9, #768	; 0x300
+     eac:	444a      	add	r2, r9
+     eae:	0092      	lsls	r2, r2, #2
+     eb0:	59d3      	ldr	r3, [r2, r7]
+     eb2:	9a04      	ldr	r2, [sp, #16]
+     eb4:	4013      	ands	r3, r2
+        (Te[2][GETBYTE(t3, 3)] & 0xff000000) ^
+     eb6:	0e2d      	lsrs	r5, r5, #24
+     eb8:	f240 2900 	movw	r9, #512	; 0x200
+     ebc:	444d      	add	r5, r9
+     ebe:	00ad      	lsls	r5, r5, #2
+     ec0:	59ea      	ldr	r2, [r5, r7]
+     ec2:	0e12      	lsrs	r2, r2, #24
+     ec4:	0612      	lsls	r2, r2, #24
+     ec6:	4313      	orrs	r3, r2
+        (Te[1][GETBYTE(t2, 0)] & 0x000000ff) ^
+     ec8:	4059      	eors	r1, r3
+    value = ((value & 0xFF00FF00) >> 8) | ((value & 0x00FF00FF) << 8);
+     eca:	0a23      	lsrs	r3, r4, #8
+     ecc:	26ff      	movs	r6, #255	; 0xff
+     ece:	f2c0 06ff 	movt	r6, #255	; 0xff
+     ed2:	4033      	ands	r3, r6
+     ed4:	0222      	lsls	r2, r4, #8
+     ed6:	f64f 7000 	movw	r0, #65280	; 0xff00
+     eda:	f6cf 7000 	movt	r0, #65280	; 0xff00
+     ede:	4002      	ands	r2, r0
+     ee0:	4313      	orrs	r3, r2
+        return (x << y) | (x >> (sizeof(y) * 8 - y));
+     ee2:	2510      	movs	r5, #16
+     ee4:	41eb      	rors	r3, r5
+    s0 = ByteReverseWord32(s0);
+     ee6:	9309      	str	r3, [sp, #36]	; 0x24
+    value = ((value & 0xFF00FF00) >> 8) | ((value & 0x00FF00FF) << 8);
+     ee8:	4663      	mov	r3, ip
+     eea:	0a1b      	lsrs	r3, r3, #8
+     eec:	4033      	ands	r3, r6
+     eee:	4662      	mov	r2, ip
+     ef0:	0212      	lsls	r2, r2, #8
+     ef2:	4002      	ands	r2, r0
+     ef4:	4313      	orrs	r3, r2
+        return (x << y) | (x >> (sizeof(y) * 8 - y));
+     ef6:	41eb      	rors	r3, r5
+    s1 = ByteReverseWord32(s1);
+     ef8:	9308      	str	r3, [sp, #32]
+    value = ((value & 0xFF00FF00) >> 8) | ((value & 0x00FF00FF) << 8);
+     efa:	4643      	mov	r3, r8
+     efc:	0a1a      	lsrs	r2, r3, #8
+     efe:	4032      	ands	r2, r6
+     f00:	021b      	lsls	r3, r3, #8
+     f02:	4003      	ands	r3, r0
+     f04:	431a      	orrs	r2, r3
+        return (x << y) | (x >> (sizeof(y) * 8 - y));
+     f06:	41ea      	rors	r2, r5
+    s2 = ByteReverseWord32(s2);
+     f08:	9207      	str	r2, [sp, #28]
+    value = ((value & 0xFF00FF00) >> 8) | ((value & 0x00FF00FF) << 8);
+     f0a:	0a0b      	lsrs	r3, r1, #8
+     f0c:	4033      	ands	r3, r6
+     f0e:	0209      	lsls	r1, r1, #8
+     f10:	4008      	ands	r0, r1
+     f12:	4303      	orrs	r3, r0
+        return (x << y) | (x >> (sizeof(y) * 8 - y));
+     f14:	41eb      	rors	r3, r5
+    s3 = ByteReverseWord32(s3);
+     f16:	9306      	str	r3, [sp, #24]
+    XMEMCPY(outBlock,                  &s0, sizeof(s0));
+     f18:	2204      	movs	r2, #4
+     f1a:	a909      	add	r1, sp, #36	; 0x24
+     f1c:	9c02      	ldr	r4, [sp, #8]
+     f1e:	0020      	movs	r0, r4
+     f20:	f641 1589 	movw	r5, #6537	; 0x1989
+     f24:	f2c0 0500 	movt	r5, #0
+     f28:	47a8      	blx	r5
+    XMEMCPY(outBlock + sizeof(s0),     &s1, sizeof(s1));
+     f2a:	1d20      	adds	r0, r4, #4
+     f2c:	2204      	movs	r2, #4
+     f2e:	a908      	add	r1, sp, #32
+     f30:	47a8      	blx	r5
+    XMEMCPY(outBlock + 2 * sizeof(s0), &s2, sizeof(s2));
+     f32:	0020      	movs	r0, r4
+     f34:	3008      	adds	r0, #8
+     f36:	2204      	movs	r2, #4
+     f38:	a907      	add	r1, sp, #28
+     f3a:	47a8      	blx	r5
+    XMEMCPY(outBlock + 3 * sizeof(s0), &s3, sizeof(s3));
+     f3c:	0020      	movs	r0, r4
+     f3e:	300c      	adds	r0, #12
+     f40:	2204      	movs	r2, #4
+     f42:	a906      	add	r1, sp, #24
+     f44:	47a8      	blx	r5
+     f46:	e584      	b.n	a52 <wc_AesEncrypt+0x20>
+
+00000f48 <wc_AesDecrypt>:
+    return x;
+}
+
+/* Software AES - ECB Decrypt */
+static void wc_AesDecrypt(Aes* aes, const byte* inBlock, byte* outBlock)
+{
+     f48:	b5f0      	push	{r4, r5, r6, r7, lr}
+     f4a:	46de      	mov	lr, fp
+     f4c:	4657      	mov	r7, sl
+     f4e:	464e      	mov	r6, r9
+     f50:	4645      	mov	r5, r8
+     f52:	b5e0      	push	{r5, r6, r7, lr}
+     f54:	b089      	sub	sp, #36	; 0x24
+     f56:	0007      	movs	r7, r0
+     f58:	000d      	movs	r5, r1
+     f5a:	9203      	str	r2, [sp, #12]
+    word32 s0, s1, s2, s3;
+    word32 t0, t1, t2, t3;
+    word32 r = aes->rounds >> 1;
+     f5c:	23f0      	movs	r3, #240	; 0xf0
+     f5e:	58c6      	ldr	r6, [r0, r3]
+     f60:	0876      	lsrs	r6, r6, #1
+
+    const word32* rk = aes->key;
+    if (r > 7 || r == 0) {
+     f62:	1e73      	subs	r3, r6, #1
+     f64:	2b06      	cmp	r3, #6
+     f66:	d906      	bls.n	f76 <wc_AesDecrypt+0x2e>
+
+    XMEMCPY(outBlock,                  &s0, sizeof(s0));
+    XMEMCPY(outBlock + sizeof(s0),     &s1, sizeof(s1));
+    XMEMCPY(outBlock + 2 * sizeof(s0), &s2, sizeof(s2));
+    XMEMCPY(outBlock + 3 * sizeof(s0), &s3, sizeof(s3));
+}
+     f68:	b009      	add	sp, #36	; 0x24
+     f6a:	bc3c      	pop	{r2, r3, r4, r5}
+     f6c:	4690      	mov	r8, r2
+     f6e:	4699      	mov	r9, r3
+     f70:	46a2      	mov	sl, r4
+     f72:	46ab      	mov	fp, r5
+     f74:	bdf0      	pop	{r4, r5, r6, r7, pc}
+    XMEMCPY(&s0, inBlock,                  sizeof(s0));
+     f76:	2204      	movs	r2, #4
+     f78:	a807      	add	r0, sp, #28
+     f7a:	f641 1489 	movw	r4, #6537	; 0x1989
+     f7e:	f2c0 0400 	movt	r4, #0
+     f82:	47a0      	blx	r4
+    XMEMCPY(&s1, inBlock + sizeof(s0),     sizeof(s1));
+     f84:	1d29      	adds	r1, r5, #4
+     f86:	2204      	movs	r2, #4
+     f88:	a806      	add	r0, sp, #24
+     f8a:	47a0      	blx	r4
+    XMEMCPY(&s2, inBlock + 2 * sizeof(s0), sizeof(s2));
+     f8c:	0029      	movs	r1, r5
+     f8e:	3108      	adds	r1, #8
+     f90:	2204      	movs	r2, #4
+     f92:	a805      	add	r0, sp, #20
+     f94:	47a0      	blx	r4
+    XMEMCPY(&s3, inBlock + 3 * sizeof(s0), sizeof(s3));
+     f96:	0029      	movs	r1, r5
+     f98:	310c      	adds	r1, #12
+     f9a:	2204      	movs	r2, #4
+     f9c:	a804      	add	r0, sp, #16
+     f9e:	47a0      	blx	r4
+    s0 = ByteReverseWord32(s0);
+     fa0:	9b07      	ldr	r3, [sp, #28]
+    s1 = ByteReverseWord32(s1);
+     fa2:	9906      	ldr	r1, [sp, #24]
+    value = ((value & 0xFF00FF00) >> 8) | ((value & 0x00FF00FF) << 8);
+     fa4:	0a18      	lsrs	r0, r3, #8
+     fa6:	f240 08ff 	movw	r8, #255	; 0xff
+     faa:	f2c0 08ff 	movt	r8, #255	; 0xff
+     fae:	4642      	mov	r2, r8
+     fb0:	4010      	ands	r0, r2
+     fb2:	021b      	lsls	r3, r3, #8
+     fb4:	f64f 7200 	movw	r2, #65280	; 0xff00
+     fb8:	f6cf 7200 	movt	r2, #65280	; 0xff00
+     fbc:	4013      	ands	r3, r2
+     fbe:	4318      	orrs	r0, r3
+        return (x << y) | (x >> (sizeof(y) * 8 - y));
+     fc0:	2410      	movs	r4, #16
+     fc2:	41e0      	rors	r0, r4
+    s0 ^= rk[0];
+     fc4:	683b      	ldr	r3, [r7, #0]
+     fc6:	4058      	eors	r0, r3
+    value = ((value & 0xFF00FF00) >> 8) | ((value & 0x00FF00FF) << 8);
+     fc8:	0a0d      	lsrs	r5, r1, #8
+     fca:	4643      	mov	r3, r8
+     fcc:	401d      	ands	r5, r3
+     fce:	0209      	lsls	r1, r1, #8
+     fd0:	4011      	ands	r1, r2
+     fd2:	430d      	orrs	r5, r1
+        return (x << y) | (x >> (sizeof(y) * 8 - y));
+     fd4:	41e5      	rors	r5, r4
+    s1 ^= rk[1];
+     fd6:	687b      	ldr	r3, [r7, #4]
+     fd8:	405d      	eors	r5, r3
+     fda:	9501      	str	r5, [sp, #4]
+    value = ((value & 0xFF00FF00) >> 8) | ((value & 0x00FF00FF) << 8);
+     fdc:	9b05      	ldr	r3, [sp, #20]
+     fde:	0a19      	lsrs	r1, r3, #8
+     fe0:	4643      	mov	r3, r8
+     fe2:	4019      	ands	r1, r3
+     fe4:	9b05      	ldr	r3, [sp, #20]
+     fe6:	021b      	lsls	r3, r3, #8
+     fe8:	4013      	ands	r3, r2
+     fea:	4319      	orrs	r1, r3
+        return (x << y) | (x >> (sizeof(y) * 8 - y));
+     fec:	41e1      	rors	r1, r4
+    s2 ^= rk[2];
+     fee:	68bb      	ldr	r3, [r7, #8]
+     ff0:	4059      	eors	r1, r3
+    value = ((value & 0xFF00FF00) >> 8) | ((value & 0x00FF00FF) << 8);
+     ff2:	9b04      	ldr	r3, [sp, #16]
+     ff4:	021b      	lsls	r3, r3, #8
+     ff6:	4013      	ands	r3, r2
+     ff8:	9a04      	ldr	r2, [sp, #16]
+     ffa:	0a12      	lsrs	r2, r2, #8
+     ffc:	4645      	mov	r5, r8
+     ffe:	402a      	ands	r2, r5
+    1000:	4313      	orrs	r3, r2
+        return (x << y) | (x >> (sizeof(y) * 8 - y));
+    1002:	41e3      	rors	r3, r4
+    s3 ^= rk[3];
+    1004:	68fa      	ldr	r2, [r7, #12]
+    1006:	405a      	eors	r2, r3
+    1008:	4690      	mov	r8, r2
+    100a:	2204      	movs	r2, #4
+{
+    100c:	2320      	movs	r3, #32
+    100e:	3b01      	subs	r3, #1
+        for (j = 0; j < 256; j += WC_CACHE_LINE_SZ/4) {
+    1010:	2b00      	cmp	r3, #0
+    1012:	d1fc      	bne.n	100e <wc_AesDecrypt+0xc6>
+    1014:	3a01      	subs	r2, #1
+    for (i = 0; i < 4; i++) {
+    1016:	2a00      	cmp	r2, #0
+    1018:	d1f8      	bne.n	100c <wc_AesDecrypt+0xc4>
+    const word32* rk = aes->key;
+    101a:	003c      	movs	r4, r7
+    101c:	0176      	lsls	r6, r6, #5
+    101e:	46ba      	mov	sl, r7
+    1020:	44b2      	add	sl, r6
+            Td[0][GETBYTE(s0, 3)] ^
+    1022:	f642 3330 	movw	r3, #11056	; 0x2b30
+    1026:	f2c0 0300 	movt	r3, #0
+            Td[3][GETBYTE(s1, 0)] ^
+    102a:	22ff      	movs	r2, #255	; 0xff
+            Td[0][GETBYTE(s0, 3)] ^
+    102c:	0e06      	lsrs	r6, r0, #24
+    102e:	00b6      	lsls	r6, r6, #2
+            Td[3][GETBYTE(s1, 0)] ^
+    1030:	0017      	movs	r7, r2
+    1032:	9d01      	ldr	r5, [sp, #4]
+    1034:	402f      	ands	r7, r5
+    1036:	f240 3c00 	movw	ip, #768	; 0x300
+    103a:	4467      	add	r7, ip
+    103c:	00bf      	lsls	r7, r7, #2
+        t0 =
+    103e:	58f6      	ldr	r6, [r6, r3]
+    1040:	58ff      	ldr	r7, [r7, r3]
+    1042:	407e      	eors	r6, r7
+    1044:	6925      	ldr	r5, [r4, #16]
+    1046:	406e      	eors	r6, r5
+            Td[1][GETBYTE(s3, 2)] ^
+    1048:	4645      	mov	r5, r8
+    104a:	0c2f      	lsrs	r7, r5, #16
+    104c:	4017      	ands	r7, r2
+    104e:	3701      	adds	r7, #1
+    1050:	37ff      	adds	r7, #255	; 0xff
+    1052:	00bf      	lsls	r7, r7, #2
+        t0 =
+    1054:	58ff      	ldr	r7, [r7, r3]
+    1056:	407e      	eors	r6, r7
+            Td[2][GETBYTE(s2, 1)] ^
+    1058:	0a0f      	lsrs	r7, r1, #8
+    105a:	4017      	ands	r7, r2
+    105c:	f240 2c00 	movw	ip, #512	; 0x200
+    1060:	4467      	add	r7, ip
+    1062:	00bf      	lsls	r7, r7, #2
+        t0 =
+    1064:	58ff      	ldr	r7, [r7, r3]
+    1066:	407e      	eors	r6, r7
+    1068:	46b4      	mov	ip, r6
+            Td[0][GETBYTE(s1, 3)] ^
+    106a:	9d01      	ldr	r5, [sp, #4]
+    106c:	0e2f      	lsrs	r7, r5, #24
+    106e:	00bf      	lsls	r7, r7, #2
+            Td[3][GETBYTE(s2, 0)] ^
+    1070:	0016      	movs	r6, r2
+    1072:	400e      	ands	r6, r1
+    1074:	f240 3900 	movw	r9, #768	; 0x300
+    1078:	444e      	add	r6, r9
+    107a:	00b6      	lsls	r6, r6, #2
+        t1 =
+    107c:	58ff      	ldr	r7, [r7, r3]
+    107e:	58f6      	ldr	r6, [r6, r3]
+    1080:	4077      	eors	r7, r6
+    1082:	6965      	ldr	r5, [r4, #20]
+    1084:	406f      	eors	r7, r5
+            Td[1][GETBYTE(s0, 2)] ^
+    1086:	0c06      	lsrs	r6, r0, #16
+    1088:	4016      	ands	r6, r2
+    108a:	3601      	adds	r6, #1
+    108c:	36ff      	adds	r6, #255	; 0xff
+    108e:	00b6      	lsls	r6, r6, #2
+        t1 =
+    1090:	58f6      	ldr	r6, [r6, r3]
+    1092:	4077      	eors	r7, r6
+            Td[2][GETBYTE(s3, 1)] ^
+    1094:	4645      	mov	r5, r8
+    1096:	0a2e      	lsrs	r6, r5, #8
+    1098:	4016      	ands	r6, r2
+    109a:	f240 2900 	movw	r9, #512	; 0x200
+    109e:	444e      	add	r6, r9
+    10a0:	00b6      	lsls	r6, r6, #2
+        t1 =
+    10a2:	58f6      	ldr	r6, [r6, r3]
+    10a4:	4077      	eors	r7, r6
+            Td[0][GETBYTE(s2, 3)] ^
+    10a6:	0e0e      	lsrs	r6, r1, #24
+    10a8:	00b5      	lsls	r5, r6, #2
+            Td[3][GETBYTE(s3, 0)] ^
+    10aa:	4646      	mov	r6, r8
+    10ac:	4016      	ands	r6, r2
+    10ae:	f240 3900 	movw	r9, #768	; 0x300
+    10b2:	444e      	add	r6, r9
+    10b4:	00b6      	lsls	r6, r6, #2
+        t2 =
+    10b6:	58ed      	ldr	r5, [r5, r3]
+    10b8:	58f6      	ldr	r6, [r6, r3]
+    10ba:	406e      	eors	r6, r5
+    10bc:	69a5      	ldr	r5, [r4, #24]
+    10be:	406e      	eors	r6, r5
+            Td[1][GETBYTE(s1, 2)] ^
+    10c0:	9d01      	ldr	r5, [sp, #4]
+    10c2:	0c2d      	lsrs	r5, r5, #16
+    10c4:	4015      	ands	r5, r2
+    10c6:	46ab      	mov	fp, r5
+    10c8:	f240 1900 	movw	r9, #256	; 0x100
+    10cc:	44cb      	add	fp, r9
+    10ce:	465d      	mov	r5, fp
+    10d0:	00ad      	lsls	r5, r5, #2
+        t2 =
+    10d2:	58ed      	ldr	r5, [r5, r3]
+    10d4:	406e      	eors	r6, r5
+            Td[2][GETBYTE(s0, 1)] ^
+    10d6:	0a05      	lsrs	r5, r0, #8
+    10d8:	4015      	ands	r5, r2
+    10da:	46ab      	mov	fp, r5
+    10dc:	f240 2900 	movw	r9, #512	; 0x200
+    10e0:	44cb      	add	fp, r9
+    10e2:	465d      	mov	r5, fp
+    10e4:	00ad      	lsls	r5, r5, #2
+        t2 =
+    10e6:	58ed      	ldr	r5, [r5, r3]
+    10e8:	406e      	eors	r6, r5
+    10ea:	9602      	str	r6, [sp, #8]
+            Td[0][GETBYTE(s3, 3)] ^
+    10ec:	4645      	mov	r5, r8
+    10ee:	0e2d      	lsrs	r5, r5, #24
+    10f0:	00ad      	lsls	r5, r5, #2
+            Td[3][GETBYTE(s0, 0)] ^
+    10f2:	4010      	ands	r0, r2
+    10f4:	f240 3900 	movw	r9, #768	; 0x300
+    10f8:	4448      	add	r0, r9
+    10fa:	0080      	lsls	r0, r0, #2
+        t3 =
+    10fc:	58ed      	ldr	r5, [r5, r3]
+    10fe:	58c0      	ldr	r0, [r0, r3]
+    1100:	4068      	eors	r0, r5
+    1102:	69e5      	ldr	r5, [r4, #28]
+    1104:	4045      	eors	r5, r0
+            Td[1][GETBYTE(s2, 2)] ^
+    1106:	0c09      	lsrs	r1, r1, #16
+    1108:	4011      	ands	r1, r2
+    110a:	1c48      	adds	r0, r1, #1
+    110c:	30ff      	adds	r0, #255	; 0xff
+    110e:	0080      	lsls	r0, r0, #2
+        t3 =
+    1110:	58c1      	ldr	r1, [r0, r3]
+    1112:	4069      	eors	r1, r5
+            Td[2][GETBYTE(s1, 1)] ^
+    1114:	9801      	ldr	r0, [sp, #4]
+    1116:	0a05      	lsrs	r5, r0, #8
+    1118:	4015      	ands	r5, r2
+    111a:	f240 2800 	movw	r8, #512	; 0x200
+    111e:	4445      	add	r5, r8
+    1120:	00ad      	lsls	r5, r5, #2
+        t3 =
+    1122:	58e8      	ldr	r0, [r5, r3]
+    1124:	4041      	eors	r1, r0
+    1126:	4688      	mov	r8, r1
+        rk += 8;
+    1128:	3420      	adds	r4, #32
+        if (--r == 0) {
+    112a:	4554      	cmp	r4, sl
+    112c:	d100      	bne.n	1130 <wc_AesDecrypt+0x1e8>
+    112e:	e08a      	b.n	1246 <wc_AesDecrypt+0x2fe>
+            Td[0][GETBYTE(t0, 3)] ^
+    1130:	4661      	mov	r1, ip
+    1132:	0e08      	lsrs	r0, r1, #24
+    1134:	0080      	lsls	r0, r0, #2
+            Td[3][GETBYTE(t1, 0)] ^
+    1136:	0011      	movs	r1, r2
+    1138:	4039      	ands	r1, r7
+    113a:	4449      	add	r1, r9
+    113c:	0089      	lsls	r1, r1, #2
+    113e:	58c0      	ldr	r0, [r0, r3]
+    1140:	58c9      	ldr	r1, [r1, r3]
+    1142:	4048      	eors	r0, r1
+    1144:	6821      	ldr	r1, [r4, #0]
+    1146:	4048      	eors	r0, r1
+            Td[1][GETBYTE(t3, 2)] ^
+    1148:	4641      	mov	r1, r8
+    114a:	0c09      	lsrs	r1, r1, #16
+    114c:	4011      	ands	r1, r2
+    114e:	3101      	adds	r1, #1
+    1150:	31ff      	adds	r1, #255	; 0xff
+    1152:	0089      	lsls	r1, r1, #2
+            Td[3][GETBYTE(t1, 0)] ^
+    1154:	58c9      	ldr	r1, [r1, r3]
+    1156:	4048      	eors	r0, r1
+            Td[2][GETBYTE(t2, 1)] ^
+    1158:	0a31      	lsrs	r1, r6, #8
+    115a:	4011      	ands	r1, r2
+    115c:	f240 2900 	movw	r9, #512	; 0x200
+    1160:	4449      	add	r1, r9
+    1162:	0089      	lsls	r1, r1, #2
+            Td[3][GETBYTE(t1, 0)] ^
+    1164:	58c9      	ldr	r1, [r1, r3]
+    1166:	4048      	eors	r0, r1
+            Td[0][GETBYTE(t1, 3)] ^
+    1168:	0e3d      	lsrs	r5, r7, #24
+    116a:	00ad      	lsls	r5, r5, #2
+            Td[3][GETBYTE(t2, 0)] ^
+    116c:	0011      	movs	r1, r2
+    116e:	4031      	ands	r1, r6
+    1170:	f240 3900 	movw	r9, #768	; 0x300
+    1174:	4449      	add	r1, r9
+    1176:	0089      	lsls	r1, r1, #2
+    1178:	58ed      	ldr	r5, [r5, r3]
+    117a:	58c9      	ldr	r1, [r1, r3]
+    117c:	404d      	eors	r5, r1
+    117e:	6861      	ldr	r1, [r4, #4]
+    1180:	404d      	eors	r5, r1
+            Td[1][GETBYTE(t0, 2)] ^
+    1182:	4661      	mov	r1, ip
+    1184:	0c09      	lsrs	r1, r1, #16
+    1186:	4011      	ands	r1, r2
+    1188:	3101      	adds	r1, #1
+    118a:	31ff      	adds	r1, #255	; 0xff
+    118c:	0089      	lsls	r1, r1, #2
+            Td[3][GETBYTE(t2, 0)] ^
+    118e:	58c9      	ldr	r1, [r1, r3]
+    1190:	404d      	eors	r5, r1
+            Td[2][GETBYTE(t3, 1)] ^
+    1192:	4641      	mov	r1, r8
+    1194:	0a09      	lsrs	r1, r1, #8
+    1196:	4011      	ands	r1, r2
+    1198:	f240 2900 	movw	r9, #512	; 0x200
+    119c:	4449      	add	r1, r9
+    119e:	0089      	lsls	r1, r1, #2
+            Td[3][GETBYTE(t2, 0)] ^
+    11a0:	58c9      	ldr	r1, [r1, r3]
+    11a2:	404d      	eors	r5, r1
+    11a4:	9501      	str	r5, [sp, #4]
+            Td[0][GETBYTE(t2, 3)] ^
+    11a6:	0e31      	lsrs	r1, r6, #24
+    11a8:	0089      	lsls	r1, r1, #2
+    11aa:	468b      	mov	fp, r1
+            Td[3][GETBYTE(t3, 0)] ^
+    11ac:	4641      	mov	r1, r8
+    11ae:	4011      	ands	r1, r2
+    11b0:	f240 3900 	movw	r9, #768	; 0x300
+    11b4:	4449      	add	r1, r9
+    11b6:	0089      	lsls	r1, r1, #2
+    11b8:	465d      	mov	r5, fp
+    11ba:	58ed      	ldr	r5, [r5, r3]
+    11bc:	58c9      	ldr	r1, [r1, r3]
+    11be:	4069      	eors	r1, r5
+    11c0:	68a5      	ldr	r5, [r4, #8]
+    11c2:	4069      	eors	r1, r5
+            Td[1][GETBYTE(t1, 2)] ^
+    11c4:	0c3d      	lsrs	r5, r7, #16
+    11c6:	4015      	ands	r5, r2
+    11c8:	46ab      	mov	fp, r5
+    11ca:	f240 1900 	movw	r9, #256	; 0x100
+    11ce:	44cb      	add	fp, r9
+    11d0:	465d      	mov	r5, fp
+    11d2:	00ad      	lsls	r5, r5, #2
+            Td[3][GETBYTE(t3, 0)] ^
+    11d4:	58ed      	ldr	r5, [r5, r3]
+    11d6:	4069      	eors	r1, r5
+            Td[2][GETBYTE(t0, 1)] ^
+    11d8:	4665      	mov	r5, ip
+    11da:	0a2d      	lsrs	r5, r5, #8
+    11dc:	4015      	ands	r5, r2
+    11de:	46ab      	mov	fp, r5
+    11e0:	f240 2900 	movw	r9, #512	; 0x200
+    11e4:	44cb      	add	fp, r9
+    11e6:	465d      	mov	r5, fp
+    11e8:	00ad      	lsls	r5, r5, #2
+            Td[3][GETBYTE(t3, 0)] ^
+    11ea:	58ed      	ldr	r5, [r5, r3]
+    11ec:	4069      	eors	r1, r5
+            Td[0][GETBYTE(t3, 3)] ^
+    11ee:	4645      	mov	r5, r8
+    11f0:	0e2d      	lsrs	r5, r5, #24
+    11f2:	00ad      	lsls	r5, r5, #2
+    11f4:	46a8      	mov	r8, r5
+            Td[3][GETBYTE(t0, 0)] ^
+    11f6:	4665      	mov	r5, ip
+    11f8:	4015      	ands	r5, r2
+    11fa:	46ac      	mov	ip, r5
+    11fc:	f240 3900 	movw	r9, #768	; 0x300
+    1200:	44cc      	add	ip, r9
+    1202:	4665      	mov	r5, ip
+    1204:	00ad      	lsls	r5, r5, #2
+    1206:	46ac      	mov	ip, r5
+    1208:	4645      	mov	r5, r8
+    120a:	58ed      	ldr	r5, [r5, r3]
+    120c:	46a8      	mov	r8, r5
+    120e:	4665      	mov	r5, ip
+    1210:	58ed      	ldr	r5, [r5, r3]
+    1212:	46ac      	mov	ip, r5
+    1214:	4645      	mov	r5, r8
+    1216:	4666      	mov	r6, ip
+    1218:	4075      	eors	r5, r6
+    121a:	68e6      	ldr	r6, [r4, #12]
+    121c:	4075      	eors	r5, r6
+    121e:	46a8      	mov	r8, r5
+            Td[1][GETBYTE(t2, 2)] ^
+    1220:	9d02      	ldr	r5, [sp, #8]
+    1222:	0c2e      	lsrs	r6, r5, #16
+    1224:	4016      	ands	r6, r2
+    1226:	3601      	adds	r6, #1
+    1228:	36ff      	adds	r6, #255	; 0xff
+    122a:	00b6      	lsls	r6, r6, #2
+            Td[3][GETBYTE(t0, 0)] ^
+    122c:	58f6      	ldr	r6, [r6, r3]
+    122e:	4645      	mov	r5, r8
+    1230:	406e      	eors	r6, r5
+            Td[2][GETBYTE(t1, 1)] ^
+    1232:	0a3f      	lsrs	r7, r7, #8
+    1234:	4017      	ands	r7, r2
+    1236:	f240 2c00 	movw	ip, #512	; 0x200
+    123a:	4467      	add	r7, ip
+    123c:	00bf      	lsls	r7, r7, #2
+            Td[3][GETBYTE(t0, 0)] ^
+    123e:	58ff      	ldr	r7, [r7, r3]
+    1240:	407e      	eors	r6, r7
+    1242:	46b0      	mov	r8, r6
+        t0 =
+    1244:	e6f2      	b.n	102c <wc_AesDecrypt+0xe4>
+        ((word32)Td4[GETBYTE(t1, 0)]) ^
+    1246:	f643 3330 	movw	r3, #15152	; 0x3b30
+    124a:	f2c0 0300 	movt	r3, #0
+    124e:	25ff      	movs	r5, #255	; 0xff
+    1250:	002a      	movs	r2, r5
+    1252:	403a      	ands	r2, r7
+    1254:	5c98      	ldrb	r0, [r3, r2]
+    1256:	4652      	mov	r2, sl
+    1258:	6812      	ldr	r2, [r2, #0]
+    125a:	4050      	eors	r0, r2
+        ((word32)Td4[GETBYTE(t0, 3)] << 24) ^
+    125c:	4662      	mov	r2, ip
+    125e:	0e12      	lsrs	r2, r2, #24
+    1260:	5c9a      	ldrb	r2, [r3, r2]
+    1262:	0612      	lsls	r2, r2, #24
+        ((word32)Td4[GETBYTE(t1, 0)]) ^
+    1264:	4050      	eors	r0, r2
+        ((word32)Td4[GETBYTE(t3, 2)] << 16) ^
+    1266:	0c0a      	lsrs	r2, r1, #16
+    1268:	402a      	ands	r2, r5
+    126a:	5c9a      	ldrb	r2, [r3, r2]
+    126c:	0412      	lsls	r2, r2, #16
+        ((word32)Td4[GETBYTE(t1, 0)]) ^
+    126e:	4050      	eors	r0, r2
+        ((word32)Td4[GETBYTE(t2, 1)] <<  8) ^
+    1270:	9e02      	ldr	r6, [sp, #8]
+    1272:	0a32      	lsrs	r2, r6, #8
+    1274:	402a      	ands	r2, r5
+    1276:	5c9a      	ldrb	r2, [r3, r2]
+    1278:	0212      	lsls	r2, r2, #8
+        ((word32)Td4[GETBYTE(t1, 0)]) ^
+    127a:	4050      	eors	r0, r2
+        ((word32)Td4[GETBYTE(t2, 0)]) ^
+    127c:	002a      	movs	r2, r5
+    127e:	4032      	ands	r2, r6
+    1280:	5c99      	ldrb	r1, [r3, r2]
+    1282:	4652      	mov	r2, sl
+    1284:	6852      	ldr	r2, [r2, #4]
+    1286:	4051      	eors	r1, r2
+        ((word32)Td4[GETBYTE(t1, 3)] << 24) ^
+    1288:	0e3a      	lsrs	r2, r7, #24
+    128a:	5c9a      	ldrb	r2, [r3, r2]
+    128c:	0612      	lsls	r2, r2, #24
+        ((word32)Td4[GETBYTE(t2, 0)]) ^
+    128e:	4051      	eors	r1, r2
+        ((word32)Td4[GETBYTE(t0, 2)] << 16) ^
+    1290:	4662      	mov	r2, ip
+    1292:	0c12      	lsrs	r2, r2, #16
+    1294:	402a      	ands	r2, r5
+    1296:	5c9a      	ldrb	r2, [r3, r2]
+    1298:	0412      	lsls	r2, r2, #16
+        ((word32)Td4[GETBYTE(t2, 0)]) ^
+    129a:	4051      	eors	r1, r2
+        ((word32)Td4[GETBYTE(t3, 1)] <<  8) ^
+    129c:	4642      	mov	r2, r8
+    129e:	0a12      	lsrs	r2, r2, #8
+    12a0:	402a      	ands	r2, r5
+    12a2:	5c9a      	ldrb	r2, [r3, r2]
+    12a4:	0212      	lsls	r2, r2, #8
+        ((word32)Td4[GETBYTE(t2, 0)]) ^
+    12a6:	4051      	eors	r1, r2
+        ((word32)Td4[GETBYTE(t3, 0)]) ^
+    12a8:	4642      	mov	r2, r8
+    12aa:	402a      	ands	r2, r5
+    12ac:	5c9a      	ldrb	r2, [r3, r2]
+    12ae:	4654      	mov	r4, sl
+    12b0:	68a4      	ldr	r4, [r4, #8]
+    12b2:	4054      	eors	r4, r2
+    12b4:	46a1      	mov	r9, r4
+        ((word32)Td4[GETBYTE(t2, 3)] << 24) ^
+    12b6:	0e32      	lsrs	r2, r6, #24
+    12b8:	5c9a      	ldrb	r2, [r3, r2]
+    12ba:	0612      	lsls	r2, r2, #24
+        ((word32)Td4[GETBYTE(t3, 0)]) ^
+    12bc:	464c      	mov	r4, r9
+    12be:	4062      	eors	r2, r4
+        ((word32)Td4[GETBYTE(t1, 2)] << 16) ^
+    12c0:	0c3c      	lsrs	r4, r7, #16
+    12c2:	402c      	ands	r4, r5
+    12c4:	5d1c      	ldrb	r4, [r3, r4]
+    12c6:	0424      	lsls	r4, r4, #16
+        ((word32)Td4[GETBYTE(t3, 0)]) ^
+    12c8:	4062      	eors	r2, r4
+        ((word32)Td4[GETBYTE(t0, 1)] <<  8) ^
+    12ca:	4664      	mov	r4, ip
+    12cc:	0a24      	lsrs	r4, r4, #8
+    12ce:	402c      	ands	r4, r5
+    12d0:	5d1c      	ldrb	r4, [r3, r4]
+    12d2:	0224      	lsls	r4, r4, #8
+        ((word32)Td4[GETBYTE(t3, 0)]) ^
+    12d4:	4062      	eors	r2, r4
+        ((word32)Td4[GETBYTE(t0, 0)]) ^
+    12d6:	4664      	mov	r4, ip
+    12d8:	402c      	ands	r4, r5
+    12da:	5d1c      	ldrb	r4, [r3, r4]
+    12dc:	46a4      	mov	ip, r4
+    12de:	4654      	mov	r4, sl
+    12e0:	68e4      	ldr	r4, [r4, #12]
+    12e2:	46a1      	mov	r9, r4
+    12e4:	4664      	mov	r4, ip
+    12e6:	464e      	mov	r6, r9
+    12e8:	4074      	eors	r4, r6
+    12ea:	46a4      	mov	ip, r4
+        ((word32)Td4[GETBYTE(t3, 3)] << 24) ^
+    12ec:	4644      	mov	r4, r8
+    12ee:	0e24      	lsrs	r4, r4, #24
+    12f0:	5d1c      	ldrb	r4, [r3, r4]
+    12f2:	0624      	lsls	r4, r4, #24
+    12f4:	46a0      	mov	r8, r4
+        ((word32)Td4[GETBYTE(t0, 0)]) ^
+    12f6:	4664      	mov	r4, ip
+    12f8:	4646      	mov	r6, r8
+    12fa:	4074      	eors	r4, r6
+    12fc:	46a4      	mov	ip, r4
+        ((word32)Td4[GETBYTE(t2, 2)] << 16) ^
+    12fe:	9c02      	ldr	r4, [sp, #8]
+    1300:	0c26      	lsrs	r6, r4, #16
+    1302:	402e      	ands	r6, r5
+    1304:	5d9e      	ldrb	r6, [r3, r6]
+    1306:	0436      	lsls	r6, r6, #16
+        ((word32)Td4[GETBYTE(t0, 0)]) ^
+    1308:	4664      	mov	r4, ip
+    130a:	4066      	eors	r6, r4
+        ((word32)Td4[GETBYTE(t1, 1)] <<  8) ^
+    130c:	0a3f      	lsrs	r7, r7, #8
+    130e:	402f      	ands	r7, r5
+    1310:	5ddb      	ldrb	r3, [r3, r7]
+    1312:	021b      	lsls	r3, r3, #8
+        ((word32)Td4[GETBYTE(t0, 0)]) ^
+    1314:	4073      	eors	r3, r6
+    value = ((value & 0xFF00FF00) >> 8) | ((value & 0x00FF00FF) << 8);
+    1316:	0a07      	lsrs	r7, r0, #8
+    1318:	26ff      	movs	r6, #255	; 0xff
+    131a:	f2c0 06ff 	movt	r6, #255	; 0xff
+    131e:	4037      	ands	r7, r6
+    1320:	0200      	lsls	r0, r0, #8
+    1322:	f64f 7500 	movw	r5, #65280	; 0xff00
+    1326:	f6cf 7500 	movt	r5, #65280	; 0xff00
+    132a:	4028      	ands	r0, r5
+    132c:	4307      	orrs	r7, r0
+        return (x << y) | (x >> (sizeof(y) * 8 - y));
+    132e:	2010      	movs	r0, #16
+    1330:	41c7      	rors	r7, r0
+    s0 = ByteReverseWord32(s0);
+    1332:	9707      	str	r7, [sp, #28]
+    value = ((value & 0xFF00FF00) >> 8) | ((value & 0x00FF00FF) << 8);
+    1334:	0a0f      	lsrs	r7, r1, #8
+    1336:	4037      	ands	r7, r6
+    1338:	0209      	lsls	r1, r1, #8
+    133a:	4029      	ands	r1, r5
+    133c:	4339      	orrs	r1, r7
+        return (x << y) | (x >> (sizeof(y) * 8 - y));
+    133e:	41c1      	rors	r1, r0
+    s1 = ByteReverseWord32(s1);
+    1340:	9106      	str	r1, [sp, #24]
+    value = ((value & 0xFF00FF00) >> 8) | ((value & 0x00FF00FF) << 8);
+    1342:	0a11      	lsrs	r1, r2, #8
+    1344:	4031      	ands	r1, r6
+    1346:	0212      	lsls	r2, r2, #8
+    1348:	402a      	ands	r2, r5
+    134a:	4311      	orrs	r1, r2
+        return (x << y) | (x >> (sizeof(y) * 8 - y));
+    134c:	41c1      	rors	r1, r0
+    s2 = ByteReverseWord32(s2);
+    134e:	9105      	str	r1, [sp, #20]
+    value = ((value & 0xFF00FF00) >> 8) | ((value & 0x00FF00FF) << 8);
+    1350:	0a1a      	lsrs	r2, r3, #8
+    1352:	4032      	ands	r2, r6
+    1354:	021b      	lsls	r3, r3, #8
+    1356:	402b      	ands	r3, r5
+    1358:	4313      	orrs	r3, r2
+        return (x << y) | (x >> (sizeof(y) * 8 - y));
+    135a:	41c3      	rors	r3, r0
+    s3 = ByteReverseWord32(s3);
+    135c:	9304      	str	r3, [sp, #16]
+    XMEMCPY(outBlock,                  &s0, sizeof(s0));
+    135e:	2204      	movs	r2, #4
+    1360:	a907      	add	r1, sp, #28
+    1362:	9c03      	ldr	r4, [sp, #12]
+    1364:	0020      	movs	r0, r4
+    1366:	f641 1589 	movw	r5, #6537	; 0x1989
+    136a:	f2c0 0500 	movt	r5, #0
+    136e:	47a8      	blx	r5
+    XMEMCPY(outBlock + sizeof(s0),     &s1, sizeof(s1));
+    1370:	1d20      	adds	r0, r4, #4
+    1372:	2204      	movs	r2, #4
+    1374:	a906      	add	r1, sp, #24
+    1376:	47a8      	blx	r5
+    XMEMCPY(outBlock + 2 * sizeof(s0), &s2, sizeof(s2));
+    1378:	0020      	movs	r0, r4
+    137a:	3008      	adds	r0, #8
+    137c:	2204      	movs	r2, #4
+    137e:	a905      	add	r1, sp, #20
+    1380:	47a8      	blx	r5
+    XMEMCPY(outBlock + 3 * sizeof(s0), &s3, sizeof(s3));
+    1382:	0020      	movs	r0, r4
+    1384:	300c      	adds	r0, #12
+    1386:	2204      	movs	r2, #4
+    1388:	a904      	add	r1, sp, #16
+    138a:	47a8      	blx	r5
+    138c:	e5ec      	b.n	f68 <wc_AesDecrypt+0x20>
+
+0000138e <wc_AesSetIV>:
+#endif /* wc_AesSetKey block */
+
+
+/* wc_AesSetIV is shared between software and hardware */
+int wc_AesSetIV(Aes* aes, const byte* iv)
+{
+    138e:	b510      	push	{r4, lr}
+    if (aes == NULL)
+    1390:	b198      	cbz	r0, 13ba <wc_AesSetIV+0x2c>
+        return BAD_FUNC_ARG;
+
+    if (iv)
+    1392:	b141      	cbz	r1, 13a6 <wc_AesSetIV+0x18>
+        XMEMCPY(aes->reg, iv, AES_BLOCK_SIZE);
+    1394:	30f8      	adds	r0, #248	; 0xf8
+    1396:	2210      	movs	r2, #16
+    1398:	f641 1389 	movw	r3, #6537	; 0x1989
+    139c:	f2c0 0300 	movt	r3, #0
+    13a0:	4798      	blx	r3
+    else
+        XMEMSET(aes->reg,  0, AES_BLOCK_SIZE);
+
+    return 0;
+    13a2:	2000      	movs	r0, #0
+}
+    13a4:	bd10      	pop	{r4, pc}
+        XMEMSET(aes->reg,  0, AES_BLOCK_SIZE);
+    13a6:	30f8      	adds	r0, #248	; 0xf8
+    13a8:	2210      	movs	r2, #16
+    13aa:	2100      	movs	r1, #0
+    13ac:	f641 139b 	movw	r3, #6555	; 0x199b
+    13b0:	f2c0 0300 	movt	r3, #0
+    13b4:	4798      	blx	r3
+    return 0;
+    13b6:	2000      	movs	r0, #0
+    13b8:	e7f4      	b.n	13a4 <wc_AesSetIV+0x16>
+        return BAD_FUNC_ARG;
+    13ba:	20ad      	movs	r0, #173	; 0xad
+    13bc:	4240      	negs	r0, r0
+    13be:	e7f1      	b.n	13a4 <wc_AesSetIV+0x16>
+
+000013c0 <wc_AesSetKeyLocal>:
+    {
+    13c0:	b5f0      	push	{r4, r5, r6, r7, lr}
+    13c2:	46de      	mov	lr, fp
+    13c4:	4657      	mov	r7, sl
+    13c6:	464e      	mov	r6, r9
+    13c8:	4645      	mov	r5, r8
+    13ca:	b5e0      	push	{r5, r6, r7, lr}
+    13cc:	b085      	sub	sp, #20
+    13ce:	0007      	movs	r7, r0
+    13d0:	0014      	movs	r4, r2
+    13d2:	9302      	str	r3, [sp, #8]
+        word32 *rk = aes->key;
+    13d4:	0005      	movs	r5, r0
+        aes->keylen = keylen;
+    13d6:	23f4      	movs	r3, #244	; 0xf4
+    13d8:	50fa      	str	r2, [r7, r3]
+        aes->rounds = (keylen/4) + 6;
+    13da:	0896      	lsrs	r6, r2, #2
+    13dc:	1db2      	adds	r2, r6, #6
+    13de:	3b04      	subs	r3, #4
+    13e0:	50c2      	str	r2, [r0, r3]
+        XMEMCPY(rk, userKey, keylen);
+    13e2:	0022      	movs	r2, r4
+    13e4:	f641 1389 	movw	r3, #6537	; 0x1989
+    13e8:	f2c0 0300 	movt	r3, #0
+    13ec:	4798      	blx	r3
+WC_STATIC WC_INLINE void ByteReverseWords(word32* out, const word32* in,
+                                    word32 byteCount)
+{
+    word32 count = byteCount/(word32)sizeof(word32), i;
+
+    for (i = 0; i < count; i++)
+    13ee:	b1d6      	cbz	r6, 1426 <wc_AesSetKeyLocal+0x66>
+    13f0:	003a      	movs	r2, r7
+    13f2:	2303      	movs	r3, #3
+    13f4:	0021      	movs	r1, r4
+    13f6:	4399      	bics	r1, r3
+    13f8:	1879      	adds	r1, r7, r1
+    value = ((value & 0xFF00FF00) >> 8) | ((value & 0x00FF00FF) << 8);
+    13fa:	26ff      	movs	r6, #255	; 0xff
+    13fc:	f2c0 06ff 	movt	r6, #255	; 0xff
+    1400:	f64f 7000 	movw	r0, #65280	; 0xff00
+    1404:	f6cf 7000 	movt	r0, #65280	; 0xff00
+        return (x << y) | (x >> (sizeof(y) * 8 - y));
+    1408:	f240 0c10 	movw	ip, #16
+    140c:	46a0      	mov	r8, r4
+        out[i] = ByteReverseWord32(in[i]);
+    140e:	6814      	ldr	r4, [r2, #0]
+    value = ((value & 0xFF00FF00) >> 8) | ((value & 0x00FF00FF) << 8);
+    1410:	0a23      	lsrs	r3, r4, #8
+    1412:	4033      	ands	r3, r6
+    1414:	0224      	lsls	r4, r4, #8
+    1416:	4004      	ands	r4, r0
+    1418:	4323      	orrs	r3, r4
+        return (x << y) | (x >> (sizeof(y) * 8 - y));
+    141a:	4664      	mov	r4, ip
+    141c:	41e3      	rors	r3, r4
+        out[i] = ByteReverseWord32(in[i]);
+    141e:	c208      	stmia	r2!, {r3}
+    for (i = 0; i < count; i++)
+    1420:	428a      	cmp	r2, r1
+    1422:	d1f4      	bne.n	140e <wc_AesSetKeyLocal+0x4e>
+    1424:	4644      	mov	r4, r8
+        switch (keylen) {
+    1426:	2c18      	cmp	r4, #24
+    1428:	d052      	beq.n	14d0 <wc_AesSetKeyLocal+0x110>
+    142a:	2c20      	cmp	r4, #32
+    142c:	d100      	bne.n	1430 <wc_AesSetKeyLocal+0x70>
+    142e:	e0a8      	b.n	1582 <wc_AesSetKeyLocal+0x1c2>
+    1430:	2c10      	cmp	r4, #16
+    1432:	d002      	beq.n	143a <wc_AesSetKeyLocal+0x7a>
+            return BAD_FUNC_ARG;
+    1434:	20ad      	movs	r0, #173	; 0xad
+    1436:	4240      	negs	r0, r0
+    1438:	e12f      	b.n	169a <wc_AesSetKeyLocal+0x2da>
+    143a:	f643 4630 	movw	r6, #15408	; 0x3c30
+    143e:	f2c0 0600 	movt	r6, #0
+    1442:	f240 0990 	movw	r9, #144	; 0x90
+    1446:	44b9      	add	r9, r7
+        switch (keylen) {
+    1448:	0039      	movs	r1, r7
+                    (Te[0][GETBYTE(temp, 0)] & 0x0000ff00) ^
+    144a:	f641 3030 	movw	r0, #6960	; 0x1b30
+    144e:	f2c0 0000 	movt	r0, #0
+    1452:	34ef      	adds	r4, #239	; 0xef
+    1454:	f64f 7800 	movw	r8, #65280	; 0xff00
+                    (Te[3][GETBYTE(temp, 1)] & 0x00ff0000) ^
+    1458:	23ff      	movs	r3, #255	; 0xff
+    145a:	041b      	lsls	r3, r3, #16
+    145c:	469c      	mov	ip, r3
+    145e:	464b      	mov	r3, r9
+    1460:	46a9      	mov	r9, r5
+    1462:	46ba      	mov	sl, r7
+    1464:	9301      	str	r3, [sp, #4]
+                temp  = rk[3];
+    1466:	68ca      	ldr	r2, [r1, #12]
+                    (Te[1][GETBYTE(temp, 3)] & 0x000000ff) ^
+    1468:	ce80      	ldmia	r6!, {r7}
+    146a:	680b      	ldr	r3, [r1, #0]
+    146c:	405f      	eors	r7, r3
+                    (Te[0][GETBYTE(temp, 0)] & 0x0000ff00) ^
+    146e:	0023      	movs	r3, r4
+    1470:	4013      	ands	r3, r2
+    1472:	009b      	lsls	r3, r3, #2
+    1474:	581b      	ldr	r3, [r3, r0]
+    1476:	4645      	mov	r5, r8
+    1478:	402b      	ands	r3, r5
+                    (Te[1][GETBYTE(temp, 3)] & 0x000000ff) ^
+    147a:	407b      	eors	r3, r7
+    147c:	0e17      	lsrs	r7, r2, #24
+    147e:	3701      	adds	r7, #1
+    1480:	37ff      	adds	r7, #255	; 0xff
+    1482:	00bf      	lsls	r7, r7, #2
+    1484:	583f      	ldr	r7, [r7, r0]
+    1486:	4027      	ands	r7, r4
+    1488:	407b      	eors	r3, r7
+                    (Te[2][GETBYTE(temp, 2)] & 0xff000000) ^
+    148a:	0c17      	lsrs	r7, r2, #16
+    148c:	4027      	ands	r7, r4
+    148e:	f240 2b00 	movw	fp, #512	; 0x200
+    1492:	445f      	add	r7, fp
+    1494:	00bf      	lsls	r7, r7, #2
+    1496:	583f      	ldr	r7, [r7, r0]
+    1498:	0e3f      	lsrs	r7, r7, #24
+    149a:	063f      	lsls	r7, r7, #24
+                    (Te[1][GETBYTE(temp, 3)] & 0x000000ff) ^
+    149c:	407b      	eors	r3, r7
+                    (Te[3][GETBYTE(temp, 1)] & 0x00ff0000) ^
+    149e:	0a17      	lsrs	r7, r2, #8
+    14a0:	4027      	ands	r7, r4
+    14a2:	f240 3b00 	movw	fp, #768	; 0x300
+    14a6:	445f      	add	r7, fp
+    14a8:	00bf      	lsls	r7, r7, #2
+    14aa:	583f      	ldr	r7, [r7, r0]
+    14ac:	4665      	mov	r5, ip
+    14ae:	402f      	ands	r7, r5
+                    (Te[1][GETBYTE(temp, 3)] & 0x000000ff) ^
+    14b0:	407b      	eors	r3, r7
+                rk[4] = rk[0] ^
+    14b2:	610b      	str	r3, [r1, #16]
+                rk[5] = rk[1] ^ rk[4];
+    14b4:	684d      	ldr	r5, [r1, #4]
+    14b6:	406b      	eors	r3, r5
+    14b8:	614b      	str	r3, [r1, #20]
+                rk[6] = rk[2] ^ rk[5];
+    14ba:	688d      	ldr	r5, [r1, #8]
+    14bc:	406b      	eors	r3, r5
+    14be:	618b      	str	r3, [r1, #24]
+                rk[7] = rk[3] ^ rk[6];
+    14c0:	4053      	eors	r3, r2
+    14c2:	61cb      	str	r3, [r1, #28]
+                if (++i == 10)
+    14c4:	9b01      	ldr	r3, [sp, #4]
+    14c6:	4299      	cmp	r1, r3
+    14c8:	d100      	bne.n	14cc <wc_AesSetKeyLocal+0x10c>
+    14ca:	e0da      	b.n	1682 <wc_AesSetKeyLocal+0x2c2>
+                rk += 4;
+    14cc:	3110      	adds	r1, #16
+                temp  = rk[3];
+    14ce:	e7ca      	b.n	1466 <wc_AesSetKeyLocal+0xa6>
+    14d0:	f643 4630 	movw	r6, #15408	; 0x3c30
+    14d4:	f2c0 0600 	movt	r6, #0
+    14d8:	f240 09a8 	movw	r9, #168	; 0xa8
+    14dc:	44b9      	add	r9, r7
+        switch (keylen) {
+    14de:	0039      	movs	r1, r7
+                    (Te[0][GETBYTE(temp, 0)] & 0x0000ff00) ^
+    14e0:	f641 3030 	movw	r0, #6960	; 0x1b30
+    14e4:	f2c0 0000 	movt	r0, #0
+    14e8:	24ff      	movs	r4, #255	; 0xff
+    14ea:	f64f 7800 	movw	r8, #65280	; 0xff00
+                    (Te[3][GETBYTE(temp, 1)] & 0x00ff0000) ^
+    14ee:	23ff      	movs	r3, #255	; 0xff
+    14f0:	041b      	lsls	r3, r3, #16
+    14f2:	469c      	mov	ip, r3
+    14f4:	464b      	mov	r3, r9
+    14f6:	9503      	str	r5, [sp, #12]
+    14f8:	46bb      	mov	fp, r7
+    14fa:	9301      	str	r3, [sp, #4]
+                temp = rk[ 5];
+    14fc:	694a      	ldr	r2, [r1, #20]
+                    (Te[1][GETBYTE(temp, 3)] & 0x000000ff) ^
+    14fe:	ce80      	ldmia	r6!, {r7}
+    1500:	680b      	ldr	r3, [r1, #0]
+    1502:	405f      	eors	r7, r3
+                    (Te[0][GETBYTE(temp, 0)] & 0x0000ff00) ^
+    1504:	0023      	movs	r3, r4
+    1506:	4013      	ands	r3, r2
+    1508:	009b      	lsls	r3, r3, #2
+    150a:	581b      	ldr	r3, [r3, r0]
+    150c:	4645      	mov	r5, r8
+    150e:	402b      	ands	r3, r5
+                    (Te[1][GETBYTE(temp, 3)] & 0x000000ff) ^
+    1510:	407b      	eors	r3, r7
+    1512:	0e17      	lsrs	r7, r2, #24
+    1514:	1c7d      	adds	r5, r7, #1
+    1516:	35ff      	adds	r5, #255	; 0xff
+    1518:	00ad      	lsls	r5, r5, #2
+    151a:	582d      	ldr	r5, [r5, r0]
+    151c:	002f      	movs	r7, r5
+    151e:	4027      	ands	r7, r4
+    1520:	407b      	eors	r3, r7
+                    (Te[2][GETBYTE(temp, 2)] & 0xff000000) ^
+    1522:	0c15      	lsrs	r5, r2, #16
+    1524:	002f      	movs	r7, r5
+    1526:	4027      	ands	r7, r4
+    1528:	46ba      	mov	sl, r7
+    152a:	f240 2900 	movw	r9, #512	; 0x200
+    152e:	44ca      	add	sl, r9
+    1530:	4655      	mov	r5, sl
+    1532:	00ad      	lsls	r5, r5, #2
+    1534:	582d      	ldr	r5, [r5, r0]
+    1536:	0e2d      	lsrs	r5, r5, #24
+    1538:	062d      	lsls	r5, r5, #24
+                    (Te[1][GETBYTE(temp, 3)] & 0x000000ff) ^
+    153a:	406b      	eors	r3, r5
+                    (Te[3][GETBYTE(temp, 1)] & 0x00ff0000) ^
+    153c:	0a15      	lsrs	r5, r2, #8
+    153e:	002f      	movs	r7, r5
+    1540:	4027      	ands	r7, r4
+    1542:	46ba      	mov	sl, r7
+    1544:	f240 3900 	movw	r9, #768	; 0x300
+    1548:	44ca      	add	sl, r9
+    154a:	4655      	mov	r5, sl
+    154c:	00ad      	lsls	r5, r5, #2
+    154e:	582d      	ldr	r5, [r5, r0]
+    1550:	002f      	movs	r7, r5
+    1552:	4665      	mov	r5, ip
+    1554:	402f      	ands	r7, r5
+                    (Te[1][GETBYTE(temp, 3)] & 0x000000ff) ^
+    1556:	407b      	eors	r3, r7
+                rk[ 6] = rk[ 0] ^
+    1558:	618b      	str	r3, [r1, #24]
+                rk[ 7] = rk[ 1] ^ rk[ 6];
+    155a:	684d      	ldr	r5, [r1, #4]
+    155c:	406b      	eors	r3, r5
+    155e:	61cb      	str	r3, [r1, #28]
+                rk[ 8] = rk[ 2] ^ rk[ 7];
+    1560:	688d      	ldr	r5, [r1, #8]
+    1562:	406b      	eors	r3, r5
+    1564:	620b      	str	r3, [r1, #32]
+                rk[ 9] = rk[ 3] ^ rk[ 8];
+    1566:	68cd      	ldr	r5, [r1, #12]
+    1568:	406b      	eors	r3, r5
+    156a:	624b      	str	r3, [r1, #36]	; 0x24
+                if (++i == 8)
+    156c:	9d01      	ldr	r5, [sp, #4]
+    156e:	42a9      	cmp	r1, r5
+    1570:	d100      	bne.n	1574 <wc_AesSetKeyLocal+0x1b4>
+    1572:	e099      	b.n	16a8 <wc_AesSetKeyLocal+0x2e8>
+                rk[10] = rk[ 4] ^ rk[ 9];
+    1574:	690d      	ldr	r5, [r1, #16]
+    1576:	406b      	eors	r3, r5
+    1578:	628b      	str	r3, [r1, #40]	; 0x28
+                rk[11] = rk[ 5] ^ rk[10];
+    157a:	4053      	eors	r3, r2
+    157c:	62cb      	str	r3, [r1, #44]	; 0x2c
+                rk += 6;
+    157e:	3118      	adds	r1, #24
+                temp = rk[ 5];
+    1580:	e7bc      	b.n	14fc <wc_AesSetKeyLocal+0x13c>
+    1582:	f643 4830 	movw	r8, #15408	; 0x3c30
+    1586:	f2c0 0800 	movt	r8, #0
+    158a:	f240 0bc0 	movw	fp, #192	; 0xc0
+    158e:	44bb      	add	fp, r7
+        switch (keylen) {
+    1590:	003c      	movs	r4, r7
+                    (Te[0][GETBYTE(temp, 0)] & 0x0000ff00) ^
+    1592:	f641 3630 	movw	r6, #6960	; 0x1b30
+    1596:	f2c0 0600 	movt	r6, #0
+    159a:	f240 0cff 	movw	ip, #255	; 0xff
+    159e:	f64f 7a00 	movw	sl, #65280	; 0xff00
+                    (Te[3][GETBYTE(temp, 1)] & 0x00ff0000) ^
+    15a2:	23ff      	movs	r3, #255	; 0xff
+    15a4:	041b      	lsls	r3, r3, #16
+    15a6:	4699      	mov	r9, r3
+    15a8:	9501      	str	r5, [sp, #4]
+    15aa:	4641      	mov	r1, r8
+    15ac:	4658      	mov	r0, fp
+    15ae:	9703      	str	r7, [sp, #12]
+                temp = rk[ 7];
+    15b0:	69e2      	ldr	r2, [r4, #28]
+                    (Te[0][GETBYTE(temp, 0)] & 0x0000ff00) ^
+    15b2:	4663      	mov	r3, ip
+    15b4:	4013      	ands	r3, r2
+    15b6:	009b      	lsls	r3, r3, #2
+    15b8:	599d      	ldr	r5, [r3, r6]
+    15ba:	4653      	mov	r3, sl
+    15bc:	401d      	ands	r5, r3
+                    (Te[1][GETBYTE(temp, 3)] & 0x000000ff) ^
+    15be:	c908      	ldmia	r1!, {r3}
+    15c0:	6827      	ldr	r7, [r4, #0]
+    15c2:	407b      	eors	r3, r7
+    15c4:	406b      	eors	r3, r5
+    15c6:	0e15      	lsrs	r5, r2, #24
+    15c8:	3501      	adds	r5, #1
+    15ca:	35ff      	adds	r5, #255	; 0xff
+    15cc:	00ad      	lsls	r5, r5, #2
+    15ce:	59ad      	ldr	r5, [r5, r6]
+    15d0:	4667      	mov	r7, ip
+    15d2:	403d      	ands	r5, r7
+    15d4:	406b      	eors	r3, r5
+                    (Te[2][GETBYTE(temp, 2)] & 0xff000000) ^
+    15d6:	0c15      	lsrs	r5, r2, #16
+    15d8:	403d      	ands	r5, r7
+    15da:	f240 2800 	movw	r8, #512	; 0x200
+    15de:	4445      	add	r5, r8
+    15e0:	00ad      	lsls	r5, r5, #2
+    15e2:	59ad      	ldr	r5, [r5, r6]
+    15e4:	0e2d      	lsrs	r5, r5, #24
+    15e6:	062d      	lsls	r5, r5, #24
+                    (Te[1][GETBYTE(temp, 3)] & 0x000000ff) ^
+    15e8:	406b      	eors	r3, r5
+                    (Te[3][GETBYTE(temp, 1)] & 0x00ff0000) ^
+    15ea:	0a15      	lsrs	r5, r2, #8
+    15ec:	403d      	ands	r5, r7
+    15ee:	f240 3800 	movw	r8, #768	; 0x300
+    15f2:	4445      	add	r5, r8
+    15f4:	00ad      	lsls	r5, r5, #2
+    15f6:	59ad      	ldr	r5, [r5, r6]
+    15f8:	464f      	mov	r7, r9
+    15fa:	403d      	ands	r5, r7
+                    (Te[1][GETBYTE(temp, 3)] & 0x000000ff) ^
+    15fc:	406b      	eors	r3, r5
+                rk[ 8] = rk[ 0] ^
+    15fe:	6223      	str	r3, [r4, #32]
+                rk[ 9] = rk[ 1] ^ rk[ 8];
+    1600:	6865      	ldr	r5, [r4, #4]
+    1602:	406b      	eors	r3, r5
+    1604:	6263      	str	r3, [r4, #36]	; 0x24
+                rk[10] = rk[ 2] ^ rk[ 9];
+    1606:	68a5      	ldr	r5, [r4, #8]
+    1608:	406b      	eors	r3, r5
+    160a:	62a3      	str	r3, [r4, #40]	; 0x28
+                rk[11] = rk[ 3] ^ rk[10];
+    160c:	68e5      	ldr	r5, [r4, #12]
+    160e:	406b      	eors	r3, r5
+    1610:	62e3      	str	r3, [r4, #44]	; 0x2c
+                if (++i == 7)
+    1612:	4284      	cmp	r4, r0
+    1614:	d04b      	beq.n	16ae <wc_AesSetKeyLocal+0x2ee>
+                    (Te[3][GETBYTE(temp, 2)] & 0x00ff0000) ^
+    1616:	0c1d      	lsrs	r5, r3, #16
+    1618:	4667      	mov	r7, ip
+    161a:	403d      	ands	r5, r7
+    161c:	4445      	add	r5, r8
+    161e:	00ad      	lsls	r5, r5, #2
+    1620:	59ad      	ldr	r5, [r5, r6]
+    1622:	464f      	mov	r7, r9
+    1624:	402f      	ands	r7, r5
+    1626:	46b8      	mov	r8, r7
+                    (Te[0][GETBYTE(temp, 1)] & 0x0000ff00) ^
+    1628:	0a1d      	lsrs	r5, r3, #8
+    162a:	4667      	mov	r7, ip
+    162c:	403d      	ands	r5, r7
+    162e:	00ad      	lsls	r5, r5, #2
+    1630:	59ad      	ldr	r5, [r5, r6]
+    1632:	4657      	mov	r7, sl
+    1634:	403d      	ands	r5, r7
+    1636:	4647      	mov	r7, r8
+    1638:	432f      	orrs	r7, r5
+    163a:	003d      	movs	r5, r7
+    163c:	6927      	ldr	r7, [r4, #16]
+    163e:	407d      	eors	r5, r7
+    1640:	46a8      	mov	r8, r5
+                    (Te[2][GETBYTE(temp, 3)] & 0xff000000) ^
+    1642:	0e1d      	lsrs	r5, r3, #24
+    1644:	f240 2b00 	movw	fp, #512	; 0x200
+    1648:	44ab      	add	fp, r5
+    164a:	465d      	mov	r5, fp
+    164c:	00ad      	lsls	r5, r5, #2
+    164e:	59ad      	ldr	r5, [r5, r6]
+    1650:	0e2d      	lsrs	r5, r5, #24
+    1652:	062d      	lsls	r5, r5, #24
+    1654:	46ab      	mov	fp, r5
+                    (Te[1][GETBYTE(temp, 0)] & 0x000000ff);
+    1656:	4665      	mov	r5, ip
+    1658:	402b      	ands	r3, r5
+    165a:	3301      	adds	r3, #1
+    165c:	33ff      	adds	r3, #255	; 0xff
+    165e:	009b      	lsls	r3, r3, #2
+    1660:	599b      	ldr	r3, [r3, r6]
+    1662:	402b      	ands	r3, r5
+                    (Te[0][GETBYTE(temp, 1)] & 0x0000ff00) ^
+    1664:	465d      	mov	r5, fp
+    1666:	432b      	orrs	r3, r5
+    1668:	4645      	mov	r5, r8
+    166a:	406b      	eors	r3, r5
+                rk[12] = rk[ 4] ^
+    166c:	6323      	str	r3, [r4, #48]	; 0x30
+                rk[13] = rk[ 5] ^ rk[12];
+    166e:	6965      	ldr	r5, [r4, #20]
+    1670:	406b      	eors	r3, r5
+    1672:	6363      	str	r3, [r4, #52]	; 0x34
+                rk[14] = rk[ 6] ^ rk[13];
+    1674:	69a5      	ldr	r5, [r4, #24]
+    1676:	406b      	eors	r3, r5
+    1678:	63a3      	str	r3, [r4, #56]	; 0x38
+                rk[15] = rk[ 7] ^ rk[14];
+    167a:	405a      	eors	r2, r3
+    167c:	63e2      	str	r2, [r4, #60]	; 0x3c
+                rk += 8;
+    167e:	3420      	adds	r4, #32
+                temp = rk[ 7];
+    1680:	e796      	b.n	15b0 <wc_AesSetKeyLocal+0x1f0>
+    1682:	464d      	mov	r5, r9
+    1684:	4657      	mov	r7, sl
+        if (dir == AES_DECRYPTION) {
+    1686:	9b0e      	ldr	r3, [sp, #56]	; 0x38
+    1688:	2b01      	cmp	r3, #1
+    168a:	d013      	beq.n	16b4 <wc_AesSetKeyLocal+0x2f4>
+        return wc_AesSetIV(aes, iv);
+    168c:	9902      	ldr	r1, [sp, #8]
+    168e:	0038      	movs	r0, r7
+    1690:	f241 338f 	movw	r3, #5007	; 0x138f
+    1694:	f2c0 0300 	movt	r3, #0
+    1698:	4798      	blx	r3
+    }
+    169a:	b005      	add	sp, #20
+    169c:	bc3c      	pop	{r2, r3, r4, r5}
+    169e:	4690      	mov	r8, r2
+    16a0:	4699      	mov	r9, r3
+    16a2:	46a2      	mov	sl, r4
+    16a4:	46ab      	mov	fp, r5
+    16a6:	bdf0      	pop	{r4, r5, r6, r7, pc}
+    16a8:	9d03      	ldr	r5, [sp, #12]
+    16aa:	465f      	mov	r7, fp
+    16ac:	e7eb      	b.n	1686 <wc_AesSetKeyLocal+0x2c6>
+    16ae:	9d01      	ldr	r5, [sp, #4]
+    16b0:	9f03      	ldr	r7, [sp, #12]
+    16b2:	e7e8      	b.n	1686 <wc_AesSetKeyLocal+0x2c6>
+            for (i = 0, j = 4* aes->rounds; i < j; i += 4, j -= 4) {
+    16b4:	33ef      	adds	r3, #239	; 0xef
+    16b6:	58fc      	ldr	r4, [r7, r3]
+    16b8:	00a4      	lsls	r4, r4, #2
+    16ba:	b1cc      	cbz	r4, 16f0 <wc_AesSetKeyLocal+0x330>
+    16bc:	003a      	movs	r2, r7
+    16be:	00a3      	lsls	r3, r4, #2
+    16c0:	18fb      	adds	r3, r7, r3
+    16c2:	2100      	movs	r1, #0
+                temp = rk[i    ]; rk[i    ] = rk[j    ]; rk[j    ] = temp;
+    16c4:	6810      	ldr	r0, [r2, #0]
+    16c6:	681e      	ldr	r6, [r3, #0]
+    16c8:	6016      	str	r6, [r2, #0]
+    16ca:	6018      	str	r0, [r3, #0]
+                temp = rk[i + 1]; rk[i + 1] = rk[j + 1]; rk[j + 1] = temp;
+    16cc:	6850      	ldr	r0, [r2, #4]
+    16ce:	685e      	ldr	r6, [r3, #4]
+    16d0:	6056      	str	r6, [r2, #4]
+    16d2:	6058      	str	r0, [r3, #4]
+                temp = rk[i + 2]; rk[i + 2] = rk[j + 2]; rk[j + 2] = temp;
+    16d4:	6890      	ldr	r0, [r2, #8]
+    16d6:	689e      	ldr	r6, [r3, #8]
+    16d8:	6096      	str	r6, [r2, #8]
+    16da:	6098      	str	r0, [r3, #8]
+                temp = rk[i + 3]; rk[i + 3] = rk[j + 3]; rk[j + 3] = temp;
+    16dc:	68d0      	ldr	r0, [r2, #12]
+    16de:	68de      	ldr	r6, [r3, #12]
+    16e0:	60d6      	str	r6, [r2, #12]
+    16e2:	60d8      	str	r0, [r3, #12]
+            for (i = 0, j = 4* aes->rounds; i < j; i += 4, j -= 4) {
+    16e4:	3104      	adds	r1, #4
+    16e6:	3210      	adds	r2, #16
+    16e8:	3b10      	subs	r3, #16
+    16ea:	1a60      	subs	r0, r4, r1
+    16ec:	4281      	cmp	r1, r0
+    16ee:	d3e9      	bcc.n	16c4 <wc_AesSetKeyLocal+0x304>
+            for (i = 1; i < aes->rounds; i++) {
+    16f0:	23f0      	movs	r3, #240	; 0xf0
+    16f2:	58fb      	ldr	r3, [r7, r3]
+    16f4:	2b01      	cmp	r3, #1
+    16f6:	d9c9      	bls.n	168c <wc_AesSetKeyLocal+0x2cc>
+    16f8:	2601      	movs	r6, #1
+                    Td[0][Te[1][GETBYTE(rk[0], 3)] & 0xff] ^
+    16fa:	f642 3130 	movw	r1, #11056	; 0x2b30
+    16fe:	f2c0 0100 	movt	r1, #0
+    1702:	f641 3230 	movw	r2, #6960	; 0x1b30
+    1706:	f2c0 0200 	movt	r2, #0
+    170a:	23ff      	movs	r3, #255	; 0xff
+            for (i = 1; i < aes->rounds; i++) {
+    170c:	f240 0cf0 	movw	ip, #240	; 0xf0
+    1710:	46ba      	mov	sl, r7
+                rk += 4;
+    1712:	3510      	adds	r5, #16
+                    Td[0][Te[1][GETBYTE(rk[0], 3)] & 0xff] ^
+    1714:	6828      	ldr	r0, [r5, #0]
+    1716:	0e04      	lsrs	r4, r0, #24
+    1718:	3401      	adds	r4, #1
+    171a:	34ff      	adds	r4, #255	; 0xff
+    171c:	00a4      	lsls	r4, r4, #2
+    171e:	58a4      	ldr	r4, [r4, r2]
+    1720:	401c      	ands	r4, r3
+    1722:	00a4      	lsls	r4, r4, #2
+    1724:	46a0      	mov	r8, r4
+                    Td[3][Te[1][GETBYTE(rk[0], 0)] & 0xff];
+    1726:	001c      	movs	r4, r3
+    1728:	4004      	ands	r4, r0
+    172a:	3401      	adds	r4, #1
+    172c:	34ff      	adds	r4, #255	; 0xff
+    172e:	00a4      	lsls	r4, r4, #2
+    1730:	58a4      	ldr	r4, [r4, r2]
+    1732:	401c      	ands	r4, r3
+    1734:	f240 3900 	movw	r9, #768	; 0x300
+    1738:	444c      	add	r4, r9
+    173a:	00a4      	lsls	r4, r4, #2
+                    Td[2][Te[1][GETBYTE(rk[0], 1)] & 0xff] ^
+    173c:	4647      	mov	r7, r8
+    173e:	587f      	ldr	r7, [r7, r1]
+    1740:	5864      	ldr	r4, [r4, r1]
+    1742:	4067      	eors	r7, r4
+                    Td[1][Te[1][GETBYTE(rk[0], 2)] & 0xff] ^
+    1744:	0c04      	lsrs	r4, r0, #16
+    1746:	401c      	ands	r4, r3
+    1748:	3401      	adds	r4, #1
+    174a:	34ff      	adds	r4, #255	; 0xff
+    174c:	00a4      	lsls	r4, r4, #2
+    174e:	58a4      	ldr	r4, [r4, r2]
+    1750:	401c      	ands	r4, r3
+    1752:	3401      	adds	r4, #1
+    1754:	34ff      	adds	r4, #255	; 0xff
+    1756:	00a4      	lsls	r4, r4, #2
+                    Td[2][Te[1][GETBYTE(rk[0], 1)] & 0xff] ^
+    1758:	5864      	ldr	r4, [r4, r1]
+    175a:	407c      	eors	r4, r7
+    175c:	0a00      	lsrs	r0, r0, #8
+    175e:	4018      	ands	r0, r3
+    1760:	3001      	adds	r0, #1
+    1762:	30ff      	adds	r0, #255	; 0xff
+    1764:	0080      	lsls	r0, r0, #2
+    1766:	5880      	ldr	r0, [r0, r2]
+    1768:	4018      	ands	r0, r3
+    176a:	f240 2800 	movw	r8, #512	; 0x200
+    176e:	4440      	add	r0, r8
+    1770:	0080      	lsls	r0, r0, #2
+    1772:	5840      	ldr	r0, [r0, r1]
+    1774:	4044      	eors	r4, r0
+                rk[0] =
+    1776:	602c      	str	r4, [r5, #0]
+                    Td[0][Te[1][GETBYTE(rk[1], 3)] & 0xff] ^
+    1778:	6868      	ldr	r0, [r5, #4]
+    177a:	0e04      	lsrs	r4, r0, #24
+    177c:	3401      	adds	r4, #1
+    177e:	34ff      	adds	r4, #255	; 0xff
+    1780:	00a4      	lsls	r4, r4, #2
+    1782:	58a4      	ldr	r4, [r4, r2]
+    1784:	401c      	ands	r4, r3
+    1786:	00a4      	lsls	r4, r4, #2
+    1788:	46a0      	mov	r8, r4
+                    Td[3][Te[1][GETBYTE(rk[1], 0)] & 0xff];
+    178a:	001c      	movs	r4, r3
+    178c:	4004      	ands	r4, r0
+    178e:	3401      	adds	r4, #1
+    1790:	34ff      	adds	r4, #255	; 0xff
+    1792:	00a4      	lsls	r4, r4, #2
+    1794:	58a4      	ldr	r4, [r4, r2]
+    1796:	401c      	ands	r4, r3
+    1798:	444c      	add	r4, r9
+    179a:	00a4      	lsls	r4, r4, #2
+                    Td[2][Te[1][GETBYTE(rk[1], 1)] & 0xff] ^
+    179c:	4647      	mov	r7, r8
+    179e:	587f      	ldr	r7, [r7, r1]
+    17a0:	5864      	ldr	r4, [r4, r1]
+    17a2:	4067      	eors	r7, r4
+                    Td[1][Te[1][GETBYTE(rk[1], 2)] & 0xff] ^
+    17a4:	0c04      	lsrs	r4, r0, #16
+    17a6:	401c      	ands	r4, r3
+    17a8:	3401      	adds	r4, #1
+    17aa:	34ff      	adds	r4, #255	; 0xff
+    17ac:	00a4      	lsls	r4, r4, #2
+    17ae:	58a4      	ldr	r4, [r4, r2]
+    17b0:	401c      	ands	r4, r3
+    17b2:	3401      	adds	r4, #1
+    17b4:	34ff      	adds	r4, #255	; 0xff
+    17b6:	00a4      	lsls	r4, r4, #2
+                    Td[2][Te[1][GETBYTE(rk[1], 1)] & 0xff] ^
+    17b8:	5864      	ldr	r4, [r4, r1]
+    17ba:	407c      	eors	r4, r7
+    17bc:	0a00      	lsrs	r0, r0, #8
+    17be:	4018      	ands	r0, r3
+    17c0:	3001      	adds	r0, #1
+    17c2:	30ff      	adds	r0, #255	; 0xff
+    17c4:	0080      	lsls	r0, r0, #2
+    17c6:	5880      	ldr	r0, [r0, r2]
+    17c8:	4018      	ands	r0, r3
+    17ca:	f240 2800 	movw	r8, #512	; 0x200
+    17ce:	4440      	add	r0, r8
+    17d0:	0080      	lsls	r0, r0, #2
+    17d2:	5840      	ldr	r0, [r0, r1]
+    17d4:	4044      	eors	r4, r0
+                rk[1] =
+    17d6:	606c      	str	r4, [r5, #4]
+                    Td[0][Te[1][GETBYTE(rk[2], 3)] & 0xff] ^
+    17d8:	68a8      	ldr	r0, [r5, #8]
+    17da:	0e04      	lsrs	r4, r0, #24
+    17dc:	3401      	adds	r4, #1
+    17de:	34ff      	adds	r4, #255	; 0xff
+    17e0:	00a4      	lsls	r4, r4, #2
+    17e2:	58a4      	ldr	r4, [r4, r2]
+    17e4:	401c      	ands	r4, r3
+    17e6:	00a4      	lsls	r4, r4, #2
+    17e8:	46a0      	mov	r8, r4
+                    Td[3][Te[1][GETBYTE(rk[2], 0)] & 0xff];
+    17ea:	001c      	movs	r4, r3
+    17ec:	4004      	ands	r4, r0
+    17ee:	3401      	adds	r4, #1
+    17f0:	34ff      	adds	r4, #255	; 0xff
+    17f2:	00a4      	lsls	r4, r4, #2
+    17f4:	58a4      	ldr	r4, [r4, r2]
+    17f6:	401c      	ands	r4, r3
+    17f8:	444c      	add	r4, r9
+    17fa:	00a4      	lsls	r4, r4, #2
+                    Td[2][Te[1][GETBYTE(rk[2], 1)] & 0xff] ^
+    17fc:	4647      	mov	r7, r8
+    17fe:	587f      	ldr	r7, [r7, r1]
+    1800:	5864      	ldr	r4, [r4, r1]
+    1802:	4067      	eors	r7, r4
+                    Td[1][Te[1][GETBYTE(rk[2], 2)] & 0xff] ^
+    1804:	0c04      	lsrs	r4, r0, #16
+    1806:	401c      	ands	r4, r3
+    1808:	3401      	adds	r4, #1
+    180a:	34ff      	adds	r4, #255	; 0xff
+    180c:	00a4      	lsls	r4, r4, #2
+    180e:	58a4      	ldr	r4, [r4, r2]
+    1810:	401c      	ands	r4, r3
+    1812:	3401      	adds	r4, #1
+    1814:	34ff      	adds	r4, #255	; 0xff
+    1816:	00a4      	lsls	r4, r4, #2
+                    Td[2][Te[1][GETBYTE(rk[2], 1)] & 0xff] ^
+    1818:	5864      	ldr	r4, [r4, r1]
+    181a:	407c      	eors	r4, r7
+    181c:	0a00      	lsrs	r0, r0, #8
+    181e:	4018      	ands	r0, r3
+    1820:	3001      	adds	r0, #1
+    1822:	30ff      	adds	r0, #255	; 0xff
+    1824:	0080      	lsls	r0, r0, #2
+    1826:	5880      	ldr	r0, [r0, r2]
+    1828:	4018      	ands	r0, r3
+    182a:	f240 2800 	movw	r8, #512	; 0x200
+    182e:	4440      	add	r0, r8
+    1830:	0080      	lsls	r0, r0, #2
+    1832:	5840      	ldr	r0, [r0, r1]
+    1834:	4044      	eors	r4, r0
+                rk[2] =
+    1836:	60ac      	str	r4, [r5, #8]
+                    Td[0][Te[1][GETBYTE(rk[3], 3)] & 0xff] ^
+    1838:	68e8      	ldr	r0, [r5, #12]
+    183a:	0e04      	lsrs	r4, r0, #24
+    183c:	3401      	adds	r4, #1
+    183e:	34ff      	adds	r4, #255	; 0xff
+    1840:	00a4      	lsls	r4, r4, #2
+    1842:	58a4      	ldr	r4, [r4, r2]
+    1844:	401c      	ands	r4, r3
+    1846:	00a4      	lsls	r4, r4, #2
+    1848:	46a0      	mov	r8, r4
+                    Td[3][Te[1][GETBYTE(rk[3], 0)] & 0xff];
+    184a:	001c      	movs	r4, r3
+    184c:	4004      	ands	r4, r0
+    184e:	3401      	adds	r4, #1
+    1850:	34ff      	adds	r4, #255	; 0xff
+    1852:	00a4      	lsls	r4, r4, #2
+    1854:	58a4      	ldr	r4, [r4, r2]
+    1856:	401c      	ands	r4, r3
+    1858:	444c      	add	r4, r9
+    185a:	00a4      	lsls	r4, r4, #2
+                    Td[2][Te[1][GETBYTE(rk[3], 1)] & 0xff] ^
+    185c:	4647      	mov	r7, r8
+    185e:	587f      	ldr	r7, [r7, r1]
+    1860:	5864      	ldr	r4, [r4, r1]
+    1862:	4067      	eors	r7, r4
+                    Td[1][Te[1][GETBYTE(rk[3], 2)] & 0xff] ^
+    1864:	0c04      	lsrs	r4, r0, #16
+    1866:	401c      	ands	r4, r3
+    1868:	3401      	adds	r4, #1
+    186a:	34ff      	adds	r4, #255	; 0xff
+    186c:	00a4      	lsls	r4, r4, #2
+    186e:	58a4      	ldr	r4, [r4, r2]
+    1870:	401c      	ands	r4, r3
+    1872:	3401      	adds	r4, #1
+    1874:	34ff      	adds	r4, #255	; 0xff
+    1876:	00a4      	lsls	r4, r4, #2
+                    Td[2][Te[1][GETBYTE(rk[3], 1)] & 0xff] ^
+    1878:	5864      	ldr	r4, [r4, r1]
+    187a:	407c      	eors	r4, r7
+    187c:	0a00      	lsrs	r0, r0, #8
+    187e:	4018      	ands	r0, r3
+    1880:	3001      	adds	r0, #1
+    1882:	30ff      	adds	r0, #255	; 0xff
+    1884:	0080      	lsls	r0, r0, #2
+    1886:	5880      	ldr	r0, [r0, r2]
+    1888:	4018      	ands	r0, r3
+    188a:	f240 2800 	movw	r8, #512	; 0x200
+    188e:	4440      	add	r0, r8
+    1890:	0080      	lsls	r0, r0, #2
+    1892:	5840      	ldr	r0, [r0, r1]
+    1894:	4044      	eors	r4, r0
+                rk[3] =
+    1896:	60ec      	str	r4, [r5, #12]
+            for (i = 1; i < aes->rounds; i++) {
+    1898:	3601      	adds	r6, #1
+    189a:	4660      	mov	r0, ip
+    189c:	4654      	mov	r4, sl
+    189e:	5820      	ldr	r0, [r4, r0]
+    18a0:	42b0      	cmp	r0, r6
+    18a2:	d900      	bls.n	18a6 <wc_AesSetKeyLocal+0x4e6>
+    18a4:	e735      	b.n	1712 <wc_AesSetKeyLocal+0x352>
+    18a6:	4657      	mov	r7, sl
+    18a8:	e6f0      	b.n	168c <wc_AesSetKeyLocal+0x2cc>
+
+000018aa <wc_AesSetKey>:
+    {
+    18aa:	b530      	push	{r4, r5, lr}
+    18ac:	b083      	sub	sp, #12
+        if (aes == NULL ||
+    18ae:	b1a8      	cbz	r0, 18dc <wc_AesSetKey+0x32>
+    18b0:	2408      	movs	r4, #8
+    18b2:	0015      	movs	r5, r2
+    18b4:	43a5      	bics	r5, r4
+    18b6:	2d10      	cmp	r5, #16
+    18b8:	d001      	beq.n	18be <wc_AesSetKey+0x14>
+                !((keylen == 16) || (keylen == 24) || (keylen == 32))) {
+    18ba:	2a20      	cmp	r2, #32
+    18bc:	d111      	bne.n	18e2 <wc_AesSetKey+0x38>
+        aes->keylen = keylen;
+    18be:	24f4      	movs	r4, #244	; 0xf4
+    18c0:	5102      	str	r2, [r0, r4]
+        aes->rounds = keylen/4 + 6;
+    18c2:	0894      	lsrs	r4, r2, #2
+    18c4:	3406      	adds	r4, #6
+    18c6:	25f0      	movs	r5, #240	; 0xf0
+    18c8:	5144      	str	r4, [r0, r5]
+        ret = wc_AesSetKeyLocal(aes, userKey, keylen, iv, dir);
+    18ca:	9c06      	ldr	r4, [sp, #24]
+    18cc:	9400      	str	r4, [sp, #0]
+    18ce:	f241 34c1 	movw	r4, #5057	; 0x13c1
+    18d2:	f2c0 0400 	movt	r4, #0
+    18d6:	47a0      	blx	r4
+    }
+    18d8:	b003      	add	sp, #12
+    18da:	bd30      	pop	{r4, r5, pc}
+            return BAD_FUNC_ARG;
+    18dc:	20ad      	movs	r0, #173	; 0xad
+    18de:	4240      	negs	r0, r0
+    18e0:	e7fa      	b.n	18d8 <wc_AesSetKey+0x2e>
+    18e2:	20ad      	movs	r0, #173	; 0xad
+    18e4:	4240      	negs	r0, r0
+    18e6:	e7f7      	b.n	18d8 <wc_AesSetKey+0x2e>
+
+000018e8 <wc_AesEncryptDirect>:
+        #endif /* HAVE_AES_DECRYPT */
+
+    #else
+        /* Allow direct access to one block encrypt */
+        void wc_AesEncryptDirect(Aes* aes, byte* out, const byte* in)
+        {
+    18e8:	b510      	push	{r4, lr}
+    18ea:	0013      	movs	r3, r2
+            wc_AesEncrypt(aes, in, out);
+    18ec:	000a      	movs	r2, r1
+    18ee:	0019      	movs	r1, r3
+    18f0:	f640 2333 	movw	r3, #2611	; 0xa33
+    18f4:	f2c0 0300 	movt	r3, #0
+    18f8:	4798      	blx	r3
+        }
+    18fa:	bd10      	pop	{r4, pc}
+
+000018fc <wc_AesDecryptDirect>:
+        #ifdef HAVE_AES_DECRYPT
+        /* Allow direct access to one block decrypt */
+        void wc_AesDecryptDirect(Aes* aes, byte* out, const byte* in)
+        {
+    18fc:	b510      	push	{r4, lr}
+    18fe:	0013      	movs	r3, r2
+            wc_AesDecrypt(aes, in, out);
+    1900:	000a      	movs	r2, r1
+    1902:	0019      	movs	r1, r3
+    1904:	f640 7349 	movw	r3, #3913	; 0xf49
+    1908:	f2c0 0300 	movt	r3, #0
+    190c:	4798      	blx	r3
+        }
+    190e:	bd10      	pop	{r4, pc}
+
+00001910 <__libc_init_array>:
+    1910:	b570      	push	{r4, r5, r6, lr}
+    1912:	2500      	movs	r5, #0
+    1914:	4b0e      	ldr	r3, [pc, #56]	; (1950 <__libc_init_array+0x40>)
+    1916:	4c0f      	ldr	r4, [pc, #60]	; (1954 <__libc_init_array+0x44>)
+    1918:	1ae4      	subs	r4, r4, r3
+    191a:	10a4      	asrs	r4, r4, #2
+    191c:	42a5      	cmp	r5, r4
+    191e:	d109      	bne.n	1934 <__libc_init_array+0x24>
+    1920:	2500      	movs	r5, #0
+    1922:	f002 f9c9 	bl	3cb8 <_init>
+    1926:	4c0c      	ldr	r4, [pc, #48]	; (1958 <__libc_init_array+0x48>)
+    1928:	4b0c      	ldr	r3, [pc, #48]	; (195c <__libc_init_array+0x4c>)
+    192a:	1ae4      	subs	r4, r4, r3
+    192c:	10a4      	asrs	r4, r4, #2
+    192e:	42a5      	cmp	r5, r4
+    1930:	d107      	bne.n	1942 <__libc_init_array+0x32>
+    1932:	bd70      	pop	{r4, r5, r6, pc}
+    1934:	4a06      	ldr	r2, [pc, #24]	; (1950 <__libc_init_array+0x40>)
+    1936:	00ab      	lsls	r3, r5, #2
+    1938:	189b      	adds	r3, r3, r2
+    193a:	681b      	ldr	r3, [r3, #0]
+    193c:	4798      	blx	r3
+    193e:	3501      	adds	r5, #1
+    1940:	e7ec      	b.n	191c <__libc_init_array+0xc>
+    1942:	4a06      	ldr	r2, [pc, #24]	; (195c <__libc_init_array+0x4c>)
+    1944:	00ab      	lsls	r3, r5, #2
+    1946:	189b      	adds	r3, r3, r2
+    1948:	681b      	ldr	r3, [r3, #0]
+    194a:	4798      	blx	r3
+    194c:	3501      	adds	r5, #1
+    194e:	e7ee      	b.n	192e <__libc_init_array+0x1e>
+    1950:	00003cc4 	.word	0x00003cc4
+    1954:	00003cc4 	.word	0x00003cc4
+    1958:	00003cc8 	.word	0x00003cc8
+    195c:	00003cc4 	.word	0x00003cc4
+
+00001960 <malloc>:
+    1960:	b510      	push	{r4, lr}
+    1962:	4b03      	ldr	r3, [pc, #12]	; (1970 <malloc+0x10>)
+    1964:	0001      	movs	r1, r0
+    1966:	6818      	ldr	r0, [r3, #0]
+    1968:	f000 f86a 	bl	1a40 <_malloc_r>
+    196c:	bd10      	pop	{r4, pc}
+    196e:	46c0      	nop			; (mov r8, r8)
+    1970:	20000010 	.word	0x20000010
+
+00001974 <free>:
+    1974:	b510      	push	{r4, lr}
+    1976:	4b03      	ldr	r3, [pc, #12]	; (1984 <free+0x10>)
+    1978:	0001      	movs	r1, r0
+    197a:	6818      	ldr	r0, [r3, #0]
+    197c:	f000 f816 	bl	19ac <_free_r>
+    1980:	bd10      	pop	{r4, pc}
+    1982:	46c0      	nop			; (mov r8, r8)
+    1984:	20000010 	.word	0x20000010
+
+00001988 <memcpy>:
+    1988:	2300      	movs	r3, #0
+    198a:	b510      	push	{r4, lr}
+    198c:	429a      	cmp	r2, r3
+    198e:	d100      	bne.n	1992 <memcpy+0xa>
+    1990:	bd10      	pop	{r4, pc}
+    1992:	5ccc      	ldrb	r4, [r1, r3]
+    1994:	54c4      	strb	r4, [r0, r3]
+    1996:	3301      	adds	r3, #1
+    1998:	e7f8      	b.n	198c <memcpy+0x4>
+
+0000199a <memset>:
+    199a:	0003      	movs	r3, r0
+    199c:	1882      	adds	r2, r0, r2
+    199e:	4293      	cmp	r3, r2
+    19a0:	d100      	bne.n	19a4 <memset+0xa>
+    19a2:	4770      	bx	lr
+    19a4:	7019      	strb	r1, [r3, #0]
+    19a6:	3301      	adds	r3, #1
+    19a8:	e7f9      	b.n	199e <memset+0x4>
+	...
+
+000019ac <_free_r>:
+    19ac:	b570      	push	{r4, r5, r6, lr}
+    19ae:	0005      	movs	r5, r0
+    19b0:	b181      	cbz	r1, 19d4 <_free_r+0x28>
+    19b2:	1f0c      	subs	r4, r1, #4
+    19b4:	6823      	ldr	r3, [r4, #0]
+    19b6:	2b00      	cmp	r3, #0
+    19b8:	da00      	bge.n	19bc <_free_r+0x10>
+    19ba:	18e4      	adds	r4, r4, r3
+    19bc:	0028      	movs	r0, r5
+    19be:	f000 f8ad 	bl	1b1c <__malloc_lock>
+    19c2:	4a1e      	ldr	r2, [pc, #120]	; (1a3c <_free_r+0x90>)
+    19c4:	6813      	ldr	r3, [r2, #0]
+    19c6:	0011      	movs	r1, r2
+    19c8:	b92b      	cbnz	r3, 19d6 <_free_r+0x2a>
+    19ca:	6063      	str	r3, [r4, #4]
+    19cc:	6014      	str	r4, [r2, #0]
+    19ce:	0028      	movs	r0, r5
+    19d0:	f000 f8a5 	bl	1b1e <__malloc_unlock>
+    19d4:	bd70      	pop	{r4, r5, r6, pc}
+    19d6:	42a3      	cmp	r3, r4
+    19d8:	d90b      	bls.n	19f2 <_free_r+0x46>
+    19da:	6822      	ldr	r2, [r4, #0]
+    19dc:	18a0      	adds	r0, r4, r2
+    19de:	4283      	cmp	r3, r0
+    19e0:	d103      	bne.n	19ea <_free_r+0x3e>
+    19e2:	6818      	ldr	r0, [r3, #0]
+    19e4:	685b      	ldr	r3, [r3, #4]
+    19e6:	1882      	adds	r2, r0, r2
+    19e8:	6022      	str	r2, [r4, #0]
+    19ea:	6063      	str	r3, [r4, #4]
+    19ec:	600c      	str	r4, [r1, #0]
+    19ee:	e7ee      	b.n	19ce <_free_r+0x22>
+    19f0:	0013      	movs	r3, r2
+    19f2:	685a      	ldr	r2, [r3, #4]
+    19f4:	b10a      	cbz	r2, 19fa <_free_r+0x4e>
+    19f6:	42a2      	cmp	r2, r4
+    19f8:	d9fa      	bls.n	19f0 <_free_r+0x44>
+    19fa:	6819      	ldr	r1, [r3, #0]
+    19fc:	1858      	adds	r0, r3, r1
+    19fe:	42a0      	cmp	r0, r4
+    1a00:	d10b      	bne.n	1a1a <_free_r+0x6e>
+    1a02:	6820      	ldr	r0, [r4, #0]
+    1a04:	1809      	adds	r1, r1, r0
+    1a06:	1858      	adds	r0, r3, r1
+    1a08:	6019      	str	r1, [r3, #0]
+    1a0a:	4282      	cmp	r2, r0
+    1a0c:	d1df      	bne.n	19ce <_free_r+0x22>
+    1a0e:	6810      	ldr	r0, [r2, #0]
+    1a10:	6852      	ldr	r2, [r2, #4]
+    1a12:	1841      	adds	r1, r0, r1
+    1a14:	6019      	str	r1, [r3, #0]
+    1a16:	605a      	str	r2, [r3, #4]
+    1a18:	e7d9      	b.n	19ce <_free_r+0x22>
+    1a1a:	42a0      	cmp	r0, r4
+    1a1c:	d902      	bls.n	1a24 <_free_r+0x78>
+    1a1e:	230c      	movs	r3, #12
+    1a20:	602b      	str	r3, [r5, #0]
+    1a22:	e7d4      	b.n	19ce <_free_r+0x22>
+    1a24:	6821      	ldr	r1, [r4, #0]
+    1a26:	1860      	adds	r0, r4, r1
+    1a28:	4282      	cmp	r2, r0
+    1a2a:	d103      	bne.n	1a34 <_free_r+0x88>
+    1a2c:	6810      	ldr	r0, [r2, #0]
+    1a2e:	6852      	ldr	r2, [r2, #4]
+    1a30:	1841      	adds	r1, r0, r1
+    1a32:	6021      	str	r1, [r4, #0]
+    1a34:	6062      	str	r2, [r4, #4]
+    1a36:	605c      	str	r4, [r3, #4]
+    1a38:	e7c9      	b.n	19ce <_free_r+0x22>
+    1a3a:	46c0      	nop			; (mov r8, r8)
+    1a3c:	20000098 	.word	0x20000098
+
+00001a40 <_malloc_r>:
+    1a40:	2303      	movs	r3, #3
+    1a42:	b570      	push	{r4, r5, r6, lr}
+    1a44:	1ccd      	adds	r5, r1, #3
+    1a46:	439d      	bics	r5, r3
+    1a48:	3508      	adds	r5, #8
+    1a4a:	0006      	movs	r6, r0
+    1a4c:	2d0c      	cmp	r5, #12
+    1a4e:	d21c      	bcs.n	1a8a <_malloc_r+0x4a>
+    1a50:	250c      	movs	r5, #12
+    1a52:	42a9      	cmp	r1, r5
+    1a54:	d81b      	bhi.n	1a8e <_malloc_r+0x4e>
+    1a56:	0030      	movs	r0, r6
+    1a58:	f000 f860 	bl	1b1c <__malloc_lock>
+    1a5c:	4a25      	ldr	r2, [pc, #148]	; (1af4 <_malloc_r+0xb4>)
+    1a5e:	6814      	ldr	r4, [r2, #0]
+    1a60:	0021      	movs	r1, r4
+    1a62:	b9c1      	cbnz	r1, 1a96 <_malloc_r+0x56>
+    1a64:	4c24      	ldr	r4, [pc, #144]	; (1af8 <_malloc_r+0xb8>)
+    1a66:	6823      	ldr	r3, [r4, #0]
+    1a68:	b91b      	cbnz	r3, 1a72 <_malloc_r+0x32>
+    1a6a:	0030      	movs	r0, r6
+    1a6c:	f000 f846 	bl	1afc <_sbrk_r>
+    1a70:	6020      	str	r0, [r4, #0]
+    1a72:	0029      	movs	r1, r5
+    1a74:	0030      	movs	r0, r6
+    1a76:	f000 f841 	bl	1afc <_sbrk_r>
+    1a7a:	1c43      	adds	r3, r0, #1
+    1a7c:	d12d      	bne.n	1ada <_malloc_r+0x9a>
+    1a7e:	230c      	movs	r3, #12
+    1a80:	0030      	movs	r0, r6
+    1a82:	6033      	str	r3, [r6, #0]
+    1a84:	f000 f84b 	bl	1b1e <__malloc_unlock>
+    1a88:	e003      	b.n	1a92 <_malloc_r+0x52>
+    1a8a:	2d00      	cmp	r5, #0
+    1a8c:	dae1      	bge.n	1a52 <_malloc_r+0x12>
+    1a8e:	230c      	movs	r3, #12
+    1a90:	6033      	str	r3, [r6, #0]
+    1a92:	2000      	movs	r0, #0
+    1a94:	bd70      	pop	{r4, r5, r6, pc}
+    1a96:	680b      	ldr	r3, [r1, #0]
+    1a98:	1b5b      	subs	r3, r3, r5
+    1a9a:	d41b      	bmi.n	1ad4 <_malloc_r+0x94>
+    1a9c:	2b0b      	cmp	r3, #11
+    1a9e:	d903      	bls.n	1aa8 <_malloc_r+0x68>
+    1aa0:	600b      	str	r3, [r1, #0]
+    1aa2:	18cc      	adds	r4, r1, r3
+    1aa4:	6025      	str	r5, [r4, #0]
+    1aa6:	e003      	b.n	1ab0 <_malloc_r+0x70>
+    1aa8:	428c      	cmp	r4, r1
+    1aaa:	d10f      	bne.n	1acc <_malloc_r+0x8c>
+    1aac:	6863      	ldr	r3, [r4, #4]
+    1aae:	6013      	str	r3, [r2, #0]
+    1ab0:	0030      	movs	r0, r6
+    1ab2:	f000 f834 	bl	1b1e <__malloc_unlock>
+    1ab6:	0020      	movs	r0, r4
+    1ab8:	2207      	movs	r2, #7
+    1aba:	300b      	adds	r0, #11
+    1abc:	1d23      	adds	r3, r4, #4
+    1abe:	4390      	bics	r0, r2
+    1ac0:	1ac3      	subs	r3, r0, r3
+    1ac2:	2b00      	cmp	r3, #0
+    1ac4:	d0e6      	beq.n	1a94 <_malloc_r+0x54>
+    1ac6:	425a      	negs	r2, r3
+    1ac8:	50e2      	str	r2, [r4, r3]
+    1aca:	e7e3      	b.n	1a94 <_malloc_r+0x54>
+    1acc:	684b      	ldr	r3, [r1, #4]
+    1ace:	6063      	str	r3, [r4, #4]
+    1ad0:	000c      	movs	r4, r1
+    1ad2:	e7ed      	b.n	1ab0 <_malloc_r+0x70>
+    1ad4:	000c      	movs	r4, r1
+    1ad6:	6849      	ldr	r1, [r1, #4]
+    1ad8:	e7c3      	b.n	1a62 <_malloc_r+0x22>
+    1ada:	2303      	movs	r3, #3
+    1adc:	1cc4      	adds	r4, r0, #3
+    1ade:	439c      	bics	r4, r3
+    1ae0:	42a0      	cmp	r0, r4
+    1ae2:	d0df      	beq.n	1aa4 <_malloc_r+0x64>
+    1ae4:	1a21      	subs	r1, r4, r0
+    1ae6:	0030      	movs	r0, r6
+    1ae8:	f000 f808 	bl	1afc <_sbrk_r>
+    1aec:	1c43      	adds	r3, r0, #1
+    1aee:	d1d9      	bne.n	1aa4 <_malloc_r+0x64>
+    1af0:	e7c5      	b.n	1a7e <_malloc_r+0x3e>
+    1af2:	46c0      	nop			; (mov r8, r8)
+    1af4:	20000098 	.word	0x20000098
+    1af8:	2000009c 	.word	0x2000009c
+
+00001afc <_sbrk_r>:
+    1afc:	2300      	movs	r3, #0
+    1afe:	b570      	push	{r4, r5, r6, lr}
+    1b00:	4c05      	ldr	r4, [pc, #20]	; (1b18 <_sbrk_r+0x1c>)
+    1b02:	0005      	movs	r5, r0
+    1b04:	0008      	movs	r0, r1
+    1b06:	6023      	str	r3, [r4, #0]
+    1b08:	f7fe fcb3 	bl	472 <_sbrk>
+    1b0c:	1c43      	adds	r3, r0, #1
+    1b0e:	d102      	bne.n	1b16 <_sbrk_r+0x1a>
+    1b10:	6823      	ldr	r3, [r4, #0]
+    1b12:	b103      	cbz	r3, 1b16 <_sbrk_r+0x1a>
+    1b14:	602b      	str	r3, [r5, #0]
+    1b16:	bd70      	pop	{r4, r5, r6, pc}
+    1b18:	200000a0 	.word	0x200000a0
+
+00001b1c <__malloc_lock>:
+    1b1c:	4770      	bx	lr
+
+00001b1e <__malloc_unlock>:
+    1b1e:	4770      	bx	lr
+    1b20:	10eb3d60 	.word	0x10eb3d60
+    1b24:	be71ca15 	.word	0xbe71ca15
+    1b28:	f0ae732b 	.word	0xf0ae732b
+    1b2c:	81777d85 	.word	0x81777d85
+
+00001b30 <Te>:
+    1b30:	c66363a5 f87c7c84 ee777799 f67b7b8d     .cc..||..ww..{{.
+    1b40:	fff2f20d d66b6bbd de6f6fb1 91c5c554     .....kk..oo.T...
+    1b50:	60303050 02010103 ce6767a9 562b2b7d     P00`.....gg.}++V
+    1b60:	e7fefe19 b5d7d762 4dababe6 ec76769a     ....b......M.vv.
+    1b70:	8fcaca45 1f82829d 89c9c940 fa7d7d87     E.......@....}}.
+    1b80:	effafa15 b25959eb 8e4747c9 fbf0f00b     .....YY..GG.....
+    1b90:	41adadec b3d4d467 5fa2a2fd 45afafea     ...Ag......_...E
+    1ba0:	239c9cbf 53a4a4f7 e4727296 9bc0c05b     ...#...S.rr.[...
+    1bb0:	75b7b7c2 e1fdfd1c 3d9393ae 4c26266a     ...u.......=j&&L
+    1bc0:	6c36365a 7e3f3f41 f5f7f702 83cccc4f     Z66lA??~....O...
+    1bd0:	6834345c 51a5a5f4 d1e5e534 f9f1f108     \44h...Q4.......
+    1be0:	e2717193 abd8d873 62313153 2a15153f     .qq.s...S11b?..*
+    1bf0:	0804040c 95c7c752 46232365 9dc3c35e     ....R...e##F^...
+    1c00:	30181828 379696a1 0a05050f 2f9a9ab5     (..0...7......./
+    1c10:	0e070709 24121236 1b80809b dfe2e23d     ....6..$....=...
+    1c20:	cdebeb26 4e272769 7fb2b2cd ea75759f     &...i''N.....uu.
+    1c30:	1209091b 1d83839e 582c2c74 341a1a2e     ........t,,X...4
+    1c40:	361b1b2d dc6e6eb2 b45a5aee 5ba0a0fb     -..6.nn..ZZ....[
+    1c50:	a45252f6 763b3b4d b7d6d661 7db3b3ce     .RR.M;;va......}
+    1c60:	5229297b dde3e33e 5e2f2f71 13848497     {))R>...q//^....
+    1c70:	a65353f5 b9d1d168 00000000 c1eded2c     .SS.h.......,...
+    1c80:	40202060 e3fcfc1f 79b1b1c8 b65b5bed     `  @.......y.[[.
+    1c90:	d46a6abe 8dcbcb46 67bebed9 7239394b     .jj.F......gK99r
+    1ca0:	944a4ade 984c4cd4 b05858e8 85cfcf4a     .JJ..LL..XX.J...
+    1cb0:	bbd0d06b c5efef2a 4faaaae5 edfbfb16     k...*......O....
+    1cc0:	864343c5 9a4d4dd7 66333355 11858594     .CC..MM.U33f....
+    1cd0:	8a4545cf e9f9f910 04020206 fe7f7f81     .EE.............
+    1ce0:	a05050f0 783c3c44 259f9fba 4ba8a8e3     .PP.D<<x...%...K
+    1cf0:	a25151f3 5da3a3fe 804040c0 058f8f8a     .QQ....].@@.....
+    1d00:	3f9292ad 219d9dbc 70383848 f1f5f504     ...?...!H88p....
+    1d10:	63bcbcdf 77b6b6c1 afdada75 42212163     ...c...wu...c!!B
+    1d20:	20101030 e5ffff1a fdf3f30e bfd2d26d     0.. ........m...
+    1d30:	81cdcd4c 180c0c14 26131335 c3ecec2f     L.......5..&/...
+    1d40:	be5f5fe1 359797a2 884444cc 2e171739     .__....5.DD.9...
+    1d50:	93c4c457 55a7a7f2 fc7e7e82 7a3d3d47     W......U.~~.G==z
+    1d60:	c86464ac ba5d5de7 3219192b e6737395     .dd..]].+..2.ss.
+    1d70:	c06060a0 19818198 9e4f4fd1 a3dcdc7f     .``......OO.....
+    1d80:	44222266 542a2a7e 3b9090ab 0b888883     f""D~**T...;....
+    1d90:	8c4646ca c7eeee29 6bb8b8d3 2814143c     .FF.)......k<..(
+    1da0:	a7dede79 bc5e5ee2 160b0b1d addbdb76     y....^^.....v...
+    1db0:	dbe0e03b 64323256 743a3a4e 140a0a1e     ;...V22dN::t....
+    1dc0:	924949db 0c06060a 4824246c b85c5ce4     .II.....l$$H.\\.
+    1dd0:	9fc2c25d bdd3d36e 43acacef c46262a6     ]...n......C.bb.
+    1de0:	399191a8 319595a4 d3e4e437 f279798b     ...9...17....yy.
+    1df0:	d5e7e732 8bc8c843 6e373759 da6d6db7     2...C...Y77n.mm.
+    1e00:	018d8d8c b1d5d564 9c4e4ed2 49a9a9e0     ....d....NN....I
+    1e10:	d86c6cb4 ac5656fa f3f4f407 cfeaea25     .ll..VV.....%...
+    1e20:	ca6565af f47a7a8e 47aeaee9 10080818     .ee..zz....G....
+    1e30:	6fbabad5 f0787888 4a25256f 5c2e2e72     ...o.xx.o%%Jr..\
+    1e40:	381c1c24 57a6a6f1 73b4b4c7 97c6c651     $..8...W...sQ...
+    1e50:	cbe8e823 a1dddd7c e874749c 3e1f1f21     #...|....tt.!..>
+    1e60:	964b4bdd 61bdbddc 0d8b8b86 0f8a8a85     .KK....a........
+    1e70:	e0707090 7c3e3e42 71b5b5c4 cc6666aa     .pp.B>>|...q.ff.
+    1e80:	904848d8 06030305 f7f6f601 1c0e0e12     .HH.............
+    1e90:	c26161a3 6a35355f ae5757f9 69b9b9d0     .aa._55j.WW....i
+    1ea0:	17868691 99c1c158 3a1d1d27 279e9eb9     ....X...'..:...'
+    1eb0:	d9e1e138 ebf8f813 2b9898b3 22111133     8..........+3.."
+    1ec0:	d26969bb a9d9d970 078e8e89 339494a7     .ii.p..........3
+    1ed0:	2d9b9bb6 3c1e1e22 15878792 c9e9e920     ...-"..<.... ...
+    1ee0:	87cece49 aa5555ff 50282878 a5dfdf7a     I....UU.x((Pz...
+    1ef0:	038c8c8f 59a1a1f8 09898980 1a0d0d17     .......Y........
+    1f00:	65bfbfda d7e6e631 844242c6 d06868b8     ...e1....BB..hh.
+    1f10:	824141c3 299999b0 5a2d2d77 1e0f0f11     .AA....)w--Z....
+    1f20:	7bb0b0cb a85454fc 6dbbbbd6 2c16163a     ...{.TT....m:..,
+    1f30:	a5c66363 84f87c7c 99ee7777 8df67b7b     cc..||..ww..{{..
+    1f40:	0dfff2f2 bdd66b6b b1de6f6f 5491c5c5     ....kk..oo.....T
+    1f50:	50603030 03020101 a9ce6767 7d562b2b     00`P....gg..++V}
+    1f60:	19e7fefe 62b5d7d7 e64dabab 9aec7676     .......b..M.vv..
+    1f70:	458fcaca 9d1f8282 4089c9c9 87fa7d7d     ...E.......@}}..
+    1f80:	15effafa ebb25959 c98e4747 0bfbf0f0     ....YY..GG......
+    1f90:	ec41adad 67b3d4d4 fd5fa2a2 ea45afaf     ..A....g.._...E.
+    1fa0:	bf239c9c f753a4a4 96e47272 5b9bc0c0     ..#...S.rr.....[
+    1fb0:	c275b7b7 1ce1fdfd ae3d9393 6a4c2626     ..u.......=.&&Lj
+    1fc0:	5a6c3636 417e3f3f 02f5f7f7 4f83cccc     66lZ??~A.......O
+    1fd0:	5c683434 f451a5a5 34d1e5e5 08f9f1f1     44h\..Q....4....
+    1fe0:	93e27171 73abd8d8 53623131 3f2a1515     qq.....s11bS..*?
+    1ff0:	0c080404 5295c7c7 65462323 5e9dc3c3     .......R##Fe...^
+    2000:	28301818 a1379696 0f0a0505 b52f9a9a     ..0(..7......./.
+    2010:	090e0707 36241212 9b1b8080 3ddfe2e2     ......$6.......=
+    2020:	26cdebeb 694e2727 cd7fb2b2 9fea7575     ...&''Ni....uu..
+    2030:	1b120909 9e1d8383 74582c2c 2e341a1a     ........,,Xt..4.
+    2040:	2d361b1b b2dc6e6e eeb45a5a fb5ba0a0     ..6-nn..ZZ....[.
+    2050:	f6a45252 4d763b3b 61b7d6d6 ce7db3b3     RR..;;vM...a..}.
+    2060:	7b522929 3edde3e3 715e2f2f 97138484     ))R{...>//^q....
+    2070:	f5a65353 68b9d1d1 00000000 2cc1eded     SS.....h.......,
+    2080:	60402020 1fe3fcfc c879b1b1 edb65b5b       @`......y.[[..
+    2090:	bed46a6a 468dcbcb d967bebe 4b723939     jj.....F..g.99rK
+    20a0:	de944a4a d4984c4c e8b05858 4a85cfcf     JJ..LL..XX.....J
+    20b0:	6bbbd0d0 2ac5efef e54faaaa 16edfbfb     ...k...*..O.....
+    20c0:	c5864343 d79a4d4d 55663333 94118585     CC..MM..33fU....
+    20d0:	cf8a4545 10e9f9f9 06040202 81fe7f7f     EE..............
+    20e0:	f0a05050 44783c3c ba259f9f e34ba8a8     PP..<<xD..%...K.
+    20f0:	f3a25151 fe5da3a3 c0804040 8a058f8f     QQ....].@@......
+    2100:	ad3f9292 bc219d9d 48703838 04f1f5f5     ..?...!.88pH....
+    2110:	df63bcbc c177b6b6 75afdada 63422121     ..c...w....u!!Bc
+    2120:	30201010 1ae5ffff 0efdf3f3 6dbfd2d2     .. 0...........m
+    2130:	4c81cdcd 14180c0c 35261313 2fc3ecec     ...L......&5.../
+    2140:	e1be5f5f a2359797 cc884444 392e1717     __....5.DD.....9
+    2150:	5793c4c4 f255a7a7 82fc7e7e 477a3d3d     ...W..U.~~..==zG
+    2160:	acc86464 e7ba5d5d 2b321919 95e67373     dd..]]....2+ss..
+    2170:	a0c06060 98198181 d19e4f4f 7fa3dcdc     ``......OO......
+    2180:	66442222 7e542a2a ab3b9090 830b8888     ""Df**T~..;.....
+    2190:	ca8c4646 29c7eeee d36bb8b8 3c281414     FF.....)..k...(<
+    21a0:	79a7dede e2bc5e5e 1d160b0b 76addbdb     ...y^^.........v
+    21b0:	3bdbe0e0 56643232 4e743a3a 1e140a0a     ...;22dV::tN....
+    21c0:	db924949 0a0c0606 6c482424 e4b85c5c     II......$$Hl\\..
+    21d0:	5d9fc2c2 6ebdd3d3 ef43acac a6c46262     ...]...n..C.bb..
+    21e0:	a8399191 a4319595 37d3e4e4 8bf27979     ..9...1....7yy..
+    21f0:	32d5e7e7 438bc8c8 596e3737 b7da6d6d     ...2...C77nYmm..
+    2200:	8c018d8d 64b1d5d5 d29c4e4e e049a9a9     .......dNN....I.
+    2210:	b4d86c6c faac5656 07f3f4f4 25cfeaea     ll..VV.........%
+    2220:	afca6565 8ef47a7a e947aeae 18100808     ee..zz....G.....
+    2230:	d56fbaba 88f07878 6f4a2525 725c2e2e     ..o.xx..%%Jo..\r
+    2240:	24381c1c f157a6a6 c773b4b4 5197c6c6     ..8$..W...s....Q
+    2250:	23cbe8e8 7ca1dddd 9ce87474 213e1f1f     ...#...|tt....>!
+    2260:	dd964b4b dc61bdbd 860d8b8b 850f8a8a     KK....a.........
+    2270:	90e07070 427c3e3e c471b5b5 aacc6666     pp..>>|B..q.ff..
+    2280:	d8904848 05060303 01f7f6f6 121c0e0e     HH..............
+    2290:	a3c26161 5f6a3535 f9ae5757 d069b9b9     aa..55j_WW....i.
+    22a0:	91178686 5899c1c1 273a1d1d b9279e9e     .......X..:'..'.
+    22b0:	38d9e1e1 13ebf8f8 b32b9898 33221111     ...8......+..."3
+    22c0:	bbd26969 70a9d9d9 89078e8e a7339494     ii.....p......3.
+    22d0:	b62d9b9b 223c1e1e 92158787 20c9e9e9     ..-...<"....... 
+    22e0:	4987cece ffaa5555 78502828 7aa5dfdf     ...IUU..((Px...z
+    22f0:	8f038c8c f859a1a1 80098989 171a0d0d     ......Y.........
+    2300:	da65bfbf 31d7e6e6 c6844242 b8d06868     ..e....1BB..hh..
+    2310:	c3824141 b0299999 775a2d2d 111e0f0f     AA....).--Zw....
+    2320:	cb7bb0b0 fca85454 d66dbbbb 3a2c1616     ..{.TT....m...,:
+    2330:	63a5c663 7c84f87c 7799ee77 7b8df67b     c..c|..|w..w{..{
+    2340:	f20dfff2 6bbdd66b 6fb1de6f c55491c5     ....k..ko..o..T.
+    2350:	30506030 01030201 67a9ce67 2b7d562b     0`P0....g..g+V}+
+    2360:	fe19e7fe d762b5d7 abe64dab 769aec76     ......b..M..v..v
+    2370:	ca458fca 829d1f82 c94089c9 7d87fa7d     ..E.......@.}..}
+    2380:	fa15effa 59ebb259 47c98e47 f00bfbf0     ....Y..YG..G....
+    2390:	adec41ad d467b3d4 a2fd5fa2 afea45af     .A....g.._...E..
+    23a0:	9cbf239c a4f753a4 7296e472 c05b9bc0     .#...S..r..r..[.
+    23b0:	b7c275b7 fd1ce1fd 93ae3d93 266a4c26     .u.......=..&Lj&
+    23c0:	365a6c36 3f417e3f f702f5f7 cc4f83cc     6lZ6?~A?......O.
+    23d0:	345c6834 a5f451a5 e534d1e5 f108f9f1     4h\4.Q....4.....
+    23e0:	7193e271 d873abd8 31536231 153f2a15     q..q..s.1bS1.*?.
+    23f0:	040c0804 c75295c7 23654623 c35e9dc3     ......R.#Fe#..^.
+    2400:	18283018 96a13796 050f0a05 9ab52f9a     .0(..7......./..
+    2410:	07090e07 12362412 809b1b80 e23ddfe2     .....$6.......=.
+    2420:	eb26cdeb 27694e27 b2cd7fb2 759fea75     ..&.'Ni'....u..u
+    2430:	091b1209 839e1d83 2c74582c 1a2e341a     ........,Xt,.4..
+    2440:	1b2d361b 6eb2dc6e 5aeeb45a a0fb5ba0     .6-.n..nZ..Z.[..
+    2450:	52f6a452 3b4d763b d661b7d6 b3ce7db3     R..R;vM;..a..}..
+    2460:	297b5229 e33edde3 2f715e2f 84971384     )R{)..>./^q/....
+    2470:	53f5a653 d168b9d1 00000000 ed2cc1ed     S..S..h.......,.
+    2480:	20604020 fc1fe3fc b1c879b1 5bedb65b      @` .....y..[..[
+    2490:	6abed46a cb468dcb bed967be 394b7239     j..j..F..g..9rK9
+    24a0:	4ade944a 4cd4984c 58e8b058 cf4a85cf     J..JL..LX..X..J.
+    24b0:	d06bbbd0 ef2ac5ef aae54faa fb16edfb     ..k...*..O......
+    24c0:	43c58643 4dd79a4d 33556633 85941185     C..CM..M3fU3....
+    24d0:	45cf8a45 f910e9f9 02060402 7f81fe7f     E..E............
+    24e0:	50f0a050 3c44783c 9fba259f a8e34ba8     P..P<xD<.%...K..
+    24f0:	51f3a251 a3fe5da3 40c08040 8f8a058f     Q..Q.]..@..@....
+    2500:	92ad3f92 9dbc219d 38487038 f504f1f5     .?...!..8pH8....
+    2510:	bcdf63bc b6c177b6 da75afda 21634221     .c...w....u.!Bc!
+    2520:	10302010 ff1ae5ff f30efdf3 d26dbfd2     . 0...........m.
+    2530:	cd4c81cd 0c14180c 13352613 ec2fc3ec     ..L......&5.../.
+    2540:	5fe1be5f 97a23597 44cc8844 17392e17     _.._.5..D..D..9.
+    2550:	c45793c4 a7f255a7 7e82fc7e 3d477a3d     ..W..U..~..~=zG=
+    2560:	64acc864 5de7ba5d 192b3219 7395e673     d..d]..].2+.s..s
+    2570:	60a0c060 81981981 4fd19e4f dc7fa3dc     `..`....O..O....
+    2580:	22664422 2a7e542a 90ab3b90 88830b88     "Df"*T~*.;......
+    2590:	46ca8c46 ee29c7ee b8d36bb8 143c2814     F..F..)..k...(<.
+    25a0:	de79a7de 5ee2bc5e 0b1d160b db76addb     ..y.^..^......v.
+    25b0:	e03bdbe0 32566432 3a4e743a 0a1e140a     ..;.2dV2:tN:....
+    25c0:	49db9249 060a0c06 246c4824 5ce4b85c     I..I....$Hl$\..\
+    25d0:	c25d9fc2 d36ebdd3 acef43ac 62a6c462     ..]...n..C..b..b
+    25e0:	91a83991 95a43195 e437d3e4 798bf279     .9...1....7.y..y
+    25f0:	e732d5e7 c8438bc8 37596e37 6db7da6d     ..2...C.7nY7m..m
+    2600:	8d8c018d d564b1d5 4ed29c4e a9e049a9     ......d.N..N.I..
+    2610:	6cb4d86c 56faac56 f407f3f4 ea25cfea     l..lV..V......%.
+    2620:	65afca65 7a8ef47a aee947ae 08181008     e..ez..z.G......
+    2630:	bad56fba 7888f078 256f4a25 2e725c2e     .o..x..x%Jo%.\r.
+    2640:	1c24381c a6f157a6 b4c773b4 c65197c6     .8$..W...s....Q.
+    2650:	e823cbe8 dd7ca1dd 749ce874 1f213e1f     ..#...|.t..t.>!.
+    2660:	4bdd964b bddc61bd 8b860d8b 8a850f8a     K..K.a..........
+    2670:	7090e070 3e427c3e b5c471b5 66aacc66     p..p>|B>.q..f..f
+    2680:	48d89048 03050603 f601f7f6 0e121c0e     H..H............
+    2690:	61a3c261 355f6a35 57f9ae57 b9d069b9     a..a5j_5W..W.i..
+    26a0:	86911786 c15899c1 1d273a1d 9eb9279e     ......X..:'..'..
+    26b0:	e138d9e1 f813ebf8 98b32b98 11332211     ..8......+..."3.
+    26c0:	69bbd269 d970a9d9 8e89078e 94a73394     i..i..p......3..
+    26d0:	9bb62d9b 1e223c1e 87921587 e920c9e9     .-...<"....... .
+    26e0:	ce4987ce 55ffaa55 28785028 df7aa5df     ..I.U..U(Px(..z.
+    26f0:	8c8f038c a1f859a1 89800989 0d171a0d     .....Y..........
+    2700:	bfda65bf e631d7e6 42c68442 68b8d068     .e....1.B..Bh..h
+    2710:	41c38241 99b02999 2d775a2d 0f111e0f     A..A.)..-Zw-....
+    2720:	b0cb7bb0 54fca854 bbd66dbb 163a2c16     .{..T..T.m...,:.
+    2730:	6363a5c6 7c7c84f8 777799ee 7b7b8df6     ..cc..||..ww..{{
+    2740:	f2f20dff 6b6bbdd6 6f6fb1de c5c55491     ......kk..oo.T..
+    2750:	30305060 01010302 6767a9ce 2b2b7d56     `P00......ggV}++
+    2760:	fefe19e7 d7d762b5 ababe64d 76769aec     .....b..M.....vv
+    2770:	caca458f 82829d1f c9c94089 7d7d87fa     .E.......@....}}
+    2780:	fafa15ef 5959ebb2 4747c98e f0f00bfb     ......YY..GG....
+    2790:	adadec41 d4d467b3 a2a2fd5f afafea45     A....g.._...E...
+    27a0:	9c9cbf23 a4a4f753 727296e4 c0c05b9b     #...S.....rr.[..
+    27b0:	b7b7c275 fdfd1ce1 9393ae3d 26266a4c     u.......=...Lj&&
+    27c0:	36365a6c 3f3f417e f7f702f5 cccc4f83     lZ66~A??.....O..
+    27d0:	34345c68 a5a5f451 e5e534d1 f1f108f9     h\44Q....4......
+    27e0:	717193e2 d8d873ab 31315362 15153f2a     ..qq.s..bS11*?..
+    27f0:	04040c08 c7c75295 23236546 c3c35e9d     .....R..Fe##.^..
+    2800:	18182830 9696a137 05050f0a 9a9ab52f     0(..7......./...
+    2810:	0707090e 12123624 80809b1b e2e23ddf     ....$6.......=..
+    2820:	ebeb26cd 2727694e b2b2cd7f 75759fea     .&..Ni''......uu
+    2830:	09091b12 83839e1d 2c2c7458 1a1a2e34     ........Xt,,4...
+    2840:	1b1b2d36 6e6eb2dc 5a5aeeb4 a0a0fb5b     6-....nn..ZZ[...
+    2850:	5252f6a4 3b3b4d76 d6d661b7 b3b3ce7d     ..RRvM;;.a..}...
+    2860:	29297b52 e3e33edd 2f2f715e 84849713     R{)).>..^q//....
+    2870:	5353f5a6 d1d168b9 00000000 eded2cc1     ..SS.h.......,..
+    2880:	20206040 fcfc1fe3 b1b1c879 5b5bedb6     @`  ....y.....[[
+    2890:	6a6abed4 cbcb468d bebed967 39394b72     ..jj.F..g...rK99
+    28a0:	4a4ade94 4c4cd498 5858e8b0 cfcf4a85     ..JJ..LL..XX.J..
+    28b0:	d0d06bbb efef2ac5 aaaae54f fbfb16ed     .k...*..O.......
+    28c0:	4343c586 4d4dd79a 33335566 85859411     ..CC..MMfU33....
+    28d0:	4545cf8a f9f910e9 02020604 7f7f81fe     ..EE............
+    28e0:	5050f0a0 3c3c4478 9f9fba25 a8a8e34b     ..PPxD<<%...K...
+    28f0:	5151f3a2 a3a3fe5d 4040c080 8f8f8a05     ..QQ].....@@....
+    2900:	9292ad3f 9d9dbc21 38384870 f5f504f1     ?...!...pH88....
+    2910:	bcbcdf63 b6b6c177 dada75af 21216342     c...w....u..Bc!!
+    2920:	10103020 ffff1ae5 f3f30efd d2d26dbf      0...........m..
+    2930:	cdcd4c81 0c0c1418 13133526 ecec2fc3     .L......&5.../..
+    2940:	5f5fe1be 9797a235 4444cc88 1717392e     ..__5.....DD.9..
+    2950:	c4c45793 a7a7f255 7e7e82fc 3d3d477a     .W..U.....~~zG==
+    2960:	6464acc8 5d5de7ba 19192b32 737395e6     ..dd..]]2+....ss
+    2970:	6060a0c0 81819819 4f4fd19e dcdc7fa3     ..``......OO....
+    2980:	22226644 2a2a7e54 9090ab3b 8888830b     Df""T~**;.......
+    2990:	4646ca8c eeee29c7 b8b8d36b 14143c28     ..FF.)..k...(<..
+    29a0:	dede79a7 5e5ee2bc 0b0b1d16 dbdb76ad     .y....^^.....v..
+    29b0:	e0e03bdb 32325664 3a3a4e74 0a0a1e14     .;..dV22tN::....
+    29c0:	4949db92 06060a0c 24246c48 5c5ce4b8     ..II....Hl$$..\\
+    29d0:	c2c25d9f d3d36ebd acacef43 6262a6c4     .]...n..C.....bb
+    29e0:	9191a839 9595a431 e4e437d3 79798bf2     9...1....7....yy
+    29f0:	e7e732d5 c8c8438b 3737596e 6d6db7da     .2...C..nY77..mm
+    2a00:	8d8d8c01 d5d564b1 4e4ed29c a9a9e049     .....d....NNI...
+    2a10:	6c6cb4d8 5656faac f4f407f3 eaea25cf     ..ll..VV.....%..
+    2a20:	6565afca 7a7a8ef4 aeaee947 08081810     ..ee..zzG.......
+    2a30:	babad56f 787888f0 25256f4a 2e2e725c     o.....xxJo%%\r..
+    2a40:	1c1c2438 a6a6f157 b4b4c773 c6c65197     8$..W...s....Q..
+    2a50:	e8e823cb dddd7ca1 74749ce8 1f1f213e     .#...|....tt>!..
+    2a60:	4b4bdd96 bdbddc61 8b8b860d 8a8a850f     ..KKa...........
+    2a70:	707090e0 3e3e427c b5b5c471 6666aacc     ..pp|B>>q.....ff
+    2a80:	4848d890 03030506 f6f601f7 0e0e121c     ..HH............
+    2a90:	6161a3c2 35355f6a 5757f9ae b9b9d069     ..aaj_55..WWi...
+    2aa0:	86869117 c1c15899 1d1d273a 9e9eb927     .....X..:'..'...
+    2ab0:	e1e138d9 f8f813eb 9898b32b 11113322     .8......+..."3..
+    2ac0:	6969bbd2 d9d970a9 8e8e8907 9494a733     ..ii.p......3...
+    2ad0:	9b9bb62d 1e1e223c 87879215 e9e920c9     -...<"....... ..
+    2ae0:	cece4987 5555ffaa 28287850 dfdf7aa5     .I....UUPx((.z..
+    2af0:	8c8c8f03 a1a1f859 89898009 0d0d171a     ....Y...........
+    2b00:	bfbfda65 e6e631d7 4242c684 6868b8d0     e....1....BB..hh
+    2b10:	4141c382 9999b029 2d2d775a 0f0f111e     ..AA)...Zw--....
+    2b20:	b0b0cb7b 5454fca8 bbbbd66d 16163a2c     {.....TTm...,:..
+
+00002b30 <Td>:
+    2b30:	51f4a750 7e416553 1a17a4c3 3a275e96     P..QSeA~.....^':
+    2b40:	3bab6bcb 1f9d45f1 acfa58ab 4be30393     .k.;.E...X.....K
+    2b50:	2030fa55 ad766df6 88cc7691 f5024c25     U.0 .mv..v..%L..
+    2b60:	4fe5d7fc c52acbd7 26354480 b562a38f     ...O..*..D5&..b.
+    2b70:	deb15a49 25ba1b67 45ea0e98 5dfec0e1     IZ..g..%...E...]
+    2b80:	c32f7502 814cf012 8d4697a3 6bd3f9c6     .u/...L...F....k
+    2b90:	038f5fe7 15929c95 bf6d7aeb 955259da     ._.......zm..YR.
+    2ba0:	d4be832d 587421d3 49e06929 8ec9c844     -....!tX)i.ID...
+    2bb0:	75c2896a f48e7978 99583e6b 27b971dd     j..uxy..k>X..q.'
+    2bc0:	bee14fb6 f088ad17 c920ac66 7dce3ab4     .O......f. ..:.}
+    2bd0:	63df4a18 e51a3182 97513360 62537f45     .J.c.1..`3Q.E.Sb
+    2be0:	b16477e0 bb6bae84 fe81a01c f9082b94     .wd...k......+..
+    2bf0:	70486858 8f45fd19 94de6c87 527bf8b7     XhHp..E..l....{R
+    2c00:	ab73d323 724b02e2 e31f8f57 6655ab2a     #.s...KrW...*.Uf
+    2c10:	b2eb2807 2fb5c203 86c57b9a d33708a5     .(...../.{....7.
+    2c20:	302887f2 23bfa5b2 02036aba ed16825c     ..(0...#.j..\...
+    2c30:	8acf1c2b a779b492 f307f2f0 4e69e2a1     +.....y.......iN
+    2c40:	65daf4cd 0605bed5 d134621f c4a6fe8a     ...e.....b4.....
+    2c50:	342e539d a2f355a0 058ae132 a4f6eb75     .S.4.U..2...u...
+    2c60:	0b83ec39 4060efaa 5e719f06 bd6e1051     9.....`@..q^Q.n.
+    2c70:	3e218af9 96dd063d dd3e05ae 4de6bd46     ..!>=.....>.F..M
+    2c80:	91548db5 71c45d05 0406d46f 605015ff     ..T..].qo.....P`
+    2c90:	1998fb24 d6bde997 894043cc 67d99e77     $........C@.w..g
+    2ca0:	b0e842bd 07898b88 e7195b38 79c8eedb     .B......8[.....y
+    2cb0:	a17c0a47 7c420fe9 f8841ec9 00000000     G.|...B|........
+    2cc0:	09808683 322bed48 1e1170ac 6c5a724e     ....H.+2.p..NrZl
+    2cd0:	fd0efffb 0f853856 3daed51e 362d3927     ....V8.....='9-6
+    2ce0:	0a0fd964 685ca621 9b5b54d1 24362e3a     d...!.\h.T[.:.6$
+    2cf0:	0c0a67b1 9357e70f b4ee96d2 1b9b919e     .g....W.........
+    2d00:	80c0c54f 61dc20a2 5a774b69 1c121a16     O.... .aiKwZ....
+    2d10:	e293ba0a c0a02ae5 3c22e043 121b171d     .....*..C."<....
+    2d20:	0e090d0b f28bc7ad 2db6a8b9 141ea9c8     ...........-....
+    2d30:	57f11985 af75074c ee99ddbb a37f60fd     ...WL.u......`..
+    2d40:	f701269f 5c72f5bc 44663bc5 5bfb7e34     .&....r\.;fD4~.[
+    2d50:	8b432976 cb23c6dc b6edfc68 b8e4f163     v)C...#.h...c...
+    2d60:	d731dcca 42638510 13972240 84c61120     ..1...cB@".. ...
+    2d70:	854a247d d2bb3df8 aef93211 c729a16d     }$J..=...2..m.).
+    2d80:	1d9e2f4b dcb230f3 0d8652ec 77c1e3d0     K/...0...R.....w
+    2d90:	2bb3166c a970b999 119448fa 47e96422     l..+..p..H.."d.G
+    2da0:	a8fc8cc4 a0f03f1a 567d2cd8 223390ef     .....?...,}V..3"
+    2db0:	87494ec7 d938d1c1 8ccaa2fe 98d40b36     .NI...8.....6...
+    2dc0:	a6f581cf a57ade28 dab78e26 3fadbfa4     ....(.z.&......?
+    2dd0:	2c3a9de4 5078920d 6a5fcc9b 547e4662     ..:,..xP.._jbF~T
+    2de0:	f68d13c2 90d8b8e8 2e39f75e 82c3aff5     ........^.9.....
+    2df0:	9f5d80be 69d0937c 6fd52da9 cf2512b3     ..].|..i.-.o..%.
+    2e00:	c8ac993b 10187da7 e89c636e db3bbb7b     ;....}..nc..{.;.
+    2e10:	cd267809 6e5918f4 ec9ab701 834f9aa8     .x&...Yn......O.
+    2e20:	e6956e65 aaffe67e 21bccf08 ef15e8e6     en..~......!....
+    2e30:	bae79bd9 4a6f36ce ea9f09d4 29b07cd6     .....6oJ.....|.)
+    2e40:	31a4b2af 2a3f2331 c6a59430 35a266c0     ...11#?*0....f.5
+    2e50:	744ebc37 fc82caa6 e090d0b0 33a7d815     7.Nt...........3
+    2e60:	f104984a 41ecdaf7 7fcd500e 1791f62f     J......A.P../...
+    2e70:	764dd68d 43efb04d ccaa4d54 e49604df     ..MvM..CTM......
+    2e80:	9ed1b5e3 4c6a881b c12c1fb8 4665517f     ......jL..,..QeF
+    2e90:	9d5eea04 018c355d fa877473 fb0b412e     ..^.]5..st...A..
+    2ea0:	b3671d5a 92dbd252 e9105633 6dd64713     Z.g.R...3V...G.m
+    2eb0:	9ad7618c 37a10c7a 59f8148e eb133c89     .a..z..7...Y.<..
+    2ec0:	cea927ee b761c935 e11ce5ed 7a47b13c     .'..5.a.....<.Gz
+    2ed0:	9cd2df59 55f2733f 1814ce79 73c737bf     Y...?s.Uy....7.s
+    2ee0:	53f7cdea 5ffdaa5b df3d6f14 7844db86     ...S[.._.o=...Dx
+    2ef0:	caaff381 b968c43e 3824342c c2a3405f     ....>.h.,4$8_@..
+    2f00:	161dc372 bce2250c 283c498b ff0d9541     r....%...I<(A...
+    2f10:	39a80171 080cb3de d8b4e49c 6456c190     q..9..........Vd
+    2f20:	7bcb8461 d532b670 486c5c74 d0b85742     a..{p.2.t\lHBW..
+    2f30:	5051f4a7 537e4165 c31a17a4 963a275e     ..QPeA~S....^':.
+    2f40:	cb3bab6b f11f9d45 abacfa58 934be303     k.;.E...X.....K.
+    2f50:	552030fa f6ad766d 9188cc76 25f5024c     .0 Umv..v...L..%
+    2f60:	fc4fe5d7 d7c52acb 80263544 8fb562a3     ..O..*..D5&..b..
+    2f70:	49deb15a 6725ba1b 9845ea0e e15dfec0     Z..I..%g..E...].
+    2f80:	02c32f75 12814cf0 a38d4697 c66bd3f9     u/...L...F....k.
+    2f90:	e7038f5f 9515929c ebbf6d7a da955259     _.......zm..YR..
+    2fa0:	2dd4be83 d3587421 2949e069 448ec9c8     ...-!tX.i.I)...D
+    2fb0:	6a75c289 78f48e79 6b99583e dd27b971     ..ujy..x>X.kq.'.
+    2fc0:	b6bee14f 17f088ad 66c920ac b47dce3a     O........ .f:.}.
+    2fd0:	1863df4a 82e51a31 60975133 4562537f     J.c.1...3Q.`.SbE
+    2fe0:	e0b16477 84bb6bae 1cfe81a0 94f9082b     wd...k......+...
+    2ff0:	58704868 198f45fd 8794de6c b7527bf8     hHpX.E..l....{R.
+    3000:	23ab73d3 e2724b02 57e31f8f 2a6655ab     .s.#.Kr....W.Uf*
+    3010:	07b2eb28 032fb5c2 9a86c57b a5d33708     (...../.{....7..
+    3020:	f2302887 b223bfa5 ba02036a 5ced1682     .(0...#.j......\
+    3030:	2b8acf1c 92a779b4 f0f307f2 a14e69e2     ...+.y.......iN.
+    3040:	cd65daf4 d50605be 1fd13462 8ac4a6fe     ..e.....b4......
+    3050:	9d342e53 a0a2f355 32058ae1 75a4f6eb     S.4.U......2...u
+    3060:	390b83ec aa4060ef 065e719f 51bd6e10     ...9.`@..q^..n.Q
+    3070:	f93e218a 3d96dd06 aedd3e05 464de6bd     .!>....=.>....MF
+    3080:	b591548d 0571c45d 6f0406d4 ff605015     .T..].q....o.P`.
+    3090:	241998fb 97d6bde9 cc894043 7767d99e     ...$....C@....gw
+    30a0:	bdb0e842 8807898b 38e7195b db79c8ee     B.......[..8..y.
+    30b0:	47a17c0a e97c420f c9f8841e 00000000     .|.G.B|.........
+    30c0:	83098086 48322bed ac1e1170 4e6c5a72     .....+2Hp...rZlN
+    30d0:	fbfd0eff 560f8538 1e3daed5 27362d39     ....8..V..=.9-6'
+    30e0:	640a0fd9 21685ca6 d19b5b54 3a24362e     ...d.\h!T[...6$:
+    30f0:	b10c0a67 0f9357e7 d2b4ee96 9e1b9b91     g....W..........
+    3100:	4f80c0c5 a261dc20 695a774b 161c121a     ...O .a.KwZi....
+    3110:	0ae293ba e5c0a02a 433c22e0 1d121b17     ....*...."<C....
+    3120:	0b0e090d adf28bc7 b92db6a8 c8141ea9     ..........-.....
+    3130:	8557f119 4caf7507 bbee99dd fda37f60     ..W..u.L....`...
+    3140:	9ff70126 bc5c72f5 c544663b 345bfb7e     &....r\.;fD.~.[4
+    3150:	768b4329 dccb23c6 68b6edfc 63b8e4f1     )C.v.#.....h...c
+    3160:	cad731dc 10426385 40139722 2084c611     .1...cB."..@... 
+    3170:	7d854a24 f8d2bb3d 11aef932 6dc729a1     $J.}=...2....).m
+    3180:	4b1d9e2f f3dcb230 ec0d8652 d077c1e3     /..K0...R.....w.
+    3190:	6c2bb316 99a970b9 fa119448 2247e964     ..+l.p..H...d.G"
+    31a0:	c4a8fc8c 1aa0f03f d8567d2c ef223390     ....?...,}V..3".
+    31b0:	c787494e c1d938d1 fe8ccaa2 3698d40b     NI...8.........6
+    31c0:	cfa6f581 28a57ade 26dab78e a43fadbf     .....z.(...&..?.
+    31d0:	e42c3a9d 0d507892 9b6a5fcc 62547e46     .:,..xP.._j.F~Tb
+    31e0:	c2f68d13 e890d8b8 5e2e39f7 f582c3af     .........9.^....
+    31f0:	be9f5d80 7c69d093 a96fd52d b3cf2512     .]....i|-.o..%..
+    3200:	3bc8ac99 a710187d 6ee89c63 7bdb3bbb     ...;}...c..n.;.{
+    3210:	09cd2678 f46e5918 01ec9ab7 a8834f9a     x&...Yn......O..
+    3220:	65e6956e 7eaaffe6 0821bccf e6ef15e8     n..e...~..!.....
+    3230:	d9bae79b ce4a6f36 d4ea9f09 d629b07c     ....6oJ.....|.).
+    3240:	af31a4b2 312a3f23 30c6a594 c035a266     ..1.#?*1...0f.5.
+    3250:	37744ebc a6fc82ca b0e090d0 1533a7d8     .Nt7..........3.
+    3260:	4af10498 f741ecda 0e7fcd50 2f1791f6     ...J..A.P....../
+    3270:	8d764dd6 4d43efb0 54ccaa4d dfe49604     .Mv...CMM..T....
+    3280:	e39ed1b5 1b4c6a88 b8c12c1f 7f466551     .....jL..,..QeF.
+    3290:	049d5eea 5d018c35 73fa8774 2efb0b41     .^..5..]t..sA...
+    32a0:	5ab3671d 5292dbd2 33e91056 136dd647     .g.Z...RV..3G.m.
+    32b0:	8c9ad761 7a37a10c 8e59f814 89eb133c     a.....7z..Y.<...
+    32c0:	eecea927 35b761c9 ede11ce5 3c7a47b1     '....a.5.....Gz<
+    32d0:	599cd2df 3f55f273 791814ce bf73c737     ...Ys.U?...y7.s.
+    32e0:	ea53f7cd 5b5ffdaa 14df3d6f 867844db     ..S..._[o=...Dx.
+    32f0:	81caaff3 3eb968c4 2c382434 5fc2a340     .....h.>4$8,@.._
+    3300:	72161dc3 0cbce225 8b283c49 41ff0d95     ...r%...I<(....A
+    3310:	7139a801 de080cb3 9cd8b4e4 906456c1     ..9q.........Vd.
+    3320:	617bcb84 70d532b6 74486c5c 42d0b857     ..{a.2.p\lHtW..B
+    3330:	a75051f4 65537e41 a4c31a17 5e963a27     .QP.A~Se....':.^
+    3340:	6bcb3bab 45f11f9d 58abacfa 03934be3     .;.k...E...X.K..
+    3350:	fa552030 6df6ad76 769188cc 4c25f502     0 U.v..m...v..%L
+    3360:	d7fc4fe5 cbd7c52a 44802635 a38fb562     .O..*...5&.Db...
+    3370:	5a49deb1 1b6725ba 0e9845ea c0e15dfe     ..IZ.%g..E...]..
+    3380:	7502c32f f012814c 97a38d46 f9c66bd3     /..uL...F....k..
+    3390:	5fe7038f 9c951592 7aebbf6d 59da9552     ..._....m..zR..Y
+    33a0:	832dd4be 21d35874 692949e0 c8448ec9     ..-.tX.!.I)i..D.
+    33b0:	896a75c2 7978f48e 3e6b9958 71dd27b9     .uj...xyX.k>.'.q
+    33c0:	4fb6bee1 ad17f088 ac66c920 3ab47dce     ...O.... .f..}.:
+    33d0:	4a1863df 3182e51a 33609751 7f456253     .c.J...1Q.`3SbE.
+    33e0:	77e0b164 ae84bb6b a01cfe81 2b94f908     d..wk..........+
+    33f0:	68587048 fd198f45 6c8794de f8b7527b     HpXhE......l{R..
+    3400:	d323ab73 02e2724b 8f57e31f ab2a6655     s.#.Kr....W.Uf*.
+    3410:	2807b2eb c2032fb5 7b9a86c5 08a5d337     ...(./.....{7...
+    3420:	87f23028 a5b223bf 6aba0203 825ced16     (0...#.....j..\.
+    3430:	1c2b8acf b492a779 f2f0f307 e2a14e69     ..+.y.......iN..
+    3440:	f4cd65da bed50605 621fd134 fe8ac4a6     .e......4..b....
+    3450:	539d342e 55a0a2f3 e132058a eb75a4f6     .4.S...U..2...u.
+    3460:	ec390b83 efaa4060 9f065e71 1051bd6e     ..9.`@..q^..n.Q.
+    3470:	8af93e21 063d96dd 05aedd3e bd464de6     !>....=.>....MF.
+    3480:	8db59154 5d0571c4 d46f0406 15ff6050     T....q.]..o.P`..
+    3490:	fb241998 e997d6bd 43cc8940 9e7767d9     ..$.....@..C.gw.
+    34a0:	42bdb0e8 8b880789 5b38e719 eedb79c8     ...B......8[.y..
+    34b0:	0a47a17c 0fe97c42 1ec9f884 00000000     |.G.B|..........
+    34c0:	86830980 ed48322b 70ac1e11 724e6c5a     ....+2H....pZlNr
+    34d0:	fffbfd0e 38560f85 d51e3dae 3927362d     ......V8.=..-6'9
+    34e0:	d9640a0f a621685c 54d19b5b 2e3a2436     ..d.\h!.[..T6$:.
+    34f0:	67b10c0a e70f9357 96d2b4ee 919e1b9b     ...gW...........
+    3500:	c54f80c0 20a261dc 4b695a77 1a161c12     ..O..a. wZiK....
+    3510:	ba0ae293 2ae5c0a0 e0433c22 171d121b     .......*"<C.....
+    3520:	0d0b0e09 c7adf28b a8b92db6 a9c8141e     .........-......
+    3530:	198557f1 074caf75 ddbbee99 60fda37f     .W..u.L........`
+    3540:	269ff701 f5bc5c72 3bc54466 7e345bfb     ...&r\..fD.;.[4~
+    3550:	29768b43 c6dccb23 fc68b6ed f163b8e4     C.v)#.....h...c.
+    3560:	dccad731 85104263 22401397 112084c6     1...cB....@".. .
+    3570:	247d854a 3df8d2bb 3211aef9 a16dc729     J.}$...=...2).m.
+    3580:	2f4b1d9e 30f3dcb2 52ec0d86 e3d077c1     ..K/...0...R.w..
+    3590:	166c2bb3 b999a970 48fa1194 642247e9     .+l.p......H.G"d
+    35a0:	8cc4a8fc 3f1aa0f0 2cd8567d 90ef2233     .......?}V.,3"..
+    35b0:	4ec78749 d1c1d938 a2fe8cca 0b3698d4     I..N8.........6.
+    35c0:	81cfa6f5 de28a57a 8e26dab7 bfa43fad     ....z.(...&..?..
+    35d0:	9de42c3a 920d5078 cc9b6a5f 4662547e     :,..xP.._j..~TbF
+    35e0:	13c2f68d b8e890d8 f75e2e39 aff582c3     ........9.^.....
+    35f0:	80be9f5d 937c69d0 2da96fd5 12b3cf25     ]....i|..o.-%...
+    3600:	993bc8ac 7da71018 636ee89c bb7bdb3b     ..;....}..nc;.{.
+    3610:	7809cd26 18f46e59 b701ec9a 9aa8834f     &..xYn......O...
+    3620:	6e65e695 e67eaaff cf0821bc e8e6ef15     ..en..~..!......
+    3630:	9bd9bae7 36ce4a6f 09d4ea9f 7cd629b0     ....oJ.6.....).|
+    3640:	b2af31a4 23312a3f 9430c6a5 66c035a2     .1..?*1#..0..5.f
+    3650:	bc37744e caa6fc82 d0b0e090 d81533a7     Nt7..........3..
+    3660:	984af104 daf741ec 500e7fcd f62f1791     ..J..A.....P../.
+    3670:	d68d764d b04d43ef 4d54ccaa 04dfe496     Mv...CM...TM....
+    3680:	b5e39ed1 881b4c6a 1fb8c12c 517f4665     ....jL..,...eF.Q
+    3690:	ea049d5e 355d018c 7473fa87 412efb0b     ^.....]5..st...A
+    36a0:	1d5ab367 d25292db 5633e910 47136dd6     g.Z...R...3V.m.G
+    36b0:	618c9ad7 0c7a37a1 148e59f8 3c89eb13     ...a.7z..Y.....<
+    36c0:	27eecea9 c935b761 e5ede11c b13c7a47     ...'a.5.....Gz<.
+    36d0:	df599cd2 733f55f2 ce791814 37bf73c7     ..Y..U?s..y..s.7
+    36e0:	cdea53f7 aa5b5ffd 6f14df3d db867844     .S..._[.=..oDx..
+    36f0:	f381caaf c43eb968 342c3824 405fc2a3     ....h.>.$8,4.._@
+    3700:	c372161d 250cbce2 498b283c 9541ff0d     ..r....%<(.I..A.
+    3710:	017139a8 b3de080c e49cd8b4 c1906456     .9q.........Vd..
+    3720:	84617bcb b670d532 5c74486c 5742d0b8     .{a.2.p.lHt\..BW
+    3730:	f4a75051 4165537e 17a4c31a 275e963a     QP..~SeA....:.^'
+    3740:	ab6bcb3b 9d45f11f fa58abac e303934b     ;.k...E...X.K...
+    3750:	30fa5520 766df6ad cc769188 024c25f5      U.0..mv..v..%L.
+    3760:	e5d7fc4f 2acbd7c5 35448026 62a38fb5     O......*&.D5...b
+    3770:	b15a49de ba1b6725 ea0e9845 fec0e15d     .IZ.%g..E...]...
+    3780:	2f7502c3 4cf01281 4697a38d d3f9c66b     ..u/...L...Fk...
+    3790:	8f5fe703 929c9515 6d7aebbf 5259da95     .._.......zm..YR
+    37a0:	be832dd4 7421d358 e0692949 c9c8448e     .-..X.!tI)i..D..
+    37b0:	c2896a75 8e7978f4 583e6b99 b971dd27     uj...xy..k>X'.q.
+    37c0:	e14fb6be 88ad17f0 20ac66c9 ce3ab47d     ..O......f. }.:.
+    37d0:	df4a1863 1a3182e5 51336097 537f4562     c.J...1..`3QbE.S
+    37e0:	6477e0b1 6bae84bb 81a01cfe 082b94f9     ..wd...k......+.
+    37f0:	48685870 45fd198f de6c8794 7bf8b752     pXhH...E..l.R..{
+    3800:	73d323ab 4b02e272 1f8f57e3 55ab2a66     .#.sr..K.W..f*.U
+    3810:	eb2807b2 b5c2032f c57b9a86 3708a5d3     ..(./.....{....7
+    3820:	2887f230 bfa5b223 036aba02 16825ced     0..(#.....j..\..
+    3830:	cf1c2b8a 79b492a7 07f2f0f3 69e2a14e     .+.....y....N..i
+    3840:	daf4cd65 05bed506 34621fd1 a6fe8ac4     e.........b4....
+    3850:	2e539d34 f355a0a2 8ae13205 f6eb75a4     4.S...U..2...u..
+    3860:	83ec390b 60efaa40 719f065e 6e1051bd     .9..@..`^..q.Q.n
+    3870:	218af93e dd063d96 3e05aedd e6bd464d     >..!.=.....>MF..
+    3880:	548db591 c45d0571 06d46f04 5015ff60     ...Tq.]..o..`..P
+    3890:	98fb2419 bde997d6 4043cc89 d99e7767     .$........C@gw..
+    38a0:	e842bdb0 898b8807 195b38e7 c8eedb79     ..B......8[.y...
+    38b0:	7c0a47a1 420fe97c 841ec9f8 00000000     .G.||..B........
+    38c0:	80868309 2bed4832 1170ac1e 5a724e6c     ....2H.+..p.lNrZ
+    38d0:	0efffbfd 8538560f aed51e3d 2d392736     .....V8.=...6'9-
+    38e0:	0fd9640a 5ca62168 5b54d19b 362e3a24     .d..h!.\..T[$:.6
+    38f0:	0a67b10c 57e70f93 ee96d2b4 9b919e1b     ..g....W........
+    3900:	c0c54f80 dc20a261 774b695a 121a161c     .O..a. .ZiKw....
+    3910:	93ba0ae2 a02ae5c0 22e0433c 1b171d12     ......*.<C."....
+    3920:	090d0b0e 8bc7adf2 b6a8b92d 1ea9c814     ........-.......
+    3930:	f1198557 75074caf 99ddbbee 7f60fda3     W....L.u......`.
+    3940:	01269ff7 72f5bc5c 663bc544 fb7e345b     ..&.\..rD.;f[4~.
+    3950:	4329768b 23c6dccb edfc68b6 e4f163b8     .v)C...#.h...c..
+    3960:	31dccad7 63851042 97224013 c6112084     ...1B..c.@".. ..
+    3970:	4a247d85 bb3df8d2 f93211ae 29a16dc7     .}$J..=...2..m.)
+    3980:	9e2f4b1d b230f3dc 8652ec0d c1e3d077     .K/...0...R.w...
+    3990:	b3166c2b 70b999a9 9448fa11 e9642247     +l.....p..H.G"d.
+    39a0:	fc8cc4a8 f03f1aa0 7d2cd856 3390ef22     ......?.V.,}"..3
+    39b0:	494ec787 38d1c1d9 caa2fe8c d40b3698     ..NI...8.....6..
+    39c0:	f581cfa6 7ade28a5 b78e26da adbfa43f     .....(.z.&..?...
+    39d0:	3a9de42c 78920d50 5fcc9b6a 7e466254     ,..:P..xj.._TbF~
+    39e0:	8d13c2f6 d8b8e890 39f75e2e c3aff582     .........^.9....
+    39f0:	5d80be9f d0937c69 d52da96f 2512b3cf     ...]i|..o.-....%
+    3a00:	ac993bc8 187da710 9c636ee8 3bbb7bdb     .;....}..nc..{.;
+    3a10:	267809cd 5918f46e 9ab701ec 4f9aa883     ..x&n..Y.......O
+    3a20:	956e65e6 ffe67eaa bccf0821 15e8e6ef     .en..~..!.......
+    3a30:	e79bd9ba 6f36ce4a 9f09d4ea b07cd629     ....J.6o....).|.
+    3a40:	a4b2af31 3f23312a a59430c6 a266c035     1...*1#?.0..5.f.
+    3a50:	4ebc3774 82caa6fc 90d0b0e0 a7d81533     t7.N........3...
+    3a60:	04984af1 ecdaf741 cd500e7f 91f62f17     .J..A.....P../..
+    3a70:	4dd68d76 efb04d43 aa4d54cc 9604dfe4     v..MCM...TM.....
+    3a80:	d1b5e39e 6a881b4c 2c1fb8c1 65517f46     ....L..j...,F.Qe
+    3a90:	5eea049d 8c355d01 877473fa 0b412efb     ...^.]5..st...A.
+    3aa0:	671d5ab3 dbd25292 105633e9 d647136d     .Z.g.R...3V.m.G.
+    3ab0:	d7618c9a a10c7a37 f8148e59 133c89eb     ..a.7z..Y.....<.
+    3ac0:	a927eece 61c935b7 1ce5ede1 47b13c7a     ..'..5.a....z<.G
+    3ad0:	d2df599c f2733f55 14ce7918 c737bf73     .Y..U?s..y..s.7.
+    3ae0:	f7cdea53 fdaa5b5f 3d6f14df 44db8678     S..._[....o=x..D
+    3af0:	aff381ca 68c43eb9 24342c38 a3405fc2     .....>.h8,4$._@.
+    3b00:	1dc37216 e2250cbc 3c498b28 0d9541ff     .r....%.(.I<.A..
+    3b10:	a8017139 0cb3de08 b4e49cd8 56c19064     9q..........d..V
+    3b20:	cb84617b 32b670d5 6c5c7448 b85742d0     {a...p.2Ht\l.BW.
+
+00003b30 <Td4>:
+    3b30:	d56a0952 38a53630 9ea340bf fbd7f381     R.j.06.8.@......
+    3b40:	8239e37c 87ff2f9b 44438e34 cbe9dec4     |.9../..4.CD....
+    3b50:	32947b54 3d23c2a6 0b954cee 4ec3fa42     T{.2..#=.L..B..N
+    3b60:	66a12e08 b224d928 49a25b76 25d18b6d     ...f(.$.v[.Im..%
+    3b70:	64f6f872 16986886 cc5ca4d4 92b6655d     r..d.h....\.]e..
+    3b80:	5048706c dab9edfd 5746155e 849d8da7     lpHP....^.FW....
+    3b90:	00abd890 0ad3bc8c 0558e4f7 0645b3b8     ..........X...E.
+    3ba0:	8f1e2cd0 020f3fca 03bdafc1 6b8a1301     .,...?.........k
+    3bb0:	4111913a eadc674f cecff297 73e6b4f0     :..AOg.........s
+    3bc0:	2274ac96 8535ade7 e837f9e2 6edf751c     ..t"..5...7..u.n
+    3bd0:	711af147 89c5291d 0e62b76f 1bbe18aa     G..q.)..o.b.....
+    3be0:	4b3e56fc 2079d2c6 fec0db9a f45acd78     .V>K..y ....x.Z.
+    3bf0:	33a8dd1f 31c70788 591012b1 5fec8027     ...3...1...Y'.._
+    3c00:	a97f5160 0d4ab519 9f7ae52d ef9cc993     `Q....J.-.z.....
+    3c10:	4d3be0a0 b0f52aae 3cbbebc8 61995383     ..;M.*.....<.S.a
+    3c20:	7e042b17 26d677ba 631469e1 7d0c2155     .+.~.w.&.i.cU!.}
+
+00003c30 <rcon>:
+    3c30:	01000000 02000000 04000000 08000000     ................
+    3c40:	10000000 20000000 40000000 80000000     ....... ...@....
+    3c50:	1b000000 36000000                       .......6
+
+00003c58 <__sf_fake_stderr>:
+	...
+
+00003c78 <__sf_fake_stdin>:
+	...
+
+00003c98 <__sf_fake_stdout>:
+	...
+
+00003cb8 <_init>:
+    3cb8:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+    3cba:	46c0      	nop			; (mov r8, r8)
+    3cbc:	bcf8      	pop	{r3, r4, r5, r6, r7}
+    3cbe:	bc08      	pop	{r3}
+    3cc0:	469e      	mov	lr, r3
+    3cc2:	4770      	bx	lr
+
+00003cc4 <__init_array_start>:
+    3cc4:	00000241 	.word	0x00000241
+
+00003cc8 <_fini>:
+    3cc8:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+    3cca:	46c0      	nop			; (mov r8, r8)
+    3ccc:	bcf8      	pop	{r3, r4, r5, r6, r7}
+    3cce:	bc08      	pop	{r3}
+    3cd0:	469e      	mov	lr, r3
+    3cd2:	4770      	bx	lr
+
+00003cd4 <__fini_array_start>:
+    3cd4:	00000215 	.word	0x00000215
+
+Disassembly of section .gnu.sgstubs:
+
+0000fb00 <nsc_ext_irq_init>:
+    fb00:	e97f e97f 	sg
+    fb04:	f7f0 bb0f 	b.w	126 <__acle_se_nsc_ext_irq_init>
+
+0000fb08 <nsc_periph_clock_init>:
+    fb08:	e97f e97f 	sg
+    fb0c:	f7f0 baf2 	b.w	f4 <__acle_se_nsc_periph_clock_init>
+	...
