@@ -12,7 +12,7 @@ mechanisms.
 
 Install PyDGILib, 
 PyDGILib provides python bindings for Atmel® Data Gateway Interface (DGI) devices and allows collecting and visualizing power usage data.
-The live version of the documentation can be found at ewouters.github.io/pydgilib/.
+The live version of the documentation can be found at https://ewouters.github.io/pydgilib/.
 The documentation is very extensive and while the getting started example
 shows an easy way to get going, it should enable people to use the full extend of the library.
 Download librray from https://pypi.org/project/pydgilib/#description
