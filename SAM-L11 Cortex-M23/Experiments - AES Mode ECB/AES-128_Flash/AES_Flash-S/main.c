@@ -58,26 +58,28 @@ int main(void)
 	uint8_t *input = malloc(sizeof(uint8_t) * MAX_NUM_BYTES);
 	
 	delay_ms(10);
-	
+
+	// Loop to iterate over checkpoint sizes
 	for (size_t num_bytes = MIN_NUM_BYTES; num_bytes <= MAX_NUM_BYTES; num_bytes += STEP_SIZE) {
 		//size_t num_bytes = MAX_AES_BLOCKS * MBEDTLS_AES_BLOCK_SIZE;
-		// Fill with sequential data.
+		
+		// Initialization, fill with sequential data.
 		for (size_t byte = 0; byte < num_bytes; byte++) {
 			input[byte] = byte; // Will wrap at 0xff.
 			//input[byte] = 0xfa;
 		}
-
+		
+		// A. Encrypt 
 		START_MEASURE(DGI_GPIO2);
-		// Encrypt in place.
 		for (size_t count = 0;  count < num_bytes/STEP_SIZE; count++) {
 			mbedtls_aes_crypt_ecb( &aes, MBEDTLS_AES_ENCRYPT,input + (count*STEP_SIZE), input + (count*STEP_SIZE));
 		}
 		//mbedtls_aes_crypt_ecb( &aes, MBEDTLS_AES_ENCRYPT, input, input);
 		STOP_MEASURE(DGI_GPIO2);
+
 		
+		// B. Store result, puts data at the end of flash
 		START_MEASURE(DGI_GPIO3);
-		// Save to flash
-		// Put data at end of flash.
 		uint32_t target_addr = FLASH_ADDR + FLASH_SIZE - num_bytes;
 		target_addr -= target_addr % NVMCTRL_ROW_SIZE;
 	
@@ -97,14 +99,14 @@ int main(void)
 		for (size_t byte = 0; byte < num_bytes; byte++) {
 			input[byte] = 0xfe;
 		}
-		
+
+		// C. Read from flash
 		START_MEASURE(DGI_GPIO3);
-		// Read from flash
 		FLASH_0_read(target_addr, input, num_bytes);
 		STOP_MEASURE(DGI_GPIO3);
-		
+
+		// D. Decrypt in place.
 		START_MEASURE(DGI_GPIO2);
-		// Decrypt in place.
 		for (size_t count = 0;  count < num_bytes/STEP_SIZE; count++) {
 			mbedtls_aes_crypt_ecb( &aes2, MBEDTLS_AES_DECRYPT,input + (count*STEP_SIZE), input + (count*STEP_SIZE));
 		}
