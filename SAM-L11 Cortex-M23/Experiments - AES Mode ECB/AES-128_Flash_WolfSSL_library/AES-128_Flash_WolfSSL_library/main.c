@@ -36,7 +36,10 @@
 #endif
 
 
-
+/*
+The function performs encryption using wolfcrypt, stores result on flash,
+reads the result and decrypts the result.
+*/
 void benchmark_aes(void)
 {
 	// Example Vectors From FIPS-197:-
@@ -50,25 +53,26 @@ void benchmark_aes(void)
 		0x88, 0x99, 0xaa, 0xbb, 0xcc, 0xdd, 0xee, 0xff
 	};*/
 
-	Aes enc;
-	Aes dec;
+	Aes enc; 	// WolfCrypt struct variable
+	Aes dec; 	// WolfCrypt struct variable
 	
 	const uint8_t key[16] = {
 		0x60, 0x3d, 0xeb, 0x10, 0x15, 0xca, 0x71, 0xbe, 
 		0x2b, 0x73, 0xae, 0xf0, 0x85, 0x7d, 0x77, 0x81 
 	};
 
-	
+	// Wolfcrypt block size
 	static uint8_t iv[16] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f };
 	
 	// Allocate buffer memory
 	uint8_t *input = malloc(sizeof(uint8_t) * MAX_NUM_BYTES);
 
-    delay_ms(10);
+    	delay_ms(10);
 
+	// Loop to iterate over different checkpoint sizes
 	for (size_t num_bytes = MIN_NUM_BYTES; num_bytes <= MAX_NUM_BYTES; num_bytes += STEP_SIZE) {
 		
-		// Fill with sequential data.
+		// Initialization, fill with sequential data.
 		for (size_t byte = 0; byte < num_bytes; byte++) {
 			input[byte] = byte; // Will wrap at 0xff.
 			//input[byte] = 0xfa;
@@ -76,18 +80,15 @@ void benchmark_aes(void)
 			
 		wc_AesSetKey(&enc, key, sizeof(key), iv, AES_ENCRYPTION);
 
-		// Start encryption
+		// A. Start encryption
 		START_MEASURE(DGI_GPIO2);
 		//io_write(terminal_io, "Encryption", sizeof(uint8_t)*10);
-		/*encrypt*/		
 		for (size_t count = 0;  count < num_bytes/STEP_SIZE; count++) {
 			wc_AesEncryptDirect(&enc, input + (count*STEP_SIZE),input + (count*STEP_SIZE));
 		}
 		STOP_MEASURE(DGI_GPIO2);
 		
-		/* Save to flash
-		   Put data at end of flash.
-	    **/		
+		// B. Store results on flash	
 		START_MEASURE(DGI_GPIO3);
 		uint32_t target_addr = FLASH_ADDR + FLASH_SIZE - num_bytes;
 		target_addr -= target_addr % NVMCTRL_ROW_SIZE;
@@ -104,41 +105,36 @@ void benchmark_aes(void)
 		
 		SLEEP
 		
-		// Overwrite the memory
+		// Overwrite the buffer memory
 		for (size_t byte = 0; byte < num_bytes; byte++) {
 			input[byte] = 0xfe;
 		}
 
-		// Start reading from flash
+		// C. Read from flash
 		START_MEASURE(DGI_GPIO3);
-		// Read from flash
 		FLASH_0_read(target_addr, input, num_bytes);
 		STOP_MEASURE(DGI_GPIO3);
 	
 		wc_AesSetKey(&dec, key, sizeof(key), iv, AES_DECRYPTION);
 
-		// Start decryption
+		// D. Start decryption
 		START_MEASURE(DGI_GPIO2);
-		/*decrypt*/
 		for (size_t count = 0;  count < num_bytes/STEP_SIZE; count++) {
 			wc_AesDecryptDirect(&dec, input + (count*STEP_SIZE),input + (count*STEP_SIZE));
 		}
 		STOP_MEASURE(DGI_GPIO2);
 		
-	}
-	
-	
-		// Free the memory
+	}// End for loop
+
+		// Free the buffer memory
 		free(input);
 
 		END_MEASUREMENT;
 }
 
-
-
 int main(void)
 {
 	atmel_start_init();
 
-	benchmark_aes();
+	benchmark_aes(); 
 }
