@@ -41,8 +41,10 @@
 #endif
 
 
-
-void test_aes(void)
+/* The function performs encryption, storing result on flash,
+	reading the result and then decrypting it.
+*/
+void aes_HW_experiment(void)
 {
 	// Example Vectors From FIPS-197
 	//                 PLAINTEXT: 00112233445566778899aabbccddeeff
@@ -55,28 +57,22 @@ void test_aes(void)
 	};
 	
 
-	
 	// Allocate buffer memory
-	//uint8_t input[MAX_NUM_BYTES];
+	//uint8_t input[MAX_NUM_BYTES]; 
 	uint8_t *input = malloc(sizeof(uint8_t) * MAX_NUM_BYTES);
 	delay_ms(10);
-	 
-	//uint8_t output[200] = {0x00};
-	//uint8_t *output = malloc(sizeof(uint8_t) * MAX_NUM_BYTES);
-    //delay_ms(10);
-    
+
+	// Loop to iterate checkpoint sizes
 	for (size_t num_bytes = MIN_NUM_BYTES; num_bytes <= MAX_NUM_BYTES; num_bytes += STEP_SIZE) {
 		
-		// Fill with sequential data.
+		// Initialization, fill with sequential data.
 		for (size_t byte = 0; byte < num_bytes; byte++) {
 			input[byte] = byte; // Will wrap at 0xff.
 			//input[byte] = 0xfa;
 		}
 		
-		
 
-
-		//Start---------------------------------------------------------------------------------------------------------------------//
+		// A. Encrypt
 		START_MEASURE(DGI_GPIO2);
 		//io_write(terminal_io, "Encryption", sizeof(uint8_t)*10);		
 		for (size_t count = 0;  count < num_bytes/STEP_SIZE; count++)
@@ -84,11 +80,8 @@ void test_aes(void)
 			crya_aes_encrypt(key, 4, input + (count*STEP_SIZE), input + (count*STEP_SIZE));
 		}
 		STOP_MEASURE(DGI_GPIO2);
-		//End------------------------------------------------------------------------------------------------------------------------//
 		
-		/* Save to flash
-		   Put data at end of flash.
-	    **/		
+		// B. Write on flash	
 		START_MEASURE(DGI_GPIO3);
 		
 		uint32_t target_addr = FLASH_ADDR + FLASH_SIZE - num_bytes ;
@@ -104,27 +97,19 @@ void test_aes(void)
 		}
 		STOP_MEASURE(DGI_GPIO3);
 		
-		
-
-		
 		SLEEP
 		
-		// Overwrite the memory
+		// Overwrite the RAM variable
 		for (size_t byte = 0; byte < num_bytes; byte++) {
 			input[byte] = 0xfe;
 		}
 
-
-
-
+		// C. Read from flash
 		START_MEASURE(DGI_GPIO3);
-		// Read from flash
 		FLASH_0_read(target_addr, input, num_bytes);
 		STOP_MEASURE(DGI_GPIO3);
 
-		
-		
-		
+		// D. Decrypt
 		START_MEASURE(DGI_GPIO2);
 		for (size_t count = 0;  count < num_bytes/STEP_SIZE; count++) {	
 			
@@ -132,26 +117,17 @@ void test_aes(void)
 		}
 		STOP_MEASURE(DGI_GPIO2);
 		
-		
-
-		
-		
-	    //io_write(terminal_io, input + (num_bytes -16), sizeof(STEP_SIZE));
+	    	//io_write(terminal_io, input + (num_bytes -16), sizeof(STEP_SIZE));
 		
 		//crya_aes_decrypt(key, 4, input + (num_bytes -16) , input + (num_bytes -16));
 		//io_write(terminal_io, input + (num_bytes -16), sizeof(STEP_SIZE));
 		
-	}
+	} // End for loop
 	
-	
-	// Free the memory
-		//free(input);
+		// Free the memory
+		free(input);
 
 		END_MEASUREMENT;
-		
-		
-	//return true;
-	
 }
 
 
@@ -160,12 +136,11 @@ int main(void)
 {
 	atmel_start_init();
 	
-
-	test_aes();
-    /*
-	while (true) {
-		delay_ms(500);
-		gpio_toggle_pin_level(LED0);
-	}
-    */
+	aes_HW_experiment(); 
+	    /*
+		while (true) {
+			delay_ms(500);
+			gpio_toggle_pin_level(LED0);
+		}
+	    */
 }
