@@ -1,15 +1,11 @@
 /**
- * \file
- *
- * \brief Application implement
- * Support and FAQ: visit <a href="https://www.microchip.com/support/">Microchip Support</a>
+ * Author: Areeb
+ * Created: 2020
  */
 
 #include <atmel_start.h>
 //#include "atmel_start_pins.h"
 #include "hpl/crya/hpl_crya.h"
-
-
 //#include <hal_gpio.h>
 //#include <hal_delay.h>
 #include <stdio.h>
@@ -20,7 +16,6 @@
 #define STEP_SIZE 16
 #define MIN_NUM_BYTES STEP_SIZE
 #define MAX_NUM_BYTES 6000 //6496
-
 
 #define SLEEP delay_ms(2);
 
@@ -71,7 +66,6 @@ void aes_HW_experiment(void)
 			//input[byte] = 0xfa;
 		}
 		
-
 		// A. Encrypt
 		START_MEASURE(DGI_GPIO2);
 		//io_write(terminal_io, "Encryption", sizeof(uint8_t)*10);		
@@ -116,9 +110,9 @@ void aes_HW_experiment(void)
 			crya_aes_decrypt(key, 4, input + (count*STEP_SIZE), input + (count*STEP_SIZE));
 		}
 		STOP_MEASURE(DGI_GPIO2);
-		
+
+		// Test code lines
 	    	//io_write(terminal_io, input + (num_bytes -16), sizeof(STEP_SIZE));
-		
 		//crya_aes_decrypt(key, 4, input + (num_bytes -16) , input + (num_bytes -16));
 		//io_write(terminal_io, input + (num_bytes -16), sizeof(STEP_SIZE));
 		
@@ -130,17 +124,12 @@ void aes_HW_experiment(void)
 		END_MEASUREMENT;
 }
 
-
-
 int main(void)
 {
+	// Initialize drivers...
 	atmel_start_init();
-	
+
+	// Perform experiment
 	aes_HW_experiment(); 
-	    /*
-		while (true) {
-			delay_ms(500);
-			gpio_toggle_pin_level(LED0);
-		}
-	    */
+
 }
