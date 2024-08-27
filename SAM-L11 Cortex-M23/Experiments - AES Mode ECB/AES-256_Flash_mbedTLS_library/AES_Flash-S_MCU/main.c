@@ -69,14 +69,13 @@ int main(void)
 			//input[byte] = 0xfa;
 		}
 
+		// A. Encrypt
 		START_MEASURE(DGI_GPIO2);
-		// Encrypt in place.
 		mbedtls_aes_crypt_ecb( &aes, MBEDTLS_AES_ENCRYPT, input, input);
 		STOP_MEASURE(DGI_GPIO2);
 		
+		// B. Write on flash
 		START_MEASURE(DGI_GPIO3);
-		// Save to flash
-		// Put data at end of flash.
 		uint32_t target_addr = FLASH_ADDR + FLASH_SIZE - num_bytes;
 		target_addr -= target_addr % NVMCTRL_ROW_SIZE;
 	
@@ -98,12 +97,12 @@ int main(void)
 		}
 		
 		START_MEASURE(DGI_GPIO3);
-		// Read from flash
+		// C. Read from flash
 		FLASH_0_read(target_addr, input, num_bytes);
 		STOP_MEASURE(DGI_GPIO3);
 		
 		START_MEASURE(DGI_GPIO2);
-		// Decrypt in place.
+		// D. Decrypt in place.
 		mbedtls_aes_crypt_ecb( &aes2, MBEDTLS_AES_DECRYPT, input, input);
 		STOP_MEASURE(DGI_GPIO2);
 	

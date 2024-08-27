@@ -40,7 +40,7 @@
 The function performs encryption using wolfcrypt, stores result on flash,
 reads the result and decrypts the result.
 */
-void benchmark_aes(void)
+void aes_SW_measurement(void)
 {
 	// Example Vectors From FIPS-197:-
 	//                 PLAINTEXT: 00112233445566778899aabbccddeeff
@@ -136,5 +136,5 @@ int main(void)
 {
 	atmel_start_init();
 
-	benchmark_aes(); 
+	aes_SW_measurement(); 
 }

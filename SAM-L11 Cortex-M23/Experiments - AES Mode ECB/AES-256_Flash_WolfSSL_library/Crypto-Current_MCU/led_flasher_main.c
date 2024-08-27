@@ -1,6 +1,14 @@
 /**
- * Author: Areeb Asad
- */
+************************************************************************
+ Author		: Hafiz Areeb Asad
+ Date		: 29th April, 2020
+ Description: Encryption/Decryption using wolfSSL library (Software). 
+	GPIO pins used to measure energy consumption and time taken, 
+	by each task i.e. encrypt, decrypt, writing on flash and reading from flash.
+	Help and code snippets taken from wolfSSL/Atmel documentation
+	and from Erik's Code.                                                                     
+************************************************************************
+*/
 
 #include <atmel_start.h>
 #include "atmel_start_pins.h"
@@ -49,7 +57,11 @@ void UART_EDBG_init()
 	usart_sync_enable(&USART_0);
 }
 
-bool test_aes(void)
+/* The function performs encryption, storing result on flash,
+	reading the result and then decrypting it.
+	AES ECB mode with key length of 256 is used in this file.
+*/	
+void aes_SW_measurement(void)
 {
 	// Example Vectors From FIPS-197:-
 	//                 PLAINTEXT: 00112233445566778899aabbccddeeff
@@ -88,16 +100,14 @@ bool test_aes(void)
 			
 		wc_AesSetKey(&enc, key, sizeof(key), iv, AES_ENCRYPTION);
 
-		// Start encryption
+		// A. Encrypt
 		START_MEASURE(DGI_GPIO2);
-		//io_write(terminal_io, "Encryption", sizeof(uint8_t)*10);
-		/*encrypt*/		
+		//io_write(terminal_io, "Encryption", sizeof(uint8_t)*10);		(For debugging OR use breakpoints)
+		/* ECB - encrypt*/				
 		wc_AesEncryptDirect(&enc, input, input);
 		STOP_MEASURE(DGI_GPIO2);
 		
-		/* Save to flash
-		   Put data at end of flash.
-	    **/		
+		// B. Write on flash	
 		START_MEASURE(DGI_GPIO3);
 		uint32_t target_addr = FLASH_ADDR + FLASH_SIZE - num_bytes;
 		target_addr -= target_addr % NVMCTRL_ROW_SIZE;
@@ -119,7 +129,7 @@ bool test_aes(void)
 			input[byte] = 0xfe;
 		}
 
-		// Start reading from flash
+		// C. Read from flash
 		START_MEASURE(DGI_GPIO3);
 		// Read from flash
 		FLASH_0_read(target_addr, input, num_bytes);
@@ -127,36 +137,30 @@ bool test_aes(void)
 	
 		wc_AesSetKey(&dec, key, sizeof(key), iv, AES_DECRYPTION);
 
-		// Start decryption
+		// D. Decrypt
 		START_MEASURE(DGI_GPIO2);
-		/*decrypt*/
+		/* ECB - decrypt*/
 		wc_AesDecryptDirect(&dec, input, input);
 		STOP_MEASURE(DGI_GPIO2);
 		
 	}
-	
-	
 		// Free the memory
 		free(input);
 
 		END_MEASUREMENT;
-		
 		
 	return true;
 	
 	
 }
 
-
-
 int main(void)
 {
+	// Initialize drivers...
 	atmel_start_init();
-	
 	UART_EDBG_init();
 	
-	//io_write(terminal_io, hello_str, sizeof(hello_str) - 1);
-
-	bool f = test_aes();
+	// Start measurements
+	aes_SW_measurement();
     
 }
