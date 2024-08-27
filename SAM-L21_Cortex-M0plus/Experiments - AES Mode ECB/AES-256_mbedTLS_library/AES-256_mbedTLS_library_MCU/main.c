@@ -4,12 +4,10 @@
  Date		: 29th April, 2020
  Description: Encryption/Decryption using mbedTLS library (Software). 
 	GPIO pins used to measure energy consumption and time taken, 
-	each by encrypt, decrypt, writing on flash and reading from flash.
+	by each task i.e. encrypt, decrypt, writing on flash and reading from flash.
 	Help and code snippets taken from mbedtLS/Atmel documentation
 	and from Erik's Code.                                                                     
 ************************************************************************
-
-* Support: 
 */
 
 #include "atmel_start.h"
@@ -55,8 +53,11 @@ const const uint8_t key_256[32] = {
 //static uint8_t iv[16] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f };
 //static uint8_t iv2[16] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f }; /*(This is same but needed for decryption. Note: AES Module was not doing decryption without iv2  )*/
 
-
-void aes_measurement(void)
+/* The function performs encryption, storing result on flash,
+	reading the result and then decrypting it.
+	AES ECB mode with key length of 256 is used in this file.
+*/	
+void aes_SW_measurement(void)
 {
 	/* Example Vectors From FIPS-197:-
 	                 PLAINTEXT: 00112233445566778899aabbccddeeff
@@ -89,29 +90,27 @@ void aes_measurement(void)
 			input[byte] = byte; // 0x00 to write 0's OR 0xFF to write 1's.
 			//input[byte] = 0xfa;
 		}
-			
-
-		// Start encryption
+	
+		// A. Encrypt
 		START_MEASURE(DGI_GPIO2);
 		//io_write(terminal_io, "Encryption", sizeof(uint8_t)*10);
-		/*encrypt*/	
+		/* ECB - encrypt*/				
 		for (size_t count = 0;  count < num_bytes/STEP_SIZE; count++) {
 			mbedtls_aes_crypt_ecb( &aes, MBEDTLS_AES_ENCRYPT,input + (count*STEP_SIZE), input + (count*STEP_SIZE));
-		}	
+		}
+		/* CBC - encrypt*/				
 		//mbedtls_aes_crypt_cbc( &aes, MBEDTLS_AES_ENCRYPT, num_bytes, iv, input, input);
 		STOP_MEASURE(DGI_GPIO2);
 		
-		/* Save to flash
-		   Put data at end of flash.
-	    **/		
+		// B. Write on flash
 		START_MEASURE(DGI_GPIO3);
-		//********************************************** Solution - 1 @ To write on emulation (RWW) Area
+		/* Solution - 1 @ To write on emulation (RWW) Area */
 		if (_rww_flash_write(&FLASH_0.dev, NVMCTRL_RWW_EEPROM_ADDR, input, num_bytes ) != ERR_NONE) {
 			while (1)
 			; /* Trap here when flash write error happen */
 		}
 		
-		//*********************************************  Solution - 2 @ To write on Flash Main Application Area
+		/* Solution - 2 @ To write on Flash Main Application Area */
 		
 		//--------------------------------------------To write the whole data ----------------------------- 
 		//uint32_t target_addr = FLASH_ADDR + FLASH_SIZE - num_bytes;
@@ -133,9 +132,8 @@ void aes_measurement(void)
 			input[byte] = 0xfe;
 		}
 
-		// Start reading from flash
+		// C. Read from flash
 		START_MEASURE(DGI_GPIO3);
-		
 		/* Read data from RWWEE flash (Solution 1) */
 		if (_rww_flash_read(&FLASH_0.dev, NVMCTRL_RWW_EEPROM_ADDR, input, num_bytes) != ERR_NONE) {
 			while (1)
@@ -146,24 +144,16 @@ void aes_measurement(void)
 		//flash_read(&FLASH_0, target_addr, output, num_bytes);
 		STOP_MEASURE(DGI_GPIO3);
 		
-	
-
-		// Start decryption
+		// D. Decrypt
 		START_MEASURE(DGI_GPIO2);
-		/*decrypt*/
+		/* ECB - decrypt*/
 		for (size_t count = 0;  count < num_bytes/STEP_SIZE; count++) {
 			mbedtls_aes_crypt_ecb( &aes2, MBEDTLS_AES_DECRYPT,input + (count*STEP_SIZE), input + (count*STEP_SIZE));
 		}
+		/* CBC - decrypt*/
 		//mbedtls_aes_crypt_cbc( &aes2, MBEDTLS_AES_DECRYPT, num_bytes, iv2, input, input);
 		STOP_MEASURE(DGI_GPIO2);
-		
-		//// Check if memory has correct data
-		/*for (size_t byte = 0; byte < num_bytes; byte++) {
-		//	if (output[byte] != byte % 0xff) {
-		//		gpio_set_pin_level(DGI_GPIO2, GPIO_HIGH);
-		//	}
-		}*/
-		
+	
 		
 	}
 		// Free the memory
@@ -174,14 +164,10 @@ void aes_measurement(void)
 
 int main(void)
 {
+	// Initialize drivers...
 	atmel_start_init();
 	
 	// Start measurements
-	aes_measurement();
-
-	/*while (true) {
-		delay_ms(500);
-		gpio_toggle_pin_level(LED0);
-	}*/
+	aes_SW_measurement();
 	
 }

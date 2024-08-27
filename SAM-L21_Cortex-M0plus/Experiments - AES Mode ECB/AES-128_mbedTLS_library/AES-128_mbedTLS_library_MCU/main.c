@@ -80,7 +80,7 @@ void aes_SW_measurement(void)
 	//uint8_t *output = malloc(sizeof(uint8_t) * MAX_NUM_BYTES);
 	//uint8_t output[MAX_NUM_BYTES] = {0x00};
 
-    delay_ms(10);
+	delay_ms(10);
 
 	for (size_t num_bytes = MIN_NUM_BYTES; num_bytes <= MAX_NUM_BYTES; num_bytes += STEP_SIZE) {
 		
@@ -93,10 +93,11 @@ void aes_SW_measurement(void)
 		// A. Encrypt
 		START_MEASURE(DGI_GPIO2);
 		//io_write(terminal_io, "Encryption", sizeof(uint8_t)*10);		(For debugging OR use breakpoints)
-		/*encrypt*/				
+		/* ECB - encrypt*/				
 		for (size_t count = 0;  count < num_bytes/STEP_SIZE; count++) {
 				mbedtls_aes_crypt_ecb( &aes, MBEDTLS_AES_ENCRYPT,input + (count*STEP_SIZE), input + (count*STEP_SIZE));
 		}
+		/* CBC - encrypt*/				
 		//mbedtls_aes_crypt_cbc( &aes, MBEDTLS_AES_ENCRYPT, num_bytes, iv, input, input);
 		STOP_MEASURE(DGI_GPIO2);
 		
@@ -137,17 +138,17 @@ void aes_SW_measurement(void)
 			while (1)
 			; /* Trap here when flash read error happen */
 		}
-		
 		/* Read data from flash (Solution 2) */
 		//flash_read(&FLASH_0, target_addr, output, num_bytes);
 		STOP_MEASURE(DGI_GPIO3);
 		
 		// D. Decrypt
 		START_MEASURE(DGI_GPIO2);
-		/*decrypt*/
+		/* ECB - decrypt*/
 		for (size_t count = 0;  count < num_bytes/STEP_SIZE; count++) {
 				mbedtls_aes_crypt_ecb( &aes2, MBEDTLS_AES_DECRYPT,input + (count*STEP_SIZE), input + (count*STEP_SIZE));
 		}
+		/* CBC - decrypt*/
 		//mbedtls_aes_crypt_cbc( &aes2, MBEDTLS_AES_DECRYPT, num_bytes, iv2, input, input);
 		STOP_MEASURE(DGI_GPIO2);
 		
@@ -166,5 +167,4 @@ int main(void)
 	
 	// Start measurements
 	aes_SW_measurement();
-	
 }

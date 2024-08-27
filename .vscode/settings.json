@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "atmel_start.h": "c"
+        "atmel_start.h": "c",
+        "cmac.h": "c"
     }
 }

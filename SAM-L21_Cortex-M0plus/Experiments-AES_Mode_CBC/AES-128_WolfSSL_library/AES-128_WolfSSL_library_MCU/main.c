@@ -4,12 +4,10 @@
  Date		: 29th April, 2020
  Description: Encryption/Decryption using WolfSSL Crypto library (Software). 
 	GPIO pins used to measure energy consumption and time taken 
-	each by encrypt, decrypt, writing on flash and reading from flash.
+	by each task i.e. encrypt, decrypt, writing on flash and reading from flash.
 	Help and code snippets taken from WolfSSL/Atmel documentation
 	and from Erik's Code.                                                                     
 ************************************************************************
-
-* Support: 
 */
 
 #include "atmel_start.h"
@@ -55,8 +53,11 @@ static uint8_t iv[16] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 
 static uint8_t iv2[16] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f }; /*(This is same but needed for decryption. Note: AES Module was not doing decryption without iv2  )*/
 
 
-
-void aes_measurement(void)
+/* The function performs encryption, storing result on flash,
+	reading the result and then decrypting it.
+	AES CBC mode with key length of 128 is used in this file.
+*/	
+void aes_SW_measurement(void)
 {
 	// Example Vectors From FIPS-197:-
 	//                 PLAINTEXT: 00112233445566778899aabbccddeeff
@@ -72,7 +73,7 @@ void aes_measurement(void)
 	Aes enc;
 	Aes dec;
 		
-	// Allocate buffer memory
+	// Allocate buffer memory (heap)
 	uint8_t *input = malloc(sizeof(uint8_t) * MAX_NUM_BYTES);
 	//uint8_t input[MAX_NUM_BYTES];
 	
@@ -92,23 +93,21 @@ void aes_measurement(void)
 			
 		wc_AesSetKey(&enc, key_128, sizeof(key_128), iv, AES_ENCRYPTION);
 
-		// Start encryption
+		// A. Encrypt
 		START_MEASURE(DGI_GPIO2);
-		/*encrypt*/		
+		/* CBC - encrypt*/				
 		wc_AesCbcEncrypt(&enc, input, input, num_bytes);
 		STOP_MEASURE(DGI_GPIO2);
 		
-		/* Save to flash
-		   Put data at end of flash.
-	    **/		
+		// B. Write on flash
 		START_MEASURE(DGI_GPIO3);
-		//********************************************** Solution - 1 @ To write on emulation (RWW) Area
+		/* Solution - 1 @ To write on emulation (RWW) Area */
 		if (_rww_flash_write(&FLASH_0.dev, NVMCTRL_RWW_EEPROM_ADDR, input, num_bytes ) != ERR_NONE) {
 			while (1)
 			; /* Trap here when flash write error happen */
 		}
 		
-		//*********************************************  Solution - 2 @ To write on Flash Main Application Area
+		/* Solution - 2 @ To write on Flash Main Application Area */
 		
 		//--------------------------------------------To write the whole data ----------------------------- 
 		//uint32_t target_addr = FLASH_ADDR + FLASH_SIZE - num_bytes;
@@ -130,9 +129,8 @@ void aes_measurement(void)
 			input[byte] = 0xfe;
 		}
 
-		// Start reading from flash
+		// C. Read from flash
 		START_MEASURE(DGI_GPIO3);
-		
 		/* Read data from RWWEE flash (Solution 1) */
 		if (_rww_flash_read(&FLASH_0.dev, NVMCTRL_RWW_EEPROM_ADDR, input, num_bytes) != ERR_NONE) {
 			while (1)
@@ -143,12 +141,11 @@ void aes_measurement(void)
 		//flash_read(&FLASH_0, target_addr, output, num_bytes);
 		STOP_MEASURE(DGI_GPIO3);
 		
-	
 		wc_AesSetKey(&dec, key_128, sizeof(key_128), iv2, AES_DECRYPTION);
 
-		// Start decryption
+		// D. Decrypt
 		START_MEASURE(DGI_GPIO2);
-		/*decrypt*/
+		/* CBC - decrypt*/
 		wc_AesCbcDecrypt(&dec, input, input,num_bytes);
 		STOP_MEASURE(DGI_GPIO2);
 		
@@ -159,23 +156,17 @@ void aes_measurement(void)
 		//}
 		
 	}
-	
 		// Free the memory
 		free(input);
 
-		END_MEASUREMENT;
-			
+		END_MEASUREMENT;	
 }
 
 int main(void)
 {
+	// Initialize drivers...
 	atmel_start_init();
-
-	aes_measurement();
-
-	/*while (true) {
-		delay_ms(500);
-		gpio_toggle_pin_level(LED0);
-	}*/
 	
+	// Start measurements
+	aes_SW_measurement();
 }
