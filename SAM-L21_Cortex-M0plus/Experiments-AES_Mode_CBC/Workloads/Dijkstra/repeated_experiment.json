@@ -1,0 +1,55 @@
+{
+    "name": "Dijkstra",
+    "project_paths": [
+        [
+            ".",
+            "Dijkstra-S"
+        ]
+    ],
+    "config_dict": {
+        "loggers": [
+            1,
+            0
+        ],
+        "file_name_base": "experiment_dijkstra"
+    },
+    "config_dict_plot": {
+        "loggers": [
+            1,
+            2,
+            0
+        ],
+        "plot_pins": [
+            false,
+            false,
+            true,
+            true
+        ],
+        "plot_pins_method": "line",
+        "plot_xmax": 0.6,
+        "window_title": "Experiment Dijkstra"
+    },
+    "analysis": {
+        "pins": {
+            "2": [
+                "Dijkstra"
+            ],
+            "3": [
+                "Create Graph"
+            ]
+        },
+        "result_types": [
+            "Charge",
+            "Time"
+        ],
+        "section_types": {
+            "init": [
+                "Create Graph"
+            ],
+            "loop": [
+                "Dijkstra"
+            ],
+            "exit": []
+        }
+    }
+}

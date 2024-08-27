@@ -1,0 +1,72 @@
+{
+    "name": "AES-256 Flash",
+    "project_paths": [
+        "./AES-256_mbedTLS_library"
+    ],
+    "config_dict": {
+        "loggers": [
+            1,
+            0
+        ],
+        "file_name_base": "experiment_aes_flash"
+    },
+    "config_dict_plot": {
+        "loggers": [
+            1,
+            2,
+            0
+        ],
+        "plot_pins": [
+            false,
+            false,
+            true,
+            true
+        ],
+        "plot_pins_method": "line",
+        "plot_xmax": 5,
+        "window_title": "Experiment AES-128 Flash"
+    },
+    "analysis": {
+        "pins": {
+            "2": [
+                "AES-256 Encrypt",
+                "AES-256 Decrypt"
+            ],
+            "3": [
+                "AES-256 Flash Write",
+                "AES-256 Flash Read"
+            ]
+        },
+        "result_types": [
+            "Charge",
+            "Time"
+        ],
+        "section_types": {
+            "init": [],
+            "store": [
+                "AES-256 Encrypt",
+                "AES-256 Flash Write"
+            ],
+            "load": [
+                "AES-256 Flash Read",
+                "AES-256 Decrypt"
+            ],
+            "exit": []
+        },
+        "labels": {
+            "Charge": {
+                "x": "Data Size",
+                "x_unit": "byte",
+                "y": "Charge",
+                "y_unit": "C"
+            },
+            "Time": {
+                "x": "Data Size",
+                "x_unit": "byte",
+                "y": "Time",
+                "y_unit": "s"
+            }
+        },
+        "x_step": 16
+    }
+}

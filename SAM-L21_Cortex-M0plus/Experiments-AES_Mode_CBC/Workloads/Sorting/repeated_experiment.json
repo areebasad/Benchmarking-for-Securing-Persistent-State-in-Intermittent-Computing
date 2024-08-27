@@ -1,0 +1,50 @@
+{
+    "name": "Sorting 1024",
+    "project_paths": [
+        [
+            ".",
+            "Sorting"
+        ]
+    ],
+    "config_dict": {
+        "loggers": [
+            1,
+            0
+        ],
+        "file_name_base": "experiment_sorting"
+    },
+    "config_dict_plot": {
+        "loggers": [
+            1,
+            2,
+            0
+        ],
+        "plot_pins": [
+            false,
+            false,
+            true,
+            false
+        ],
+        "plot_pins_method": "line",
+        "plot_xmax": 0.6,
+        "window_title": "Experiment Sorting"
+    },
+    "analysis": {
+        "pins": {
+            "2": [
+                "Sorting"
+            ]
+        },
+        "result_types": [
+            "Charge",
+            "Time"
+        ],
+        "section_types": {
+            "init": [],
+            "loop": [
+                "Sorting"
+            ],
+            "exit": []
+        }
+    }
+}

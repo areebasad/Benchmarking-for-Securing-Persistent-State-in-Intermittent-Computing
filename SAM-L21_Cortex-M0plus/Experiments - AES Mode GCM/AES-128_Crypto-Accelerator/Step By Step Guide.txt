@@ -1,0 +1,71 @@
+1. Start from examples specifically from Atmel Start
+2. Add modules as per requiremnet
+3. If using USART module look for device receiving and transmiting pins. (Select the right one, see USART component in datasheet for help)
+For Cortex M0+
+RX - PA23
+TX - PA22
+
+4. Links on Microchip website are not updated (See documnets year)
+ASF4 API OR ASF Manual (SAM L21)
+
+5. For measuremnets include gpio_init.c/h files
+Change DGI GPIO port pins according to PINMUX (Get help from datasheet or atmel start)
+include the header of io_init.c in atmel_start.h file and
+define "#define INIT_GPIO" in atmel_start_pins.h file
+
+6. Change hpl_aes.c file -> _aes_sync_cbc_crypt(struct _aes_sync_device *const dev, const enum aes_action enc, const uint8_t *input,
+                            uint8_t *output, uint32_t length, uint8_t iv[16])
+
+	/** AES countermeasure type */
+	//enum aes_countermeature_type {
+	//	AES_COUNTERMEASURE_TYPE_disabled = 0x0, OR 0b0000    /**< Countermeasure type all disabled */
+	//	AES_COUNTERMEASURE_TYPE_1 = 0x01,       OR 0b0001   /**< Countermeasure1 enabled */
+	//	AES_COUNTERMEASURE_TYPE_2 = 0x02,       OR 0b0010   /**< Countermeasure2 enabled */
+	//	AES_COUNTERMEASURE_TYPE_3 = 0x04,       OR 0b0100   /**< Countermeasure3 enabled */
+	//	AES_COUNTERMEASURE_TYPE_4 = 0x08,       OR 0b1000   /**< Countermeasure4 enabled */
+	//	AES_COUNTERMEASURE_TYPE_ALL  = 0x0F,    OR 0b1111   /**< Countermeasure type all enabled */
+	//};
+	
+	uint32_t        block; /* Number of blocks (16 bytes) */
+	const uint8_t *inptr;
+	uint8_t *      outptr;
+	
+	
+	hri_aes_clear_CTRLA_ENABLE_bit(dev->hw);
+	hri_aes_write_CTRLA_reg(dev->hw, 0);
+	hri_aes_write_CTRLA_reg(dev->hw,
+	AES_CTRLA_AESMODE(1) | AES_CTRLA_KEYSIZE(dev->keysize) | (enc << AES_CTRLA_CIPHER_Pos));
+	//hri_aes_clear_CTRLA_CTYPE_bf(dev->hw, 0xFu);   // Change: add
+	hri_aes_set_CTRLA_CTYPE_bf(dev->hw,_U_(0b0000)); // Change: add
+	//hri_aes_write_CTRLA_CTYPE_bf(dev->hw, 0xFu);
+	hri_aes_set_RANDSEED_reg(dev->hw,_U_(0xFFAFFCFF)); //Change: add
+	hri_aes_set_CTRLA_ENABLE_bit(dev->hw);
+	hri_aes_write_CTRLB_reg(dev->hw, 0);
+
+	/* The Key must be write before CBC crypt */
+	__aes_sync_set_key(dev);
+	/* Write IV */
+	hri_aes_set_CTRLB_NEWMSG_bit(dev->hw);
+	__aes_sync_set_iv(dev, iv);
+	
+	/* Enc/Dec plain text */
+	inptr  = input;
+	outptr = output;
+	for (block = 0; block < (length >> 4); block++) {
+		hri_aes_clear_DATABUFPTR_INDATAPTR_bf(dev->hw, 0x3u);
+		__aes_sync_set_indata(dev, inptr, 4);
+		inptr += 16;
+		hri_aes_set_CTRLB_START_bit(dev->hw);
+		while (hri_aes_get_interrupt_ENCCMP_bit(dev->hw) == 0)
+		;
+		__aes_sync_get_indata(dev, outptr, 4);
+		outptr += 16;
+	}
+
+	/* IV equals last cipher text */
+	memcpy(iv, (enc == AES_ENCRYPT) ? output + length - 16 : input + length - 16, 16);
+	hri_aes_clear_CTRLB_NEWMSG_bit(dev->hw);
+	hri_aes_clear_CTRLA_ENABLE_bit(dev->hw);
+
+	return ERR_NONE;
+  

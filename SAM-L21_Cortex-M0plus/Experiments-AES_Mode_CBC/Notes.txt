@@ -1,0 +1,16 @@
+1. Start from examples specifically from Atmel Start
+2. Add modules as per requiremnet
+3. If using USART module look for device receiving and transmiting pins. (Select the right one, see USART component in datasheet for help)
+For Cortex M0+
+RX - PA23
+TX - PA22
+
+4. Links on Microchip website are not updated (See documnets year)
+ASF4 API OR ASF Manual (SAM L21)
+
+5. For measuremnets include gpio_init.c/h files
+Change DGI GPIO port pins according to PINMUX (Get help from datasheet or atmel start)
+include the header of gpio_init.c in atmel_start.h file and
+define "#define INIT_GPIO" in atmel_start_pins.h file
+  
+

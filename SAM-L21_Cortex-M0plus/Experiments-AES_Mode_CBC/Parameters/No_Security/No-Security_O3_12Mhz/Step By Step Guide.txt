@@ -1,0 +1,123 @@
+1. Start from examples specifically from Atmel Start
+2. Add modules as per requiremnet
+3. If using USART module look for device receiving and transmiting pins. (Select the right one, see USART component in datasheet for help)
+For Cortex M0+
+RX - PA23
+TX - PA22
+
+4. Links on Microchip website are not updated (See documnets year)
+ASF4 API OR ASF Manual (SAM L21)
+
+5. For measuremnets include gpio_init.c/h files
+Change DGI GPIO port pins according to PINMUX (Get help from datasheet or atmel start)
+include the header of gpio_init.c in atmel_start.h file and
+define "#define INIT_GPIO" in atmel_start_pins.h file
+
+
+6. For WolfSSL Integration
+
+1. For just AES you should only need the following source files from wolfssl-4.3.0/wolfcrypt/src/
+aes.c
+error.c
+hash.c
+logging.c
+memory.c
+misc.c
+wc_encrypt.c
+wc_port.c
+  
+
+Then use these settings to configure the library for AES only by making a file named "user_settings.h" and placing the below defines in that file. 
+Then globally define WOLFSSL_USER_SETTINGS (or add a line #define WOLFSSL_USER_SETTINGS at the top of wolfssl-4.3.0/wolfssl/wolfcrypt/settings.h) and make sure to #include <wolfssl/wolfcrypt/settings.h> in your application
+before all other wolfSSL headers.
+
+#ifndef USER_SETTINGS_H
+#define USER_SETTINGS_H
+
+#undef NO_RSA
+#define NO_RSA
+
+#undef NO_SHA
+#define NO_SHA
+
+#undef WOLFCRYPT_ONLY
+#define WOLFCRYPT_ONLY
+
+#undef SINGLE_THREADED
+#define SINGLE_THREADED
+
+#undef NO_DSA
+#define NO_DSA
+
+#undef NO_CODING
+#define NO_CODING
+
+#undef NO_RABBIT
+#define NO_RABBIT
+
+#undef NO_HMAC
+#define NO_HMAC
+
+#undef NO_PWDBASED
+#define NO_PWDBASED
+
+#undef NO_SHA256
+#define NO_SHA256
+
+#undef WC_NO_HASHDRBG
+#define WC_NO_HASHDRBG
+
+#undef WC_NO_RNG
+#define WC_NO_RNG
+
+#undef CUSTOM_RAND_GENERATE_BLOCK
+#define CUSTOM_RAND_GENERATE_BLOCK
+
+#undef NO_DES3
+#define NO_DES3
+
+#undef NO_DES
+#define NO_DES
+
+#undef NO_MD5
+#define NO_MD5
+
+#undef NO_MD4
+#define NO_MD4
+
+#undef NO_RC4
+#define NO_RC4
+
+#undef NO_ASN
+#define NO_ASN
+
+#undef NO_DH
+#define NO_DH
+
+#undef NO_HC128
+#define NO_HC128
+
+#undef NO_BIG_INT
+#define NO_BIG_INT
+
+#undef WOLFSSL_NO_HASH
+#define WOLFSSL_NO_HASH
+
+#undef NO_SIG_WRAPPER
+#define NO_SIG_WRAPPER
+
+#undef NO_CERTS
+#define NO_CERTS
+
+#endif /* USER_SETTINGS_H */
+
+
+2. If no file system is the case simply add #define NO_FILESYSTEM
+
+3. Go to Project properties (Solution Explorer) -> Toolchain -> ARM/GNU C Compiler -> Directories
+and include WolfSSL folder in the project.
+
+4. Add/copy wolfcrypt and wolfssl folders inside project separately.
+
+5. AES is declared two times, one at SAMl18jB.h/aes.h file(AES module, hardware) and one at wolfSSL file.
+To resolve this problem just comment #include aes.h in SAML21J18b.h file

@@ -1,0 +1,58 @@
+{
+    "name": "FFT 128",
+    "project_paths": [
+        [
+            ".",
+            "FFT"
+        ]
+    ],
+    "config_dict": {
+        "loggers": [
+            1,
+            0
+        ],
+        "file_name_base": "experiment_fft"
+    },
+    "config_dict_plot": {
+        "loggers": [
+            1,
+            2,
+            0
+        ],
+        "plot_pins": [
+            false,
+            false,
+            true,
+            true
+        ],
+        "plot_pins_method": "line",
+        "plot_xmax": 1,
+        "window_title": "Experiment FFT"
+    },
+    "analysis": {
+        "pins": {
+            "2": [
+                "Allocate FFT",
+                "Free FFT"
+            ],
+            "3": [
+                "FFT"
+            ]
+        },
+        "result_types": [
+            "Charge",
+            "Time"
+        ],
+        "section_types": {
+            "init": [
+                "Allocate FFT"
+            ],
+            "loop": [
+                "FFT"
+            ],
+            "exit": [
+                "Free FFT"
+            ]
+        }
+    }
+}

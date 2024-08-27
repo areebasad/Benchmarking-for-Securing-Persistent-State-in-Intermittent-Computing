@@ -1,0 +1,50 @@
+{
+    "name": "Bit Counting 2048",
+    "project_paths": [
+        [
+            ".",
+            "BitCounting-S"
+        ]
+    ],
+    "config_dict": {
+        "loggers": [
+            1,
+            0
+        ],
+        "file_name_base": "experiment_bit_counting"
+    },
+    "config_dict_plot": {
+        "loggers": [
+            1,
+            2,
+            0
+        ],
+        "plot_pins": [
+            false,
+            false,
+            true,
+            false
+        ],
+        "plot_pins_method": "line",
+        "plot_xmax": 0.6,
+        "window_title": "Experiment BitCounting"
+    },
+    "analysis": {
+        "pins": {
+            "2": [
+                "Bit Counting"
+            ]
+        },
+        "result_types": [
+            "Charge",
+            "Time"
+        ],
+        "section_types": {
+            "init": [],
+            "loop": [
+                "Bit Counting"
+            ],
+            "exit": []
+        }
+    }
+}

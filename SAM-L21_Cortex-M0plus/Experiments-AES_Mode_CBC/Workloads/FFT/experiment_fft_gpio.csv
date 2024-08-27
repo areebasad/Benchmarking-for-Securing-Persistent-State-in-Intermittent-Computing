@@ -1,0 +1,17 @@
+timestamp,gpio0,gpio1,gpio2,gpio3
+0.004739333333333333,True,True,True,True
+0.004739333333333333,False,False,False,False
+0.018010266666666667,False,False,False,False
+0.018010266666666667,False,False,True,False
+0.5068518666666667,False,False,True,False
+0.5068518666666667,False,False,False,False
+0.5135478666666667,False,False,False,False
+0.5135478666666667,False,False,False,True
+0.6394342666666667,False,False,False,True
+0.6394342666666667,False,False,False,False
+0.6435041333333333,False,False,False,False
+0.6435041333333333,False,False,True,False
+0.6435617333333333,False,False,True,False
+0.6435617333333333,False,False,False,False
+0.6556364,False,False,False,False
+0.6556364,True,True,True,True
