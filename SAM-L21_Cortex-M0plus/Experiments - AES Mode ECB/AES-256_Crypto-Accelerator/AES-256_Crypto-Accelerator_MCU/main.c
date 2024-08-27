@@ -4,7 +4,7 @@
  Date		: 24th April, 2020
  Description: Encryption/Decryption using AES module (Hardware). 
 	GPIO pins used to measure energy consumption and time taken 
-	each by encrypt, decrypt, writing on flash and reading from flash.
+	by each encrypt, decrypt, writing on flash and reading from flash.
 	Help and code snippets taken from Microchip/Atmel documentation
 	and from Erik's Code.                                                                     
 ************************************************************************
@@ -51,8 +51,13 @@ static const uint8_t key_256[32] = {
 static uint8_t iv[16] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f };
 static uint8_t iv2[16] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f }; /*(This is same but needed for decryption. Note: AES Module was not doing decryption without iv2  )*/
 
-
-void aes_measurement(void)
+/* The function performs encryption, storing result on flash,
+	reading the result and then decrypting it.
+	The function contains code to encrypt and decrypt 
+	in following modes of AES i.e. ECB, CBC and GCM.
+	AES-ECB Mode with 256 key length is used in this file.
+*/	
+void aes_HW_measurement(void)
 {
 	
 	// Allocate buffer memory (Heap)
@@ -76,41 +81,36 @@ void aes_measurement(void)
 
 
 		aes_sync_set_encrypt_key(&CRYPTOGRAPHY_0, key_256, AES_KEY_256);
-		// Start---------------------------------------------------------------------------------------------------------------------//
+		// A. Encrypt
 		START_MEASURE(DGI_GPIO2);
 		// io_write(terminal_io, "Encryption", sizeof(uint8_t)*10);		(For debugging OR use breakpoints)
 		
 		// Note*: To change/disable countermeasure type for preventing side-channel attacks go to hpl_aes.c
 		
+		/* Note: In file hpl_aes.c (_aes_sync_cbc_crypt function)
+			Data type of "block" variable changed from uint8 to uint32 to encrypt/decrypt input of more than 4080 bytes.
+			(AES_CTRLA_CTYPE(0b0000) added to aes_write_CTRLA_reg.  
+		*/
+		
 		// For ECB Mode
 		for (size_t count = 0;  count < num_bytes/STEP_SIZE; count++) {
 			aes_sync_ecb_crypt(&CRYPTOGRAPHY_0, AES_ENCRYPT, input + (count*STEP_SIZE), input + (count*STEP_SIZE));
 			//aes_sync_cbc_crypt(&CRYPTOGRAPHY_0, AES_ENCRYPT, input + (count*STEP_SIZE), output+ (count*STEP_SIZE), STEP_SIZE, iv);  (CBC Mode, avoid loops)
-
 		}
-		
-		/* In hpl_aes.c (_aes_sync_cbc_crypt function)
-		Data type of "block" variable changed from uint8 to uint32 to encrypt/decrypt input of more than 4080 bytes.
-		(AES_CTRLA_CTYPE(0b0000) added to aes_write_CTRLA_reg.  
-		*/
 		// For CBC Mode
 		//aes_sync_cbc_crypt(&CRYPTOGRAPHY_0, AES_ENCRYPT, input, input, num_bytes, iv);
-		
 		STOP_MEASURE(DGI_GPIO2);
-		//End------------------------------------------------------------------------------------------------------------------------//
 		
 	
-		/* Save to flash
-		   Put data at end of flash.
-	    **/		
+		// B. Write on flash
 		START_MEASURE(DGI_GPIO3);
-		//********************************************** Solution - 1 @ To write on emulation (RWW) Area
+		/* Solution - 1 @ To write on emulation (RWW) Area */
 		if (_rww_flash_write(&FLASH_0.dev, NVMCTRL_RWW_EEPROM_ADDR, input, num_bytes ) != ERR_NONE) {
 			while (1)
 			; /* Trap here when flash write error happen */
 		}
 		
-		//*********************************************  Solution - 2 @ To write on Flash Main Application Area
+		/* Solution - 2 @ To write on Flash Main Application Area */
 		
 		//--------------------------------------------To write the whole data ----------------------------- 
 		//uint32_t target_addr = FLASH_ADDR + FLASH_SIZE - num_bytes;
@@ -132,7 +132,7 @@ void aes_measurement(void)
 			input[byte] = 0xfe;
 		}	
 		
-		// Start reading from flash
+		// C. Read from flash
 		START_MEASURE(DGI_GPIO3);
 		
 		/* Read data from RWWEE flash (Solution 1) */
@@ -147,25 +147,17 @@ void aes_measurement(void)
 		
 		aes_sync_set_decrypt_key(&CRYPTOGRAPHY_0, key_256, AES_KEY_256);
 		
-		// Start decryption
+		// D. Decrypt
 		START_MEASURE(DGI_GPIO2);
 		/* For ECB - decrypt*/
 		for (size_t count = 0;  count < num_bytes/STEP_SIZE; count++) {
 			aes_sync_ecb_crypt(&CRYPTOGRAPHY_0, AES_DECRYPT, input + (count*STEP_SIZE), output + (count*STEP_SIZE));
 			//aes_sync_cbc_crypt(&CRYPTOGRAPHY_0, AES_DECRYPT, output + (count*STEP_SIZE), result+ (count*STEP_SIZE), STEP_SIZE, iv2); (Avoid loops)
 		}
-		
+		/* For CBC - decrypt*/
 		//aes_sync_cbc_crypt(&CRYPTOGRAPHY_0, AES_DECRYPT, input, output, num_bytes, iv2);
 		
 		STOP_MEASURE(DGI_GPIO2);
-		
-
-		//// Check if memory has correct data
-		//for (size_t byte = 0; byte < num_bytes; byte++) {
-		//	if (output[byte] != byte % 0xff) {
-		//		gpio_set_pin_level(DGI_GPIO2, GPIO_HIGH);
-		//	}
-		//}
 	
 	}
 	
@@ -180,13 +172,10 @@ void aes_measurement(void)
 
 int main(void)
 {
+	// Initialize drivers...
 	atmel_start_init();
-
-	aes_measurement();
-
-	/*while (true) {
-		delay_ms(500);
-		gpio_toggle_pin_level(LED0);
-	}*/
+	
+	// Perform measurement for AES-ECB on crypto-accelerator
+	aes_HW_measurement();
 	
 }

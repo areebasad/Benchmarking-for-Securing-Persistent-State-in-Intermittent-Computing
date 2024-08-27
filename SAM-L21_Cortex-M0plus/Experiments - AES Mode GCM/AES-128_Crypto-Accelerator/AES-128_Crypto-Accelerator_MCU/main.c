@@ -53,7 +53,7 @@ static uint8_t iv[16] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 
 static uint8_t iv2[16] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f }; /*(This is same but needed for decryption. Note: AES Module was not doing decryption without iv2  )*/
 
 /* The function performs encryption, storing result on flash,
-	reading the resultand then decrypting it.
+	reading the result and then decrypting it.
 	The function contains code to encrypt and decrypt 
 	in following modes of AES i.e. ECB, CBC and GCM.
 	AES-GCM Mode is used in this file.
